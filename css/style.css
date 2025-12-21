@@ -1,0 +1,82 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BASE */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0c0c0e;
+  color: #eaeaea;
+  line-height: 1.6;
+}
+
+/* NAVIGATION */
+nav {
+  display: flex;
+  gap: 32px;
+  padding: 24px 40px;
+}
+
+nav a {
+  color: #eaeaea;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+nav a:hover {
+  opacity: 0.7;
+}
+
+/* HERO */
+header {
+  padding: 120px 40px 80px;
+}
+
+header h1 {
+  font-size: 64px;
+  font-weight: 700;
+}
+
+header p {
+  margin-top: 12px;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* SECTIONS */
+section {
+  padding: 80px 40px;
+}
+
+section h2 {
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+/* WORK GRID */
+#work {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 40px;
+}
+
+.work-item img {
+  width: 100%;
+  display: block;
+}
+
+.work-item p {
+  margin-top: 12px;
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* CONTACT */
+#contact p {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
