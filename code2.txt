@@ -1,0 +1,2458 @@
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   HERO — asymmetric, left-aligned, grid-breaking
+   Layout:
+     • Left col (55%): pill, headline stack, descriptor pills, CTAs
+     • Right col (45%): oversized "look" bleeds off the right edge — clipped
+       at viewport but visible as a typographic texture
+   The headline is NOT centred. Text starts at ~8vw from left.
+   One word ("look world-class.") is set at 2× the size of the first line
+   and bleeds past the right edge, creating asymmetric tension.
+───────────────────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   FLOATING APP ICONS — draggable, icon-only, no teleport bug
+   Uses useMotionValue + pixel positions set on mount. No vw/vh strings.
+───────────────────────────────────────────────────────────────────────────── */
+const APP_ICONS = [
+  { id:"premiere",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#0d0030"/>
+        <text x="6" y="36" fontSize="26" fontWeight="900" fill="#9999FF" fontFamily="'Arial Black',sans-serif">Pr</text>
+      </svg>
+    )},
+  { id:"photoshop",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#001e36"/>
+        <text x="5" y="36" fontSize="26" fontWeight="900" fill="#31A8FF" fontFamily="'Arial Black',sans-serif">Ps</text>
+      </svg>
+    )},
+  { id:"figma",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#1e1e1e"/>
+        <rect x="17" y="8" width="9" height="9" rx="3" fill="#FF7262"/>
+        <rect x="26" y="8" width="9" height="9" rx="4.5" fill="#FF7262"/>
+        <rect x="17" y="17" width="9" height="9" rx="3" fill="#A259FF"/>
+        <rect x="17" y="26" width="9" height="9" rx="3" fill="#0ACF83"/>
+        <circle cx="30.5" cy="30.5" r="4.5" fill="#1ABCFE"/>
+        <rect x="26" y="17" width="9" height="9" rx="4.5" fill="#1ABCFE"/>
+      </svg>
+    )},
+  { id:"vscode",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#1e1e2e"/>
+        <path d="M10 17l10 8-10 8V17zm0 0l20-9 5 3-15 6M10 33l20 9 5-3-15-6M35 8l5 3v18l-5 3V8z" fill="#007ACC" fillOpacity=".9"/>
+        <path d="M35 8l5 3-20 14L10 17l15-6 10-3zm0 26l5-3-20-14-10 8 15 6 10 3z" fill="#1BA1E2" fillOpacity=".7"/>
+      </svg>
+    )},
+  { id:"github",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#24292e"/>
+        <path fillRule="evenodd" clipRule="evenodd"
+          d="M25 10C17.27 10 11 16.27 11 24c0 6.19 4.01 11.44 9.57 13.29.7.13.96-.3.96-.68v-2.38c-3.89.85-4.71-1.87-4.71-1.87-.64-1.62-1.56-2.05-1.56-2.05-1.27-.87.1-.85.1-.85 1.4.1 2.14 1.44 2.14 1.44 1.25 2.14 3.27 1.52 4.07 1.16.13-.9.49-1.52.89-1.87-3.1-.35-6.36-1.55-6.36-6.9 0-1.52.54-2.77 1.44-3.75-.14-.35-.62-1.77.14-3.7 0 0 1.18-.38 3.85 1.44A13.38 13.38 0 0125 17.96c1.19.01 2.39.16 3.51.47 2.68-1.82 3.85-1.44 3.85-1.44.76 1.93.28 3.35.14 3.7.9.98 1.44 2.23 1.44 3.75 0 5.37-3.27 6.55-6.39 6.89.5.43.95 1.29.95 2.6v3.85c0 .38.25.82.96.68C33.99 35.44 38 30.18 38 24c0-7.73-6.27-14-13-14z"
+          fill="white"/>
+      </svg>
+    )},
+  { id:"aftereffects",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#0d0030"/>
+        <text x="5" y="36" fontSize="26" fontWeight="900" fill="#9999FF" fontFamily="'Arial Black',sans-serif">Ae</text>
+      </svg>
+    )},
+  { id:"davinci",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#1a1a1a"/>
+        <circle cx="25" cy="25" r="12" stroke="#E8A020" strokeWidth="2.5" fill="none"/>
+        <circle cx="25" cy="25" r="5" fill="#E8A020"/>
+        <circle cx="25" cy="13" r="2" fill="#E8A020"/>
+        <circle cx="25" cy="37" r="2" fill="#E8A020"/>
+        <circle cx="13" cy="25" r="2" fill="#E8A020"/>
+        <circle cx="37" cy="25" r="2" fill="#E8A020"/>
+      </svg>
+    )},
+  { id:"illustrator",
+    icon:(
+      <svg viewBox="0 0 50 50" width="44" height="44">
+        <rect width="50" height="50" rx="10" fill="#330000"/>
+        <text x="5" y="36" fontSize="26" fontWeight="900" fill="#FF9A00" fontFamily="'Arial Black',sans-serif">Ai</text>
+      </svg>
+    )},
+];
+
+const sr = (seed) => { const x=Math.sin(seed+1)*10000; return x-Math.floor(x); };
+
+// Assign each icon to a scroll zone (0–1 of total page height)
+// Spread 8 icons: 2 in hero, 1 in about, 1 in tools, 1 in library,
+// 1 in thumbnails/video, 1 in graphic/code, 1 near contact
+const ICON_ZONES = [
+  { xMin:0.50, xMax:0.90, yMin:0.02, yMax:0.10 }, // hero top-right
+  { xMin:0.55, xMax:0.88, yMin:0.08, yMax:0.14 }, // hero mid-right
+  { xMin:0.02, xMax:0.20, yMin:0.15, yMax:0.22 }, // about left
+  { xMin:0.72, xMax:0.92, yMin:0.27, yMax:0.34 }, // tools right
+  { xMin:0.04, xMax:0.18, yMin:0.38, yMax:0.45 }, // library left
+  { xMin:0.75, xMax:0.94, yMin:0.52, yMax:0.60 }, // work right
+  { xMin:0.02, xMax:0.16, yMin:0.64, yMax:0.72 }, // work left
+  { xMin:0.78, xMax:0.94, yMin:0.78, yMax:0.86 }, // code/contact right
+];
+
+const FloatingIcon = ({icon, index}) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const [ready, setReady] = useState(false);
+  const [dragging, setDragging] = useState(false);
+
+  // Unique float params — each icon moves completely differently
+  const dur   = 3.5 + sr(index*1.7) * 3;
+  const ampX  = 6  + sr(index*3.1) * 9;
+  const ampY  = 8  + sr(index*2.3) * 12;
+  const rot   = (sr(index*4.7) - 0.5) * 10;
+  const delay = sr(index*5.9) * dur;
+
+  useEffect(() => {
+    const vw = window.innerWidth;
+    // Use total document height so positions cover all sections
+    const docH = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      window.innerHeight * 8  // fallback estimate
+    );
+    const zone = ICON_ZONES[index] || ICON_ZONES[0];
+    const px = vw    * (zone.xMin + sr(index*7.3) * (zone.xMax - zone.xMin));
+    const py = docH  * (zone.yMin + sr(index*3.7) * (zone.yMax - zone.yMin));
+    x.set(px);
+    y.set(py);
+    setReady(true);
+  }, []);
+
+  return (
+    <motion.div
+      drag
+      dragMomentum={false}
+      dragElastic={0}
+      style={{ x, y,
+        position:"absolute", top:0, left:0,
+        cursor:"grab", userSelect:"none", touchAction:"none",
+        opacity: ready ? 1 : 0,
+        zIndex: dragging ? 100 : 3,
+      }}
+      onDragStart={()=>setDragging(true)}
+      onDragEnd={()=>setDragging(false)}
+      whileDrag={{ scale:1.12, filter:"drop-shadow(0 14px 28px rgba(0,0,0,0.35))" }}>
+
+      <motion.div
+        animate={dragging ? {x:0,y:0,rotate:0} : {
+          x:  [0,  ampX, ampX*0.3, -ampX*0.6, 0],
+          y:  [0, -ampY, ampY*0.5,  ampY*0.3, 0],
+          rotate: [0, rot*0.6, rot*-0.4, rot*0.2, 0],
+        }}
+        transition={{
+          duration: dur,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay,
+          times: [0, 0.3, 0.55, 0.8, 1],
+        }}>
+        <motion.div
+          initial={{ opacity:0, scale:0.5 }}
+          animate={{ opacity:1, scale:1 }}
+          transition={{ delay: index*0.12 + 0.4, type:"spring", stiffness:180, damping:14 }}
+          style={{
+            width:54, height:54,
+            borderRadius:14,
+            boxShadow:"0 6px 24px rgba(0,0,0,0.22), 0 1px 0 rgba(255,255,255,0.12) inset",
+            overflow:"hidden",
+            display:"flex", alignItems:"center", justifyContent:"center",
+          }}>
+          {icon.icon}
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Fixed overlay — covers entire page, icons scroll with content
+const FloatingIcons = () => (
+  <div style={{
+    position:"absolute",
+    top:0, left:0,
+    width:"100%",
+    // tall enough to cover all sections — recalculated by children
+    height:"800vh",
+    zIndex:4,
+    pointerEvents:"none",
+  }}>
+    <div style={{position:"relative", width:"100%", height:"100%", pointerEvents:"all"}}>
+      {APP_ICONS.map((icon,i) => <FloatingIcon key={icon.id} icon={icon} index={i}/>)}
+    </div>
+  </div>
+);
+
+const Hero = () => {
+  const {scrollY} = useScroll();
+  const bleedY    = useTransform(scrollY, [0,600], [0, -60]);  // bleed word parallax
+  const contentY  = useTransform(scrollY, [0,500], [0, 60]);   // content slow scroll
+  const op        = useTransform(scrollY, [0,380],  [1, 0]);
+  const go = id => document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
+
+  return (
+    <section id="hero" style={{
+      position:"relative", zIndex:1,
+      minHeight:"100vh",
+      display:"flex", alignItems:"center",
+      padding:"0 0 0 8vw",
+      overflow:"hidden",
+    }}>
+
+      {/* ── Oversized bleed word — parallaxes independently ── */}
+      <motion.div
+        style={{
+          y: bleedY,
+          position:"absolute",
+          right:"-0.08em",          // clips off-screen right
+          top:"50%",
+          translateY:"-50%",
+          fontFamily:"'Cormorant Garamond',serif",
+          fontSize:"clamp(160px,22vw,320px)",
+          fontWeight:300, fontStyle:"italic",
+          color:"rgba(65,67,27,0.07)",
+          letterSpacing:"-0.04em", lineHeight:1,
+          userSelect:"none", pointerEvents:"none",
+          whiteSpace:"nowrap", zIndex:0,
+        }}>
+        world-class.
+      </motion.div>
+
+      {/* ── Left content column ── */}
+      <motion.div style={{y: contentY, opacity: op, position:"relative", zIndex:1, maxWidth:680}}>
+
+        {/* Status pill */}
+        <motion.div
+          initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}}
+          transition={{duration:.7, delay:.2}}
+          className="glass"
+          style={{
+            display:"inline-flex", alignItems:"center", gap:10,
+            padding:"7px 20px", borderRadius:100,
+            marginBottom:44, fontSize:12, letterSpacing:"0.12em",
+            textTransform:"uppercase", color:"#4A5C28", fontWeight:500,
+          }}>
+          <motion.span
+            animate={{opacity:[1,0.3,1]}}
+            transition={{duration:2, repeat:Infinity, ease:"easeInOut"}}
+            style={{width:6,height:6,borderRadius:"50%",background:"#AEB784",display:"inline-block"}}/>
+          Available for projects · 2025
+        </motion.div>
+
+        {/* Line 1 — "I make creators" — normal weight */}
+        <div style={{overflow:"hidden", marginBottom:2}}>
+          <motion.h1
+            initial={{y:90, opacity:0}} animate={{y:0, opacity:1}}
+            transition={{duration:1, delay:.28, ease:[.22,1,.36,1]}}
+            className="serif"
+            style={{
+              fontSize:"clamp(48px,6.5vw,90px)",
+              fontWeight:600, lineHeight:0.92,
+              color:"#41431B", letterSpacing:"-0.03em",
+              margin:0,
+            }}>
+            I make creators
+          </motion.h1>
+        </div>
+
+        {/* Line 2 — "look" only, italic, much larger — creates size contrast */}
+        <div style={{overflow:"hidden", marginBottom:32}}>
+          <motion.h1
+            initial={{y:90, opacity:0}} animate={{y:0, opacity:1}}
+            transition={{duration:1, delay:.44, ease:[.22,1,.36,1]}}
+            className="serif"
+            style={{
+              fontSize:"clamp(56px,9vw,130px)",   // noticeably bigger than line 1
+              fontWeight:300, fontStyle:"italic",
+              lineHeight:0.88,
+              color:"#AEB784", letterSpacing:"-0.04em",
+              margin:0,
+            }}>
+            look
+          </motion.h1>
+        </div>
+
+        {/* Horizontal rule — editorial punctuation */}
+        <motion.div
+          initial={{scaleX:0, opacity:0}} animate={{scaleX:1, opacity:1}}
+          transition={{duration:.7, delay:.65, ease:[.22,1,.36,1]}}
+          style={{
+            height:1.5, width:280,
+            background:"linear-gradient(to right, rgba(65,67,27,0.55), rgba(65,67,27,0.10), transparent)",
+            transformOrigin:"left", marginBottom:28,
+          }}/>
+
+        {/* Three value props — left-aligned, no dots */}
+        <motion.div
+          initial={{opacity:0, y:14}} animate={{opacity:1, y:0}}
+          transition={{duration:.7, delay:.72}}
+          style={{display:"flex", flexDirection:"column", gap:8, marginBottom:40}}>
+          {[
+            {icon:"🖼️", text:"Thumbnails that get clicked"},
+            {icon:"🎬", text:"Edits that get shared"},
+            {icon:"⌨️", text:"Sites that convert"},
+          ].map(({icon,text},i)=>(
+            <motion.div key={i}
+              initial={{opacity:0, x:-16}} animate={{opacity:1, x:0}}
+              transition={{duration:.5, delay:.72 + i*0.1, ease:[.22,1,.36,1]}}
+              style={{
+                display:"flex", alignItems:"center", gap:12,
+                fontSize:14, color:"#6B6B4A", fontWeight:400, letterSpacing:"0.01em",
+              }}>
+              <span style={{
+                fontSize:11, color:"#AEB784",
+                fontFamily:"'DM Sans',sans-serif",
+                letterSpacing:"0.12em", textTransform:"uppercase", fontWeight:500,
+                width:20, flexShrink:0, textAlign:"center",
+              }}>
+                {String(i+1).padStart(2,"0")}
+              </span>
+              <span style={{
+                width:1, height:12,
+                background:"rgba(174,183,132,0.4)",
+                flexShrink:0,
+              }}/>
+              {text}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* CTAs — left-aligned */}
+        <motion.div
+          initial={{opacity:0, y:14}} animate={{opacity:1, y:0}}
+          transition={{duration:.7, delay:1.0}}
+          style={{display:"flex", gap:14, alignItems:"center"}}>
+          <LiquidButtonPrimary onClick={()=>go("library")}>
+            See My Work
+          </LiquidButtonPrimary>
+          <LiquidButtonGhost onClick={()=>go("contact")}>
+            Start a Project
+          </LiquidButtonGhost>
+        </motion.div>
+
+      </motion.div>
+
+      {/* Rotating text scroll cue */}
+      <motion.div
+        initial={{opacity:0}} animate={{opacity:1}} transition={{delay:2.4}}
+        style={{
+          position:"absolute", bottom:36, left:"8vw",
+          width:72, height:72,
+          cursor:"pointer",
+        }}
+        onClick={()=>go("about")}
+        whileHover={{scale:1.08}}>
+        {/* Rotating text ring */}
+        <motion.svg
+          animate={{rotate:360}}
+          transition={{duration:12, repeat:Infinity, ease:"linear"}}
+          viewBox="0 0 72 72"
+          style={{position:"absolute", inset:0, width:"100%", height:"100%"}}>
+          <defs>
+            <path id="circle-path" d="M36,36 m-28,0 a28,28 0 1,1 56,0 a28,28 0 1,1 -56,0"/>
+          </defs>
+          <text style={{fontSize:7.5, fill:"rgba(65,67,27,0.45)", fontFamily:"'DM Sans',sans-serif",
+            letterSpacing:"0.14em", textTransform:"uppercase"}}>
+            <textPath href="#circle-path">
+              SCROLL TO EXPLORE ✦ SCROLL TO EXPLORE ✦
+            </textPath>
+          </text>
+        </motion.svg>
+        {/* Centre arrow */}
+        <div style={{
+          position:"absolute", inset:0,
+          display:"flex", alignItems:"center", justifyContent:"center",
+        }}>
+          <motion.div
+            animate={{y:[0,4,0]}}
+            transition={{duration:1.6, repeat:Infinity, ease:"easeInOut"}}
+            style={{
+              fontSize:14, color:"rgba(65,67,27,0.5)",
+              lineHeight:1,
+            }}>↓</motion.div>
+        </div>
+      </motion.div>
+
+    </section>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ABOUT
+   WHY client-first: visitors scan for "can this person solve my problem?"
+   The old version led with self-description ("I believe…"). This version
+   leads with the problem they recognise, then shows you as the answer.
+   Stats removed — they were placeholders and fake credibility hurts more
+   than it helps. Replace with the photo card + 3 honest capability lines.
+───────────────────────────────────────────────────────────────────────────── */
+const About = () => (
+  <section id="about" style={{position:"relative",zIndex:1,padding:"160px 6vw 140px",overflow:"hidden"}}>
+
+    {/* Chapter divider — olive rule at bottom, signals end of intro chapter */}
+    <div style={{
+      position:"absolute", bottom:0, left:"6vw", right:"6vw",
+      height:1,
+      background:"linear-gradient(to right, transparent, rgba(65,67,27,0.12) 20%, rgba(65,67,27,0.12) 80%, transparent)",
+      pointerEvents:"none",
+    }}/>
+
+    {/* ── Ghost type texture — "ABOUT" bleeds off right edge ── */}
+    <div style={{
+      position:"absolute", right:"-0.04em", top:"50%",
+      transform:"translateY(-50%)",
+      fontFamily:"'Cormorant Garamond',serif",
+      fontSize:"clamp(130px,20vw,280px)",
+      fontWeight:700, fontStyle:"italic",
+      color:"rgba(65,67,27,0.04)",
+      letterSpacing:"-0.04em", lineHeight:1,
+      userSelect:"none", pointerEvents:"none",
+      whiteSpace:"nowrap", zIndex:0,
+    }}>About</div>
+
+    <div style={{maxWidth:1100,margin:"0 auto",display:"grid",
+      gridTemplateColumns:"1fr 1fr",gap:64,alignItems:"center",position:"relative",zIndex:1}}>
+
+      {/* Photo card */}
+      <Reveal variant="slideLeft">
+        <div className="matte" style={{borderRadius:32,aspectRatio:"4/5",overflow:"hidden",
+          display:"flex",alignItems:"center",justifyContent:"center",position:"relative",
+          background:"linear-gradient(160deg,rgba(174,183,132,.22) 0%,rgba(227,219,187,.18) 100%)"}}>
+          {/* ── REPLACE WITH YOUR PHOTO — set as <img src="..." style={{width:"100%",height:"100%",objectFit:"cover"}}/> ── */}
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:14}}>
+            <div style={{width:120,height:120,borderRadius:"50%",
+              background:"rgba(174,183,132,.15)",border:"1.5px dashed rgba(174,183,132,.4)",
+              display:"flex",alignItems:"center",justifyContent:"center",fontSize:44}}>🧑</div>
+            <span style={{fontSize:11,letterSpacing:"0.1em",textTransform:"uppercase",
+              color:"rgba(174,183,132,.5)"}}>Your photo here</span>
+          </div>
+
+          {/* Floating discipline tags */}
+          {[
+            {label:"Video & Thumbnails", top:"14%", right:"-12px"},
+            {label:"Graphic Design",     top:"44%", right:"-12px"},
+            {label:"Web Development",    top:"74%", right:"-12px"},
+          ].map(({label,top,right})=>(
+            <motion.div key={label}
+              initial={{x:20,opacity:0}} whileInView={{x:0,opacity:1}}
+              viewport={{once:true}} transition={{duration:.6,delay:.3}}
+              className="glass"
+              style={{position:"absolute",top,right,
+                borderRadius:100,padding:"7px 16px",
+                fontSize:11,fontWeight:500,color:"#4A5C28",
+                letterSpacing:"0.06em",whiteSpace:"nowrap"}}>
+              {label}
+            </motion.div>
+          ))}
+        </div>
+      </Reveal>
+
+      {/* Copy */}
+      <Reveal delay={0.15} variant="slideRight">
+        <SLabel>About</SLabel>
+
+        {/* Main heading — tighter tracking, generous leading */}
+        <h2 className="serif"
+          style={{
+            fontSize:"clamp(36px,3.8vw,50px)", fontWeight:300,
+            color:"#41431B", lineHeight:1.1, letterSpacing:"-0.03em",
+            marginBottom:28,
+          }}>
+          Most creators have great work.<br/>
+          <em style={{fontStyle:"italic", color:"#AEB784", letterSpacing:"-0.01em"}}>
+            Not enough people see it.
+          </em>
+        </h2>
+
+        {/* Pull quote — breaks the body rhythm, wider tracking */}
+        <Reveal delay={0.3} variant="fade">
+          <div style={{
+            borderLeft:"2px solid rgba(174,183,132,0.6)",
+            paddingLeft:20, marginBottom:24,
+            marginLeft:2,
+          }}>
+            <p style={{
+              fontFamily:"'Cormorant Garamond',serif",
+              fontSize:"clamp(18px,1.8vw,21px)",
+              fontWeight:400, fontStyle:"italic",
+              color:"#4A5C28", lineHeight:1.55,
+              letterSpacing:"0.01em",
+            }}>
+              "One person who takes your idea all the way — thumbnail to edit to site."
+            </p>
+          </div>
+        </Reveal>
+
+        {/* Body copy — bumped weight for contrast on beige bg */}
+        <p style={{fontSize:15,color:"#6B6B4A",lineHeight:1.9,fontWeight:400,marginBottom:14,letterSpacing:"0.005em"}}>
+          I'm a designer, editor, and developer who specialises in making creators impossible to scroll past.
+          Whether you need a thumbnail that doubles your CTR, an edit that holds attention to the end,
+          or a site that turns visitors into clients — I handle the whole creative pipeline.
+        </p>
+        <p style={{fontSize:15,color:"#9A9878",lineHeight:1.9,fontWeight:400,marginBottom:36,letterSpacing:"0.005em"}}>
+          Based in [Your City]. Working with creators, studios, and brands worldwide.
+        </p>
+
+        {/* Capability pills */}
+        <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+          {["YouTube & Social","Brand Identity","Motion & Editing","React / Next.js","Figma to Code"]
+            .map(tag=>(
+            <span key={tag} style={{
+              fontSize:11.5, padding:"6px 16px", borderRadius:100, fontWeight:500,
+              background:"rgba(174,183,132,0.18)",
+              border:"1px solid rgba(174,183,132,0.35)",
+              color:"#4A5C28", letterSpacing:"0.06em", textTransform:"uppercase",
+            }}>{tag}</span>
+          ))}
+        </div>
+      </Reveal>
+    </div>
+  </section>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   TOOLS & CAPABILITIES
+───────────────────────────────────────────────────────────────────────────── */
+
+// SVG icons as inline components — no external dep needed
+const Icons = {
+  PremierePro: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#9999FF" opacity=".15"/>
+      <path d="M6 16V8h3.5c1.93 0 3 1.05 3 2.8 0 1.78-1.1 2.9-3.06 2.9H7.6V16H6zm1.6-4.6h1.8c1 0 1.5-.5 1.5-1.6 0-1.08-.5-1.6-1.5-1.6H7.6v3.2zm6.5 4.6v-5.8h1.5v.9c.4-.65 1-.95 1.8-.95.2 0 .38.02.55.06v1.4a2 2 0 00-.65-.1c-.9 0-1.6.6-1.6 1.8V16H14.1z" fill="#9999FF"/>
+    </svg>
+  ),
+  AfterEffects: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#9999FF" opacity=".15"/>
+      <path d="M4 16l3.5-8h1.2L12 16h-1.5l-.8-2H7.3L6.5 16H4zm3.7-3.2h1.6l-.8-2.3-.8 2.3zm6.3-.3c0 2.1 1.1 3.7 3 3.7.85 0 1.5-.28 2-.8v.6H20.5V8H19v3.5c-.5-.55-1.15-.85-2-.85-1.9 0-3 1.6-3 3.8zm1.5 0c0-1.4.6-2.35 1.7-2.35 1.1 0 1.7.92 1.7 2.35 0 1.42-.6 2.35-1.7 2.35-1.1 0-1.7-.94-1.7-2.35z" fill="#9999FF"/>
+    </svg>
+  ),
+  DaVinci: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#E8A020" opacity=".15"/>
+      <circle cx="12" cy="12" r="5" stroke="#E8A020" strokeWidth="1.5" fill="none"/>
+      <circle cx="12" cy="12" r="2" fill="#E8A020"/>
+    </svg>
+  ),
+  CapCut: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#000" opacity=".1"/>
+      <path d="M8 7l8 5-8 5V7z" fill="#41431B"/>
+    </svg>
+  ),
+  Photoshop: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#31A8FF" opacity=".15"/>
+      <path d="M5 16V8h3.2c2.1 0 3.3 1.1 3.3 3 0 1.95-1.25 3.05-3.35 3.05H6.6V16H5zm1.6-4.25h1.5c1.1 0 1.7-.55 1.7-1.72 0-1.15-.6-1.72-1.7-1.72H6.6v3.44zM13.5 13.7c.05.8.62 1.3 1.6 1.3.78 0 1.28-.35 1.28-.9 0-.5-.32-.76-1.2-1l-.7-.2c-1.3-.38-1.9-1-1.9-2.05 0-1.2.96-2 2.5-2 1.6 0 2.5.85 2.55 2.2h-1.45c-.05-.72-.5-1.12-1.15-1.12-.65 0-1.05.32-1.05.82 0 .44.28.68 1.1.92l.7.2c1.38.4 2 1.02 2 2.1 0 1.3-1 2.12-2.72 2.12-1.7 0-2.72-.88-2.78-2.4H13.5z" fill="#31A8FF"/>
+    </svg>
+  ),
+  Illustrator: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#FF9A00" opacity=".15"/>
+      <path d="M6 16l3.2-8h1.6L14 16h-1.7l-.75-2.1H8.45L7.7 16H6zm2.9-3.4h2l-1-2.9-1 2.9zm6.2 3.4V8.5h1.5V16H15.1z" fill="#FF9A00"/>
+    </svg>
+  ),
+  Figma: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#F24E1E" opacity=".1"/>
+      <path d="M9 3h3v4.5H9A2.25 2.25 0 019 3z" fill="#F24E1E"/>
+      <path d="M9 7.5h3V12H9a2.25 2.25 0 010-4.5z" fill="#A259FF"/>
+      <path d="M9 12h3v4.5A2.25 2.25 0 019 12z" fill="#0ACF83"/>
+      <path d="M12 7.5h3a2.25 2.25 0 010 4.5h-3V7.5z" fill="#1ABCFE"/>
+      <circle cx="14.25" cy="12" r="2.25" fill="#0ACF83"/>
+    </svg>
+  ),
+  Canva: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="12" fill="#7D2AE8" opacity=".15"/>
+      <path d="M12 6c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 9.5c-1.93 0-3.5-1.57-3.5-3.5S10.07 8.5 12 8.5c.9 0 1.72.34 2.34.9l-1.08 1.08A1.97 1.97 0 0012 10a2 2 0 000 4c.76 0 1.42-.43 1.76-1.06l1.22.7A3.5 3.5 0 0112 15.5z" fill="#7D2AE8"/>
+    </svg>
+  ),
+  React: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#61DAFB" opacity=".12"/>
+      <circle cx="12" cy="12" r="2" fill="#61DAFB"/>
+      <ellipse cx="12" cy="12" rx="9" ry="3.5" stroke="#61DAFB" strokeWidth="1.2" fill="none"/>
+      <ellipse cx="12" cy="12" rx="9" ry="3.5" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(60 12 12)"/>
+      <ellipse cx="12" cy="12" rx="9" ry="3.5" stroke="#61DAFB" strokeWidth="1.2" fill="none" transform="rotate(120 12 12)"/>
+    </svg>
+  ),
+  TypeScript: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#3178C6" opacity=".15"/>
+      <path d="M5 13.5h4.5V15H7.3v4.5H5.8V15H5v-1.5zm5.5 0h4.5v1.3h-1.5V19.5h-1.5V14.8H10.5v-1.3z" fill="#3178C6"/>
+      <path d="M4 5h16v8H4V5z" fill="#3178C6" opacity=".15"/>
+      <path d="M6 8.5h2.5c.8 0 1.5.6 1.5 1.5s-.7 1.5-1.5 1.5H7.5V13H6V8.5zm1.5 2h.8c.3 0 .5-.2.5-.5s-.2-.5-.5-.5h-.8V10.5z" fill="#3178C6"/>
+    </svg>
+  ),
+  NextJS: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#000" opacity=".08"/>
+      <path d="M12 4a8 8 0 100 16A8 8 0 0012 4zm-1.5 4.5h1.5v4.2l3-4.2H16.5l-3.3 4.5L16.8 17H15l-3-4.5V17H10.5V8.5z" fill="#41431B"/>
+    </svg>
+  ),
+  Tailwind: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#38BDF8" opacity=".12"/>
+      <path d="M8 10c.5-2 2-3 3.5-2.5-1 1-1 2 .5 2.5 1.5.5 3-.5 3.5-2C16.5 10 16 12 14 12.5c-2 .5-3.5-.5-3.5-2C10 12 9 13.5 7 13.5c2 .5 3 2.5 2 4C7.5 15.5 7.5 12 8 10zm3 4c.5-2 2-3 3.5-2.5-1 1-1 2 .5 2.5 1.5.5 3-.5 3.5-2-.5 2-1 4-3 4.5-2 .5-3.5-.5-3.5-2C12 16 11 17.5 9 17.5c2 .5 3 2.5 2 4C9.5 19.5 10.5 16 11 14z" fill="#38BDF8"/>
+    </svg>
+  ),
+  ThreeJS: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#000" opacity=".08"/>
+      <path d="M12 4L4 18h16L12 4zm0 3.5l5.5 9.5h-11L12 7.5z" fill="#41431B" opacity=".7"/>
+      <path d="M12 10l2.75 4.75H9.25L12 10z" fill="#41431B"/>
+    </svg>
+  ),
+  MotionGraphics: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#9999FF" opacity=".12"/>
+      <path d="M5 12c0-3.87 3.13-7 7-7s7 3.13 7 7" stroke="#9999FF" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+      <path d="M5 12c0 3.87 3.13 7 7 7s7-3.13 7-7" stroke="#9999FF" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeDasharray="2 2"/>
+      <circle cx="12" cy="12" r="2" fill="#9999FF"/>
+    </svg>
+  ),
+  BrandIdentity: () => (
+    <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+      <rect width="24" height="24" rx="4" fill="#FF9A00" opacity=".12"/>
+      <circle cx="12" cy="10" r="3.5" stroke="#FF9A00" strokeWidth="1.5" fill="none"/>
+      <path d="M6 19c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#FF9A00" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+    </svg>
+  ),
+};
+
+const TOOL_CATEGORIES = [
+  {
+    id: "video",
+    label: "Video Editing",
+    icon: (
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
+        <rect width="22" height="22" rx="6" fill="rgba(174,183,132,.15)"/>
+        <path d="M4 7h9v8H4V7zm10 1.5l4-2v7l-4-2V8.5z" fill="#4A5C28"/>
+      </svg>
+    ),
+    tools: [
+      { name:"Adobe Premiere Pro", Icon: Icons.PremierePro },
+      { name:"After Effects",      Icon: Icons.AfterEffects },
+      { name:"DaVinci Resolve",    Icon: Icons.DaVinci },
+      { name:"CapCut",             Icon: Icons.CapCut },
+      { name:"Motion Graphics",    Icon: Icons.MotionGraphics },
+    ],
+  },
+  {
+    id: "design",
+    label: "Graphic Design",
+    icon: (
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
+        <rect width="22" height="22" rx="6" fill="rgba(174,183,132,.15)"/>
+        <circle cx="11" cy="11" r="5" stroke="#4A5C28" strokeWidth="1.5" fill="none"/>
+        <circle cx="11" cy="11" r="2" fill="#4A5C28"/>
+        <path d="M11 4v2M11 16v2M4 11h2M16 11h2" stroke="#4A5C28" strokeWidth="1.3" strokeLinecap="round"/>
+      </svg>
+    ),
+    tools: [
+      { name:"Adobe Photoshop",  Icon: Icons.Photoshop },
+      { name:"Adobe Illustrator",Icon: Icons.Illustrator },
+      { name:"Figma",            Icon: Icons.Figma },
+      { name:"Canva",            Icon: Icons.Canva },
+      { name:"Brand Identity",   Icon: Icons.BrandIdentity },
+    ],
+  },
+  {
+    id: "dev",
+    label: "Development",
+    icon: (
+      <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
+        <rect width="22" height="22" rx="6" fill="rgba(174,183,132,.15)"/>
+        <path d="M7 8l-4 3 4 3M15 8l4 3-4 3M13 6l-4 10" stroke="#4A5C28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    ),
+    tools: [
+      { name:"React / Next.js",  Icon: Icons.React },
+      { name:"TypeScript",       Icon: Icons.TypeScript },
+      { name:"Next.js",          Icon: Icons.NextJS },
+      { name:"Tailwind CSS",     Icon: Icons.Tailwind },
+      { name:"Three.js / WebGL", Icon: Icons.ThreeJS },
+    ],
+  },
+];
+
+/* ── Marquee chip ── */
+const ToolChip = ({name, Icon}) => (
+  <div style={{
+    display:"flex", alignItems:"center", gap:10,
+    padding:"10px 20px", borderRadius:100,
+    background:"rgba(248,243,225,0.72)",
+    border:"1px solid rgba(210,205,175,0.5)",
+    backdropFilter:"blur(12px)",
+    boxShadow:"0 2px 12px rgba(65,67,27,.06)",
+    flexShrink:0,
+    transition:"box-shadow .25s",
+  }}
+  onMouseEnter={e=>e.currentTarget.style.boxShadow="0 6px 22px rgba(65,67,27,.13)"}
+  onMouseLeave={e=>e.currentTarget.style.boxShadow="0 2px 12px rgba(65,67,27,.06)"}>
+    <Icon/>
+    <span style={{fontSize:13.5, color:"#41431B", fontWeight:450, whiteSpace:"nowrap",
+      letterSpacing:"0.01em"}}>{name}</span>
+  </div>
+);
+
+/* ── Dot separator between chips ── */
+const Dot = () => (
+  <div style={{width:5,height:5,borderRadius:"50%",
+    background:"rgba(174,183,132,.45)",flexShrink:0}}/>
+);
+
+/* ── One infinite scrolling ticker row ── */
+const MarqueeRow = ({tools, speed=28, reverse=false}) => {
+  // Quadruple the items so there's no gap at any screen width
+  const items = [...tools,...tools,...tools,...tools];
+  const duration = speed;
+
+  return (
+    <div style={{overflow:"hidden", width:"100%", position:"relative"}}>
+      {/* Left fade */}
+      <div style={{position:"absolute",left:0,top:0,bottom:0,width:120,zIndex:2,
+        background:"linear-gradient(to right,rgba(248,243,225,.95),transparent)",
+        pointerEvents:"none"}}/>
+      {/* Right fade */}
+      <div style={{position:"absolute",right:0,top:0,bottom:0,width:120,zIndex:2,
+        background:"linear-gradient(to left,rgba(248,243,225,.95),transparent)",
+        pointerEvents:"none"}}/>
+
+      <motion.div
+        style={{display:"flex", alignItems:"center", gap:12, width:"max-content"}}
+        animate={{x: reverse ? ["0%","-50%"] : ["-50%","0%"]}}
+        transition={{duration, repeat:Infinity, ease:"linear"}}
+        // Pause on hover
+        whileHover={{animationPlayState:"paused"}}
+      >
+        {items.map((tool,i)=>(
+          <div key={i} style={{display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+            <ToolChip name={tool.name} Icon={tool.Icon}/>
+            <Dot/>
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+const Tools = () => (
+  <section id="tools" style={{position:"relative", zIndex:1, padding:"72px 0 88px"}}>
+
+    {/* Chapter divider */}
+    <div style={{
+      position:"absolute", bottom:0, left:"6vw", right:"6vw",
+      height:1,
+      background:"linear-gradient(to right, transparent, rgba(65,67,27,0.10) 20%, rgba(65,67,27,0.10) 80%, transparent)",
+      pointerEvents:"none",
+    }}/>
+    {/* Accent blobs */}
+    <div style={{position:"absolute",top:"5%",left:"-5%",width:"38vw",height:"38vw",
+      background:"radial-gradient(ellipse,rgba(174,183,132,.2) 0%,transparent 70%)",
+      filter:"blur(70px)",pointerEvents:"none"}}/>
+    <div style={{position:"absolute",bottom:"10%",right:"-5%",width:"30vw",height:"30vw",
+      background:"radial-gradient(ellipse,rgba(210,195,160,.18) 0%,transparent 70%)",
+      filter:"blur(60px)",pointerEvents:"none"}}/>
+
+    {/* Heading — constrained */}
+    <div style={{maxWidth:1100, margin:"0 auto", padding:"0 6vw", position:"relative"}}>
+
+      {/* Ghost texture — "TOOLS" bleeds left */}
+      <div style={{
+        position:"absolute", left:"-0.05em", top:"50%",
+        transform:"translateY(-50%)",
+        fontFamily:"'Cormorant Garamond',serif",
+        fontSize:"clamp(110px,16vw,220px)",
+        fontWeight:700, fontStyle:"italic",
+        color:"rgba(65,67,27,0.04)",
+        letterSpacing:"-0.04em", lineHeight:1,
+        userSelect:"none", pointerEvents:"none",
+        whiteSpace:"nowrap", zIndex:0,
+      }}>Tools</div>
+
+      <Reveal variant="zoom" style={{textAlign:"center", marginBottom:72, position:"relative", zIndex:1}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"center",
+          gap:16,marginBottom:14}}>
+          <div style={{height:1,width:48,background:"rgba(174,183,132,.4)"}}/>
+          <span style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.22em",
+            color:"#AEB784",fontWeight:500}}>Expertise</span>
+          <div style={{height:1,width:48,background:"rgba(174,183,132,.4)"}}/>
+        </div>
+        <h2 className="serif" style={{
+          fontSize:"clamp(38px,5vw,68px)", fontWeight:300,
+          color:"#41431B", lineHeight:0.95, letterSpacing:"-0.04em",
+        }}>
+          Tools &amp; Capabilities
+        </h2>
+      </Reveal>
+    </div>
+
+    {/* Marquee rows — full bleed (no side padding) */}
+    <div style={{display:"flex", flexDirection:"column", gap:0}}>
+      {TOOL_CATEGORIES.map((cat, ci) => (
+        <Reveal key={cat.id} delay={ci * 0.12} variant={ci % 2 === 0 ? "slideLeft" : "slideRight"}>
+          <div style={{
+            borderTop: ci===0 ? "1px solid rgba(210,205,175,.3)" : "none",
+            borderBottom:"1px solid rgba(210,205,175,.3)",
+            padding:"28px 0",
+            display:"flex", alignItems:"center",
+            gap:0, overflow:"hidden",
+          }}>
+            {/* Left label — fixed width, doesn't scroll */}
+            <div style={{
+              flexShrink:0,
+              width:"clamp(160px,16vw,220px)",
+              padding:"0 clamp(20px,4vw,48px)",
+              display:"flex", alignItems:"center", gap:12,
+              borderRight:"1px solid rgba(210,205,175,.3)",
+              marginRight:32,
+            }}>
+              <div style={{width:34,height:34,borderRadius:10,flexShrink:0,
+                background:"rgba(174,183,132,.1)",
+                border:"1px solid rgba(174,183,132,.18)",
+                display:"flex",alignItems:"center",justifyContent:"center"}}>
+                {cat.icon}
+              </div>
+              <h3 className="serif" style={{fontSize:"clamp(14px,1.4vw,18px)", fontWeight:600,
+                color:"#41431B", letterSpacing:"-0.01em", lineHeight:1.2}}>
+                {cat.label}
+              </h3>
+            </div>
+
+            {/* Scrolling ticker — fills remaining width */}
+            <div style={{flex:1, overflow:"hidden"}}>
+              <MarqueeRow tools={cat.tools} speed={18 + ci*6} reverse={ci===1}/>
+            </div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  </section>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LIBRARY / INDEX
+───────────────────────────────────────────────────────────────────────────── */
+const LIBRARY_ITEMS = [
+  {id:"thumbnails",    icon:"🖼️",  label:"Thumbnails",    sub:"YouTube & social covers",   color:"rgba(168,197,140,.28)"},
+  {id:"video-edits",   icon:"🎬",  label:"Video Edits",    sub:"Reels, shorts & long-form", color:"rgba(210,180,140,.28)"},
+  {id:"graphic-design",icon:"✏️",  label:"Graphic Design", sub:"Posters, branding & print", color:"rgba(180,168,210,.28)"},
+  {id:"code-projects", icon:"</>", label:"Code Projects",  sub:"Web apps & experiments",    color:"rgba(140,200,190,.28)"},
+];
+
+const Library = () => {
+  const go=id=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"});
+  return (
+    <section id="library" style={{position:"relative",zIndex:1,padding:"96px 6vw 112px",overflow:"hidden"}}>
+
+      {/* Ghost texture — "WORK" bleeds off left */}
+      <div style={{
+        position:"absolute", left:"-0.04em", top:"50%",
+        transform:"translateY(-50%)",
+        fontFamily:"'Cormorant Garamond',serif",
+        fontSize:"clamp(130px,19vw,260px)",
+        fontWeight:700, fontStyle:"italic",
+        color:"rgba(65,67,27,0.04)",
+        letterSpacing:"-0.04em", lineHeight:1,
+        userSelect:"none", pointerEvents:"none",
+        whiteSpace:"nowrap", zIndex:0,
+      }}>Work</div>
+
+      <div style={{maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
+        <Reveal variant="fade" style={{textAlign:"center",marginBottom:64}}>
+          <SLabel>Index</SLabel>
+          <h2 className="serif" style={{
+            fontSize:"clamp(38px,5vw,68px)", fontWeight:700,
+            color:"#41431B", letterSpacing:"-0.03em", lineHeight:0.95,
+          }}>
+            Work <span style={{fontStyle:"italic",fontWeight:200,letterSpacing:"-0.02em",color:"rgba(65,67,27,0.5)"}}>Library</span>
+          </h2>
+          <p style={{fontSize:15,color:"#6B6B4A",marginTop:18,maxWidth:400,
+            margin:"16px auto 0",lineHeight:1.8,fontWeight:300}}>
+            Browse by category — click any card to jump straight to that section.
+          </p>
+        </Reveal>
+
+        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:20}}>
+          {LIBRARY_ITEMS.map((item,i)=>(
+            <Reveal key={item.id} delay={i*0.1} variant="zoom">
+              <motion.div onClick={()=>go(item.id)}
+                whileHover={{
+                  y:-10,
+                  boxShadow:"0 28px 64px rgba(65,67,27,.15)",
+                  borderBottomColor:"rgba(65,67,27,0.35)",
+                }}
+                whileTap={{scale:.97}}
+                transition={{type:"spring",stiffness:300,damping:22}}
+                style={{cursor:"pointer",borderRadius:20,padding:"36px 24px 32px",
+                  background:item.color,
+                  backdropFilter:"blur(16px)",
+                  border:"1px solid rgba(255,255,255,.62)",
+                  borderBottom:"2px solid rgba(65,67,27,0.08)",  // olive accent at rest
+                  boxShadow:"0 8px 32px rgba(65,67,27,.08)",
+                  display:"flex",flexDirection:"column",gap:18,minHeight:240,
+                  transition:"border-bottom-color .25s",
+                }}>
+                <div style={{fontSize:40,lineHeight:1}}>{item.icon}</div>
+                <div>
+                  <div className="serif" style={{fontSize:24,fontWeight:600,color:"#41431B",
+                    lineHeight:1.1,marginBottom:6}}>{item.label}</div>
+                  <div style={{fontSize:13,color:"#6B6B4A",fontWeight:300}}>{item.sub}</div>
+                </div>
+                <div style={{marginTop:"auto",display:"flex",alignItems:"center",gap:6,
+                  fontSize:12,color:"#41431B",letterSpacing:"0.06em",fontWeight:600,
+                  opacity:0.55,
+                }}>
+                  Jump to section <motion.span animate={{x:[0,4,0]}}
+                    transition={{duration:1.4,repeat:Infinity,ease:"easeInOut"}}>↓</motion.span>
+                </div>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   WORK SECTION SHELL
+───────────────────────────────────────────────────────────────────────────── */
+const WorkSection = ({id, label, title, italic, desc, accent, children, headingVariant="slideLeft", sectionNum="", padding="120px 6vw", titleWeight=600, italicWeight=300}) => (
+  <section id={id} style={{position:"relative",zIndex:1,padding,overflow:"hidden"}}>
+    <div style={{position:"absolute",top:"-10%",right:"-5%",width:"40vw",height:"40vw",
+      background:`radial-gradient(ellipse,${accent} 0%,transparent 70%)`,
+      filter:"blur(70px)",pointerEvents:"none",zIndex:0}}/>
+
+    {sectionNum && (
+      <div style={{
+        position:"absolute", left:"-0.02em", top:"50%",
+        transform:"translateY(-50%)",
+        fontFamily:"'Cormorant Garamond',serif",
+        fontSize:"clamp(160px,22vw,300px)",
+        fontWeight:700,
+        color:"rgba(65,67,27,0.035)",
+        letterSpacing:"-0.06em", lineHeight:1,
+        userSelect:"none", pointerEvents:"none",
+        zIndex:0,
+      }}>
+        <CountUp to={parseInt(sectionNum)} duration={900}/>
+      </div>
+    )}
+
+    <div style={{maxWidth:1100,margin:"0 auto",position:"relative",zIndex:1}}>
+      <Reveal variant={headingVariant} style={{marginBottom:56}}>
+        <SLabel>{label}</SLabel>
+        <h2 className="serif" style={{
+          fontSize:"clamp(36px,4.2vw,68px)", fontWeight:titleWeight,
+          color:"#41431B", lineHeight:1.0, letterSpacing:"-0.03em", marginBottom:12,
+        }}>
+          {title} <span style={{fontStyle:"italic", fontWeight:italicWeight, letterSpacing:"-0.01em"}}>{italic}</span>
+        </h2>
+        <p style={{fontSize:14,color:"#6B6B4A",maxWidth:440,lineHeight:1.8,fontWeight:400,letterSpacing:"0.005em"}}>{desc}</p>
+      </Reveal>
+      {children}
+    </div>
+  </section>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   MODAL BACKDROP — shared by all three modal types
+───────────────────────────────────────────────────────────────────────────── */
+const ModalBackdrop = ({onClose, children, wide=false}) => {
+  useEffect(()=>{
+    const esc = e => e.key==="Escape" && onClose();
+    document.addEventListener("keydown", esc);
+    document.body.style.overflow = "hidden";
+    return ()=>{
+      document.removeEventListener("keydown", esc);
+      document.body.style.overflow = "";
+    };
+  },[]);
+  return (
+    <motion.div
+      initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
+      transition={{duration:.25}}
+      onClick={onClose}
+      style={{
+        position:"fixed", inset:0, zIndex:8000,
+        background:"rgba(15,18,8,0.92)",
+        backdropFilter:"blur(16px)",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        padding:"20px",
+        overflowY:"auto",
+      }}>
+      <div
+        onClick={e=>e.stopPropagation()}
+        style={{width:"100%", maxWidth: wide ? 1100 : 820, margin:"auto"}}>
+        {children}
+      </div>
+    </motion.div>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   THUMBNAIL LIGHTBOX
+   Opens when a thumbnail card is clicked.
+   Shows the image zoomed, with scrollable context panel below.
+   ── DATA SHAPE ──────────────────────────────────────────────────────────────
+   Add these fields to each item in THUMBNAIL_ITEMS:
+   {
+     img:       "https://...",           // the thumbnail image
+     title:     "Video Title",           // name of the video
+     platform:  "YouTube",              // platform it was made for
+     views:     "340K views",           // optional
+     channel:   "Channel Name",         // optional
+     videoUrl:  "https://youtu.be/...", // link to the actual video
+     context:   "Brief note on the creative direction, colour choices, or brief",
+     tags:      ["Gaming","Tutorial"],   // optional style/topic tags
+   }
+───────────────────────────────────────────────────────────────────────────── */
+const ThumbnailLightbox = ({item, onClose}) => (
+  <ModalBackdrop onClose={onClose} wide>
+    <motion.div
+      initial={{scale:.94, opacity:0, y:24}}
+      animate={{scale:1, opacity:1, y:0}}
+      exit={{scale:.94, opacity:0, y:24}}
+      transition={{type:"spring", stiffness:300, damping:28}}
+      style={{
+        background:"#F8F3E1",
+        borderRadius:28, overflow:"hidden",
+        boxShadow:"0 56px 140px rgba(0,0,0,0.6)",
+      }}>
+
+      {/* ── Full-width image — no aspect ratio cap, shows the thumbnail in full glory ── */}
+      <div style={{
+        position:"relative",
+        background:"linear-gradient(135deg,#2a3018,#1a2010)",
+        lineHeight:0,
+      }}>
+        {item.img
+          ? <img src={item.img} alt={item.title}
+              style={{width:"100%", display:"block", maxHeight:"60vh", objectFit:"contain"}}/>
+          : <div style={{height:320, display:"flex", alignItems:"center",
+              justifyContent:"center", fontSize:64, opacity:.2}}>🖼️</div>
+        }
+        {/* Gradient overlay at bottom for text legibility */}
+        <div style={{
+          position:"absolute", bottom:0, left:0, right:0, height:80,
+          background:"linear-gradient(to top, rgba(15,18,8,0.7), transparent)",
+          pointerEvents:"none",
+        }}/>
+        {/* Platform + channel badge bottom-left */}
+        <div style={{
+          position:"absolute", bottom:16, left:20,
+          display:"flex", alignItems:"center", gap:8,
+        }}>
+          <span style={{
+            fontSize:11, letterSpacing:"0.12em", textTransform:"uppercase",
+            color:"rgba(248,243,225,0.85)", fontWeight:500,
+            background:"rgba(0,0,0,0.45)", backdropFilter:"blur(8px)",
+            padding:"4px 12px", borderRadius:100,
+          }}>
+            {item.platform||"Platform"}{item.channel ? ` · ${item.channel}` : ""}
+          </span>
+          {item.views && <span style={{
+            fontSize:11, color:"rgba(248,243,225,0.6)",
+            background:"rgba(0,0,0,0.35)", backdropFilter:"blur(8px)",
+            padding:"4px 12px", borderRadius:100, letterSpacing:"0.06em",
+          }}>{item.views}</span>}
+        </div>
+        {/* Close */}
+        <motion.button whileHover={{scale:1.1}} whileTap={{scale:.95}} onClick={onClose}
+          style={{
+            position:"absolute", top:14, right:14,
+            width:34, height:34, borderRadius:"50%",
+            background:"rgba(0,0,0,0.55)", border:"1px solid rgba(255,255,255,0.15)",
+            cursor:"pointer", color:"#F8F3E1", fontSize:14,
+            backdropFilter:"blur(8px)",
+            display:"flex", alignItems:"center", justifyContent:"center",
+          }}>✕</motion.button>
+      </div>
+
+      {/* ── Two-column details panel ── */}
+      <div style={{
+        display:"grid", gridTemplateColumns:"1fr 1fr",
+        gap:0,
+      }}>
+        {/* Left — title + context */}
+        <div style={{
+          padding:"28px 32px 32px",
+          borderRight:"1px solid rgba(174,183,132,0.15)",
+          overflowY:"auto", maxHeight:280,
+        }}>
+          <h3 className="serif" style={{
+            fontSize:28, fontWeight:600, color:"#41431B",
+            lineHeight:1.1, marginBottom:14, letterSpacing:"-0.02em",
+          }}>
+            {item.title||"Untitled"}
+          </h3>
+          {item.context
+            ? <p style={{fontSize:14,color:"#6B6B4A",lineHeight:1.85}}>{item.context}</p>
+            : <p style={{fontSize:13,color:"rgba(174,183,132,0.55)",fontStyle:"italic",lineHeight:1.7}}>
+                Add a <code style={{background:"rgba(174,183,132,0.12)",padding:"1px 6px",
+                  borderRadius:4,fontSize:12}}>context</code> field to describe the creative brief.
+              </p>
+          }
+        </div>
+
+        {/* Right — meta + tags + CTA */}
+        <div style={{padding:"28px 32px 32px", display:"flex", flexDirection:"column", gap:20}}>
+          {/* Meta rows */}
+          <div style={{display:"flex", flexDirection:"column", gap:10}}>
+            {[
+              {label:"For video", value: item.title},
+              {label:"Platform",  value: item.platform},
+              {label:"Channel",   value: item.channel},
+              {label:"Views",     value: item.views},
+            ].filter(r=>r.value).map(({label,value})=>(
+              <div key={label} style={{display:"flex", gap:12, alignItems:"baseline"}}>
+                <span style={{fontSize:10,letterSpacing:"0.14em",textTransform:"uppercase",
+                  color:"#AEB784",fontWeight:500,minWidth:70,flexShrink:0}}>{label}</span>
+                <span style={{fontSize:13,color:"#41431B",fontWeight:400}}>{value}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Tags */}
+          {item.tags&&item.tags.length>0&&(
+            <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+              {item.tags.map(t=>(
+                <span key={t} style={{
+                  fontSize:11,padding:"4px 14px",borderRadius:100,
+                  background:"rgba(174,183,132,0.15)",
+                  border:"1px solid rgba(174,183,132,0.3)",
+                  color:"#4A5C28",letterSpacing:"0.06em",fontWeight:500,
+                }}>{t}</span>
+              ))}
+            </div>
+          )}
+
+          {/* CTA */}
+          {item.videoUrl&&(
+            <motion.a href={item.videoUrl} target="_blank" rel="noreferrer"
+              whileHover={{scale:1.03}} whileTap={{scale:.97}}
+              style={{
+                display:"inline-flex", alignItems:"center", gap:10,
+                padding:"12px 24px", borderRadius:100,
+                background:"rgba(65,67,27,0.88)", color:"#F8F3E1",
+                textDecoration:"none", fontSize:12, fontWeight:500,
+                letterSpacing:"0.08em", alignSelf:"flex-start", marginTop:"auto",
+              }}>
+              ▶ Watch the video
+            </motion.a>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  </ModalBackdrop>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   VIDEO PLAYER MODAL
+   Opens when a video card is clicked.
+   Embeds the video (YouTube/Vimeo) and shows description below.
+   ── DATA SHAPE ──────────────────────────────────────────────────────────────
+   Add these fields to each item in VIDEO_ITEMS:
+   {
+     thumb:     "https://...",           // cover image
+     title:     "Brand Film — Aura",
+     category:  "Commercial",
+     duration:  "2:15",
+     url:       "https://youtu.be/VIDEO_ID",    // YouTube or Vimeo link
+     embedUrl:  "https://www.youtube.com/embed/VIDEO_ID",  // embed URL
+     // OR for Vimeo:
+     // embedUrl: "https://player.vimeo.com/video/VIDEO_ID",
+     desc:      "What the video was about, the brief, creative approach...",
+     client:    "Client or creator name",       // optional
+     tags:      ["Brand","Cinematic"],           // optional
+   }
+───────────────────────────────────────────────────────────────────────────── */
+const VideoPlayerModal = ({item, onClose}) => (
+  <ModalBackdrop onClose={onClose}>
+    <motion.div
+      initial={{scale:.94, opacity:0, y:24}}
+      animate={{scale:1, opacity:1, y:0}}
+      exit={{scale:.94, opacity:0, y:24}}
+      transition={{type:"spring", stiffness:300, damping:28}}
+      style={{
+        background:"rgba(20,24,12,0.95)",
+        borderRadius:20, overflow:"hidden",
+        boxShadow:"0 48px 120px rgba(0,0,0,0.7)",
+        maxHeight:"90vh", display:"flex", flexDirection:"column",
+      }}>
+
+      {/* Video embed / fallback */}
+      <div style={{position:"relative", aspectRatio:"16/9", background:"#0a0c06", flexShrink:0}}>
+        {item.embedUrl ? (
+          <iframe
+            src={`${item.embedUrl}?autoplay=1`}
+            title={item.title}
+            style={{width:"100%",height:"100%",border:"none"}}
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen/>
+        ) : (
+          <div style={{
+            width:"100%",height:"100%",display:"flex",flexDirection:"column",
+            alignItems:"center",justifyContent:"center",gap:16,
+          }}>
+            {item.thumb&&<img src={item.thumb} alt={item.title}
+              style={{position:"absolute",inset:0,width:"100%",height:"100%",
+                objectFit:"cover",opacity:.35}}/>}
+            <div style={{position:"relative",zIndex:1,textAlign:"center",padding:24}}>
+              <div style={{fontSize:11,color:"rgba(174,183,132,0.7)",letterSpacing:"0.14em",
+                textTransform:"uppercase",marginBottom:12}}>No embed URL set</div>
+              {item.url&&(
+                <a href={item.url} target="_blank" rel="noreferrer"
+                  style={{
+                    display:"inline-flex",alignItems:"center",gap:8,
+                    padding:"12px 24px",borderRadius:100,
+                    background:"rgba(248,243,225,0.12)",
+                    border:"1px solid rgba(248,243,225,0.2)",
+                    color:"#F8F3E1",textDecoration:"none",fontSize:13,
+                  }}>▶ Open video externally ↗</a>
+              )}
+              {!item.url&&<p style={{color:"rgba(174,183,132,0.5)",fontSize:13,fontStyle:"italic"}}>
+                Add an <code>embedUrl</code> or <code>url</code> field to this item.
+              </p>}
+            </div>
+          </div>
+        )}
+
+        {/* Close */}
+        <motion.button whileHover={{scale:1.1}} whileTap={{scale:.95}}
+          onClick={onClose}
+          style={{
+            position:"absolute",top:12,right:12,zIndex:10,
+            width:32,height:32,borderRadius:"50%",
+            background:"rgba(0,0,0,0.6)",border:"none",cursor:"pointer",
+            color:"#F8F3E1",fontSize:15,backdropFilter:"blur(8px)",
+            display:"flex",alignItems:"center",justifyContent:"center",
+          }}>✕</motion.button>
+      </div>
+
+      {/* Info strip */}
+      <div style={{padding:"20px 24px 24px",color:"#F8F3E1"}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:10}}>
+          <div>
+            <div style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.12em",
+              color:"rgba(174,183,132,0.65)",marginBottom:5}}>
+              {item.category||"Video"}{item.client?` · ${item.client}`:""}{item.duration?` · ${item.duration}`:""}
+            </div>
+            <h3 className="serif" style={{fontSize:22,fontWeight:600,color:"#F8F3E1",lineHeight:1.1}}>
+              {item.title||"Untitled"}
+            </h3>
+          </div>
+          {item.url&&(
+            <a href={item.url} target="_blank" rel="noreferrer"
+              style={{
+                fontSize:11,padding:"6px 14px",borderRadius:100,flexShrink:0,
+                background:"rgba(174,183,132,0.12)",
+                border:"1px solid rgba(174,183,132,0.25)",
+                color:"rgba(174,183,132,0.8)",textDecoration:"none",
+                letterSpacing:"0.06em",marginLeft:12,
+              }}>Open ↗</a>
+          )}
+        </div>
+        {item.desc&&(
+          <p style={{fontSize:13,color:"rgba(248,243,225,0.55)",lineHeight:1.75,marginBottom:12}}>
+            {item.desc}
+          </p>
+        )}
+        {!item.desc&&(
+          <p style={{fontSize:12,color:"rgba(174,183,132,0.4)",fontStyle:"italic"}}>
+            Add a <code>desc</code> field to show description here.
+          </p>
+        )}
+        {item.tags&&item.tags.length>0&&(
+          <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+            {item.tags.map(t=>(
+              <span key={t} style={{
+                fontSize:10,padding:"3px 12px",borderRadius:100,
+                background:"rgba(174,183,132,0.1)",
+                border:"1px solid rgba(174,183,132,0.2)",
+                color:"rgba(174,183,132,0.7)",letterSpacing:"0.06em",
+              }}>{t}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </motion.div>
+  </ModalBackdrop>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CODE PROJECT CASE STUDY PANEL
+   Slides in from the right. Full case study — problem, solution, tech, outcomes.
+   ── DATA SHAPE ──────────────────────────────────────────────────────────────
+   Add these fields to each item in CODE_ITEMS:
+   {
+     title:     "Project Name",
+     desc:      "One-liner for the card",
+     year:      "2024",
+     stack:     ["React","TypeScript","Tailwind"],
+     url:       "https://live-site.com",
+     repo:      "https://github.com/...",
+
+     // CASE STUDY FIELDS — fill these in for the modal:
+     cover:     "https://...",       // hero screenshot or mockup
+     images:    ["https://...", "https://..."],  // additional screenshots
+     problem:   "What problem this solved and why it existed.",
+     role:      "What you specifically built / your responsibilities.",
+     process:   "How you approached it — decisions, trade-offs, interesting challenges.",
+     outcome:   "Result — users, metrics, what you learned, what you'd do differently.",
+     duration:  "3 weeks",           // how long it took
+     type:      "Personal project",  // Personal / Client / Open-source
+   }
+───────────────────────────────────────────────────────────────────────────── */
+const CodeCaseStudy = ({item, onClose}) => (
+  <ModalBackdrop onClose={onClose} wide>
+    <motion.div
+      initial={{y:32, opacity:0}}
+      animate={{y:0, opacity:1}}
+      exit={{y:32, opacity:0}}
+      transition={{type:"spring", stiffness:280, damping:30}}
+      style={{
+        background:"#F8F3E1",
+        borderRadius:28,
+        overflow:"hidden",
+        boxShadow:"0 56px 140px rgba(0,0,0,0.6)",
+        maxHeight:"90vh",
+        overflowY:"auto",
+      }}>
+
+      {/* ── Cover image — full width, tall, dominant ── */}
+      <div style={{
+        position:"relative",
+        background:"linear-gradient(135deg,#1a2410,#2a3a18)",
+        minHeight:280,
+      }}>
+        {item.cover
+          ? <img src={item.cover} alt={item.title}
+              style={{width:"100%", display:"block", maxHeight:"45vh", objectFit:"cover"}}/>
+          : <div style={{
+              height:280, display:"flex", alignItems:"center", justifyContent:"center",
+              flexDirection:"column", gap:16,
+            }}>
+              <div style={{
+                width:72, height:72, borderRadius:20,
+                background:"rgba(174,183,132,0.12)",
+                border:"1px solid rgba(174,183,132,0.2)",
+                display:"flex", alignItems:"center", justifyContent:"center",
+                fontFamily:"monospace", fontSize:26, color:"rgba(174,183,132,0.6)", fontWeight:700,
+              }}>{"</>"}</div>
+              <span style={{fontSize:11, color:"rgba(174,183,132,0.4)", letterSpacing:"0.12em",
+                textTransform:"uppercase"}}>Add a cover image</span>
+            </div>
+        }
+        {/* Bottom gradient */}
+        <div style={{
+          position:"absolute", bottom:0, left:0, right:0, height:100,
+          background:"linear-gradient(to top, #F8F3E1, transparent)",
+          pointerEvents:"none",
+        }}/>
+        {/* Type + year badge */}
+        <div style={{position:"absolute", top:16, left:20, display:"flex", gap:8}}>
+          {item.type&&<span style={{
+            fontSize:10, letterSpacing:"0.14em", textTransform:"uppercase",
+            color:"rgba(248,243,225,0.85)", fontWeight:500,
+            background:"rgba(0,0,0,0.45)", backdropFilter:"blur(8px)",
+            padding:"4px 12px", borderRadius:100,
+          }}>{item.type}</span>}
+          {item.year&&<span style={{
+            fontSize:10, color:"rgba(248,243,225,0.6)",
+            background:"rgba(0,0,0,0.35)", backdropFilter:"blur(8px)",
+            padding:"4px 12px", borderRadius:100, letterSpacing:"0.06em",
+          }}>{item.year}{item.duration ? ` · ${item.duration}` : ""}</span>}
+        </div>
+        {/* Close */}
+        <motion.button whileHover={{scale:1.1}} whileTap={{scale:.95}} onClick={onClose}
+          style={{
+            position:"absolute", top:14, right:14,
+            width:34, height:34, borderRadius:"50%",
+            background:"rgba(0,0,0,0.5)", border:"1px solid rgba(255,255,255,0.15)",
+            cursor:"pointer", color:"#F8F3E1", fontSize:14,
+            backdropFilter:"blur(8px)",
+            display:"flex", alignItems:"center", justifyContent:"center",
+          }}>✕</motion.button>
+      </div>
+
+      {/* ── Header row — title + links + stack ── */}
+      <div style={{
+        padding:"0 40px 28px",
+        borderBottom:"1px solid rgba(174,183,132,0.15)",
+      }}>
+        <div style={{display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:20}}>
+          <div style={{flex:1}}>
+            <h2 className="serif" style={{
+              fontSize:34, fontWeight:700, color:"#41431B",
+              letterSpacing:"-0.025em", lineHeight:1, marginBottom:8,
+            }}>{item.title}</h2>
+            <p style={{fontSize:14, color:"#6B6B4A", lineHeight:1.7}}>{item.desc}</p>
+          </div>
+          <div style={{display:"flex", gap:8, flexShrink:0, marginLeft:28, paddingTop:4}}>
+            {item.url&&(
+              <motion.a href={item.url} target="_blank" rel="noreferrer"
+                whileHover={{scale:1.04}} whileTap={{scale:.96}}
+                style={{
+                  fontSize:12, padding:"9px 20px", borderRadius:100,
+                  background:"rgba(65,67,27,0.88)", color:"#F8F3E1",
+                  textDecoration:"none", letterSpacing:"0.07em", fontWeight:500,
+                  display:"flex", alignItems:"center", gap:6,
+                }}>Live ↗</motion.a>
+            )}
+            {item.repo&&(
+              <motion.a href={item.repo} target="_blank" rel="noreferrer"
+                whileHover={{scale:1.04}} whileTap={{scale:.96}}
+                style={{
+                  fontSize:12, padding:"9px 20px", borderRadius:100,
+                  background:"rgba(174,183,132,0.15)", color:"#41431B",
+                  textDecoration:"none", letterSpacing:"0.07em", fontWeight:500,
+                  border:"1px solid rgba(174,183,132,0.35)",
+                }}>GitHub</motion.a>
+            )}
+          </div>
+        </div>
+
+        {/* Stack chips */}
+        <div style={{display:"flex", gap:8, flexWrap:"wrap"}}>
+          {(item.stack||[]).map(s=>(
+            <span key={s} style={{
+              fontSize:12, padding:"5px 14px", borderRadius:100, fontWeight:500,
+              letterSpacing:"0.04em",
+              background:`${STACK_COLORS[s]||"#AEB784"}18`,
+              color:STACK_COLORS[s]||"#4A5C28",
+              border:`1px solid ${STACK_COLORS[s]||"#AEB784"}35`,
+            }}>{s}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Case study body — two columns ── */}
+      <div style={{
+        display:"grid", gridTemplateColumns:"1fr 1fr",
+        gap:0,
+      }}>
+        {/* Left col — problem + role */}
+        <div style={{
+          padding:"32px 36px 36px",
+          borderRight:"1px solid rgba(174,183,132,0.12)",
+        }}>
+          {[
+            {key:"problem", label:"The Problem", icon:"◎"},
+            {key:"role",    label:"My Role",     icon:"◈"},
+          ].map(({key,label,icon})=>(
+            <div key={key} style={{marginBottom:28}}>
+              <div style={{display:"flex", alignItems:"center", gap:8, marginBottom:10}}>
+                <span style={{fontSize:11, color:"rgba(65,67,27,0.35)"}}>{icon}</span>
+                <span style={{fontSize:10, color:"#AEB784", letterSpacing:"0.18em",
+                  textTransform:"uppercase", fontWeight:500}}>{label}</span>
+              </div>
+              {item[key]
+                ? <p style={{fontSize:14, color:"#41431B", lineHeight:1.85, paddingLeft:20}}>{item[key]}</p>
+                : <p style={{fontSize:12, color:"rgba(174,183,132,0.5)", fontStyle:"italic", paddingLeft:20}}>
+                    Add a <code style={{background:"rgba(174,183,132,0.12)",padding:"1px 5px",
+                      borderRadius:4,fontSize:11}}>{key}</code> field to CODE_ITEMS.
+                  </p>
+              }
+            </div>
+          ))}
+        </div>
+
+        {/* Right col — process + outcome */}
+        <div style={{padding:"32px 36px 36px"}}>
+          {[
+            {key:"process", label:"The Process", icon:"◇"},
+            {key:"outcome", label:"Outcome",     icon:"◆"},
+          ].map(({key,label,icon})=>(
+            <div key={key} style={{marginBottom:28}}>
+              <div style={{display:"flex", alignItems:"center", gap:8, marginBottom:10}}>
+                <span style={{fontSize:11, color:"rgba(65,67,27,0.35)"}}>{icon}</span>
+                <span style={{fontSize:10, color:"#AEB784", letterSpacing:"0.18em",
+                  textTransform:"uppercase", fontWeight:500}}>{label}</span>
+              </div>
+              {item[key]
+                ? <p style={{fontSize:14, color:"#41431B", lineHeight:1.85, paddingLeft:20}}>{item[key]}</p>
+                : <p style={{fontSize:12, color:"rgba(174,183,132,0.5)", fontStyle:"italic", paddingLeft:20}}>
+                    Add a <code style={{background:"rgba(174,183,132,0.12)",padding:"1px 5px",
+                      borderRadius:4,fontSize:11}}>{key}</code> field to CODE_ITEMS.
+                  </p>
+              }
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Screenshots strip ── */}
+      {item.images&&item.images.length>0&&(
+        <div style={{
+          padding:"0 40px 40px",
+          borderTop:"1px solid rgba(174,183,132,0.12)",
+          paddingTop:28,
+        }}>
+          <div style={{fontSize:10, color:"#AEB784", letterSpacing:"0.18em",
+            textTransform:"uppercase", marginBottom:14}}>Screenshots</div>
+          <div style={{display:"grid",
+            gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))", gap:12}}>
+            {item.images.map((src,i)=>(
+              <div key={i} style={{borderRadius:14, overflow:"hidden",
+                aspectRatio:"16/10", background:"rgba(174,183,132,0.08)"}}>
+                <img src={src} alt={`Screenshot ${i+1}`}
+                  style={{width:"100%", height:"100%", objectFit:"cover"}}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </motion.div>
+  </ModalBackdrop>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   1. THUMBNAILS
+   ── HOW TO ADD ──────────────────────────────────────────────────────────────
+   Fill THUMBNAIL_ITEMS with objects shaped like:
+   { img: "https://...", title: "Video Title", platform: "YouTube", views: "200K",
+     channel: "Channel Name", videoUrl: "https://youtu.be/...",
+     context: "Creative brief / direction note.", tags: ["Gaming"] }
+───────────────────────────────────────────────────────────────────────────── */
+const THUMBNAIL_ITEMS = [
+  // { img: "https://i.ytimg.com/vi/XXXX/maxresdefault.jpg", title: "How I Edit My Videos", platform: "YouTube", views: "340K views" },
+  // { img: "https://...", title: "Morning Routine", platform: "Instagram", views: "92K views" },
+];
+
+const ThumbnailCard = ({item, onOpen}) => {
+  const [hov, setHov] = useState(false);
+  return (
+    <motion.div
+      whileHover={{y:-6, scale:1.015}}
+      onHoverStart={()=>setHov(true)} onHoverEnd={()=>setHov(false)}
+      onClick={()=>onOpen(item)}
+      transition={{type:"spring",stiffness:280,damping:22}}
+      className="matte" style={{borderRadius:20,overflow:"hidden",cursor:"pointer"}}>
+      <div style={{position:"relative", aspectRatio:"16/9",
+        background:"linear-gradient(135deg,#C8D8B0 0%,#A8C090 100%)",
+        display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+        {item.img
+          ? <img src={item.img} alt={item.title} style={{width:"100%",height:"100%",objectFit:"cover",
+              transition:"transform .5s ease", transform: hov ? "scale(1.06)" : "scale(1)"}}/>
+          : <span style={{fontSize:28,opacity:.4}}>🖼️</span>}
+
+        {/* Hover overlay — slides up from bottom */}
+        <AnimatePresence>
+          {hov && (
+            <motion.div
+              initial={{y:"100%"}} animate={{y:"0%"}} exit={{y:"100%"}}
+              transition={{duration:.3, ease:[.22,1,.36,1]}}
+              style={{
+                position:"absolute", inset:0,
+                background:"linear-gradient(to top, rgba(65,67,27,0.80) 0%, transparent 60%)",
+                display:"flex", alignItems:"flex-end",
+                padding:"16px 18px",
+              }}>
+              <span style={{
+                fontSize:11, letterSpacing:"0.18em", textTransform:"uppercase",
+                color:"#F8F3E1", fontWeight:500,
+                display:"flex", alignItems:"center", gap:8,
+              }}>
+                <span style={{
+                  width:20, height:1,
+                  background:"rgba(248,243,225,0.6)",
+                  display:"inline-block",
+                }}/>
+                View Thumbnail
+              </span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      <div style={{padding:"16px 18px 20px"}}>
+        <div className="serif" style={{fontSize:17,fontWeight:600,color:"#41431B",
+          marginBottom:6,lineHeight:1.2}}>{item.title||"Untitled"}</div>
+        <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"#9A9878"}}>
+          <span>{item.platform||"Platform"}</span>
+          <span>{item.views||""}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const Thumbnails = () => {
+  const [selected, setSelected] = useState(null);
+  return (
+    <>
+      <WorkSection id="thumbnails" label="Thumbnails" title="Click-worthy" italic="Covers"
+        desc="YouTube, Instagram & social covers designed to stop the scroll."
+        accent="rgba(168,197,140,.22)" headingVariant="slideLeft" sectionNum="01"
+        padding="148px 6vw 100px" titleWeight={700} italicWeight={200}>
+        {THUMBNAIL_ITEMS.length > 0 ? (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(270px,1fr))",gap:22}}>
+            {THUMBNAIL_ITEMS.map((item,i)=>(
+              <Reveal key={i} delay={i*0.07} variant="zoom">
+                <ThumbnailCard item={item} onOpen={setSelected}/>
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(270px,1fr))",gap:22}}>
+            {[0,1,2,3,4,5].map(i=>(
+              <Reveal key={i} delay={i*0.06} variant="zoom"><AddCard label="Add thumbnail" icon="🖼️" type="thumbnail"/></Reveal>
+            ))}
+          </div>
+        )}
+      </WorkSection>
+      <AnimatePresence>
+        {selected && <ThumbnailLightbox item={selected} onClose={()=>setSelected(null)}/>}
+      </AnimatePresence>
+    </>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   2. VIDEO EDITS
+   ── HOW TO ADD ──────────────────────────────────────────────────────────────
+   { thumb: "https://...", title: "...", category: "Short-form", duration: "1:20", url: "https://..." }
+───────────────────────────────────────────────────────────────────────────── */
+const VIDEO_ITEMS = [
+  // { thumb: "https://...", title: "Brand Film — Aura", category: "Commercial", duration: "2:15", url: "https://vimeo.com/..." },
+  // { thumb: "https://...", title: "Travel Reel NYC", category: "Short-form", duration: "0:58", url: "https://..." },
+];
+
+const VideoCard = ({item, onOpen}) => {
+  const [hover,setHover]=useState(false);
+  return (
+    <motion.div whileHover={{y:-6}}
+      onHoverStart={()=>setHover(true)} onHoverEnd={()=>setHover(false)}
+      transition={{type:"spring",stiffness:280,damping:22}}
+      className="matte" style={{borderRadius:24,overflow:"hidden",cursor:"pointer"}}
+      onClick={()=>onOpen(item)}>
+      <div style={{position:"relative",aspectRatio:"16/9",
+        background:"linear-gradient(135deg,#D8C890,#A89060)",
+        display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+        {item.thumb
+          ? <img src={item.thumb} alt={item.title} style={{
+              width:"100%",height:"100%",objectFit:"cover",
+              transition:"transform .5s ease",
+              transform: hover ? "scale(1.06)" : "scale(1)",
+            }}/>
+          : <span style={{fontSize:32,opacity:.4}}>🎬</span>}
+        <AnimatePresence>
+          {hover&&(
+            <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
+              transition={{duration:.25}}
+              style={{position:"absolute",inset:0,background:"rgba(25,38,28,.5)",
+                display:"flex",alignItems:"center",justifyContent:"center"}}>
+              <motion.div
+                initial={{scale:.6, opacity:0}} animate={{scale:1, opacity:1}}
+                exit={{scale:.6, opacity:0}}
+                transition={{type:"spring", stiffness:400, damping:25}}
+                style={{
+                  width:58, height:58, borderRadius:"50%",
+                  background:"rgba(248,243,225,.94)",
+                  boxShadow:"0 8px 32px rgba(0,0,0,.25)",
+                  display:"flex", alignItems:"center", justifyContent:"center",
+                  fontSize:20, paddingLeft:4,
+                }}>▶</motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {item.duration&&(
+          <div style={{position:"absolute",bottom:10,right:12,
+            background:"rgba(0,0,0,.62)",borderRadius:6,padding:"3px 8px",
+            fontSize:11,color:"#fff",fontWeight:500}}>{item.duration}</div>
+        )}
+      </div>
+      <div style={{padding:"18px 22px 24px"}}>
+        <div style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.1em",
+          color:"#AEB784",marginBottom:6}}>{item.category||"Video"}</div>
+        <div className="serif" style={{fontSize:21,fontWeight:600,color:"#41431B",lineHeight:1.1}}>
+          {item.title||"Untitled Edit"}</div>
+      </div>
+    </motion.div>
+  );
+};
+
+const VideoEdits = () => {
+  const [selected, setSelected] = useState(null);
+  return (
+    <>
+      <WorkSection id="video-edits" label="Video Edits" title="Motion &" italic="Storytelling"
+        desc="Reels, short-form content, long-form narratives, and cinematic brand films."
+        accent="rgba(210,180,140,.2)" headingVariant="slideRight" sectionNum="02"
+        padding="80px 6vw 130px" titleWeight={300} italicWeight={600}>
+        {VIDEO_ITEMS.length > 0 ? (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))",gap:24}}>
+            {VIDEO_ITEMS.map((item,i)=>(
+              <Reveal key={i} delay={i*0.08} variant="slideLeft">
+                <VideoCard item={item} onOpen={setSelected}/>
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))",gap:24}}>
+            {[0,1,2,3].map(i=>(
+              <Reveal key={i} delay={i*0.07} variant="slideLeft"><AddCard label="Add video" icon="🎬" tall type="video"/></Reveal>
+            ))}
+          </div>
+        )}
+      </WorkSection>
+      <AnimatePresence>
+        {selected && <VideoPlayerModal item={selected} onClose={()=>setSelected(null)}/>}
+      </AnimatePresence>
+    </>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   3. GRAPHIC DESIGN
+   ── HOW TO ADD ──────────────────────────────────────────────────────────────
+   { img: "https://...", title: "...", tags: ["Branding","Print"], year: "2024" }
+   The FIRST item auto-spans 2 columns as a featured piece.
+───────────────────────────────────────────────────────────────────────────── */
+const GRAPHIC_ITEMS = [
+  // { img: "https://...", title: "Aura — Brand Identity", tags: ["Branding","Identity"], year: "2024" },
+  // { img: "https://...", title: "Event Poster Series", tags: ["Print","Poster"], year: "2024" },
+  // { img: "https://...", title: "Type System", tags: ["Typography"], year: "2023" },
+];
+
+const GraphicCard = ({item, featured=false}) => {
+  const [hov, setHov] = useState(false);
+  return (
+    <motion.div
+      whileHover={{y:-6, scale:1.01}}
+      onHoverStart={()=>setHov(true)} onHoverEnd={()=>setHov(false)}
+      transition={{type:"spring",stiffness:280,damping:22}}
+      className="glass" style={{borderRadius:24,overflow:"hidden",
+        gridColumn:featured?"span 2":"span 1"}}>
+      <div style={{position:"relative", aspectRatio:featured?"2/1":"1/1",
+        background:"linear-gradient(135deg,#D8C8E0 0%,#B8A8D0 100%)",
+        display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden"}}>
+        {item.img
+          ? <img src={item.img} alt={item.title} style={{
+              width:"100%", height:"100%", objectFit:"cover",
+              transition:"transform .55s ease",
+              transform: hov ? "scale(1.07)" : "scale(1)",
+            }}/>
+          : <span style={{fontSize:featured?52:32,opacity:.3}}>✏️</span>}
+
+        {/* Corner expand icon */}
+        <AnimatePresence>
+          {hov && (
+            <motion.div
+              initial={{opacity:0, scale:.8}} animate={{opacity:1, scale:1}} exit={{opacity:0, scale:.8}}
+              transition={{duration:.2}}
+              style={{
+                position:"absolute", top:12, right:12,
+                width:32, height:32, borderRadius:8,
+                background:"rgba(248,243,225,0.88)",
+                display:"flex", alignItems:"center", justifyContent:"center",
+                backdropFilter:"blur(8px)",
+              }}>
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path d="M1 12L12 1M12 1H7M12 1V6" stroke="#41431B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      <div style={{padding:"20px 22px 26px"}}>
+        <div style={{display:"flex",gap:6,flexWrap:"wrap",marginBottom:10}}>
+          {(item.tags||[]).map(t=>(
+            <span key={t} style={{fontSize:10,padding:"3px 10px",borderRadius:100,
+              background:"rgba(174,183,132,.12)",color:"#4A5C28",letterSpacing:"0.08em",
+              fontWeight:500,textTransform:"uppercase"}}>{t}</span>
+          ))}
+        </div>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <div className="serif" style={{fontSize:featured?22:18,fontWeight:600,color:"#41431B"}}>
+            {item.title||"Untitled"}</div>
+          <span style={{fontSize:12,color:"#9A9878"}}>{item.year}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const GraphicDesign = () => (
+  <WorkSection id="graphic-design" label="Graphic Design" title="Visual" italic="Craft"
+    desc="Posters, brand identities, editorial layouts, and print design."
+    accent="rgba(180,168,210,.18)" headingVariant="zoom" sectionNum="03"
+    padding="152px 6vw 96px" titleWeight={400} italicWeight={400}>
+    {GRAPHIC_ITEMS.length > 0 ? (
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22}}>
+        {GRAPHIC_ITEMS.map((item,i)=>(
+          <Reveal key={i} delay={i*0.07} variant={i===0?"slideLeft":"zoom"}>
+            <GraphicCard item={item} featured={i===0}/>
+          </Reveal>
+        ))}
+      </div>
+    ) : (
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:22}}>
+        {/* Featured placeholder spans 2 cols */}
+        <Reveal delay={0} variant="slideLeft" style={{gridColumn:"span 2"}}>
+          <motion.div whileHover={{y:-4}}
+            style={{borderRadius:24,border:"1.5px dashed rgba(174,183,132,.4)",
+              background:"rgba(248,243,225,.4)",backdropFilter:"blur(10px)",
+              aspectRatio:"2/1",display:"flex",flexDirection:"column",
+              alignItems:"center",justifyContent:"center",gap:12,cursor:"pointer"}}
+            onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(174,183,132,.8)"}
+            onMouseLeave={e=>e.currentTarget.style.borderColor="rgba(174,183,132,.4)"}>
+            <span style={{fontSize:44}}>✏️</span>
+            <span style={{fontSize:11,letterSpacing:"0.1em",textTransform:"uppercase",
+              color:"rgba(174,183,132,.6)",fontWeight:500}}>Featured piece</span>
+          </motion.div>
+        </Reveal>
+        {[1,2,3,4].map(i=>(
+          <Reveal key={i} delay={i*0.07} variant="zoom"><AddCard label="Add design" icon="🎨" type="graphic"/></Reveal>
+        ))}
+      </div>
+    )}
+  </WorkSection>
+);
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   4. CODE PROJECTS
+   ── HOW TO ADD ──────────────────────────────────────────────────────────────
+   { title: "...", desc: "...", stack: ["React","TypeScript"], url: "https://...", repo: "https://github.com/...", year: "2024" }
+───────────────────────────────────────────────────────────────────────────── */
+const CODE_ITEMS = [
+  // { title: "Depth — 3D Web", desc: "Immersive product showcase with Three.js and custom GLSL shaders.", stack: ["React","Three.js","GLSL"], url: "#", repo: "https://github.com/...", year: "2024" },
+  // { title: "Tessera Dashboard", desc: "Analytics platform with 60fps data visualisations.", stack: ["Next.js","TypeScript","Tailwind"], url: "#", year: "2023" },
+];
+
+const STACK_COLORS = {
+  React:"#61DAFB","Next.js":"#888",TypeScript:"#3178C6",
+  "Three.js":"#049EF4",GLSL:"#A040A0",Tailwind:"#38BDF8",
+  "Node.js":"#339933",Python:"#3776AB",Figma:"#F24E1E",
+  JavaScript:"#F7DF1E",CSS:"#264DE4",HTML:"#E34F26",
+  Svelte:"#FF3E00",Vue:"#42B883",
+};
+
+const CodeCard = ({item, onOpen}) => (
+  <motion.div whileHover={{y:-8,boxShadow:"0 28px 60px rgba(65,67,27,.14)"}}
+    transition={{type:"spring",stiffness:280,damping:22}}
+    onClick={()=>onOpen(item)}
+    className="matte" style={{borderRadius:16,padding:"28px",display:"flex",
+      flexDirection:"column",gap:20,cursor:"pointer"}}>
+    <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+      <div style={{width:46,height:46,borderRadius:14,
+        background:"linear-gradient(135deg,rgba(65,67,27,0.85),rgba(65,67,27,0.65))",
+        display:"flex",alignItems:"center",justifyContent:"center",
+        fontFamily:"monospace",fontSize:13,color:"rgba(248,243,225,0.90)",fontWeight:700,
+        boxShadow:"0 2px 8px rgba(65,67,27,0.25)",
+      }}>{"</>"}</div>
+      <div style={{display:"flex",gap:8}}>
+        {item.url&&<a href={item.url} target="_blank" rel="noreferrer"
+          style={{fontSize:11,padding:"5px 14px",borderRadius:100,
+            background:"rgba(74,92,40,.12)",color:"#4A5C28",textDecoration:"none",
+            letterSpacing:"0.06em",fontWeight:500}}>Live ↗</a>}
+        {item.repo&&<a href={item.repo} target="_blank" rel="noreferrer"
+          style={{fontSize:11,padding:"5px 14px",borderRadius:100,
+            background:"rgba(174,183,132,.08)",color:"#4A5C28",textDecoration:"none",
+            border:"1px solid rgba(174,183,132,.2)",letterSpacing:"0.06em",fontWeight:500}}>GitHub</a>}
+      </div>
+    </div>
+    <div>
+      <div className="serif" style={{fontSize:24,fontWeight:600,color:"#41431B",
+        lineHeight:1.15,marginBottom:10}}>{item.title}</div>
+      <p style={{fontSize:14,color:"#6B6B4A",lineHeight:1.75,fontWeight:300}}>{item.desc}</p>
+    </div>
+    <div style={{display:"flex",gap:8,flexWrap:"wrap",marginTop:"auto"}}>
+      {(item.stack||[]).map(s=>(
+        <span key={s} style={{fontSize:11,padding:"4px 12px",borderRadius:100,fontWeight:500,
+          letterSpacing:"0.06em",
+          background:`${STACK_COLORS[s]||"#AEB784"}18`,
+          color:STACK_COLORS[s]||"#4A5C28",
+          border:`1px solid ${STACK_COLORS[s]||"#AEB784"}30`}}>{s}</span>
+      ))}
+    </div>
+    {item.year&&<div style={{fontSize:12,color:"#9A9878",
+      borderTop:"1px solid rgba(174,183,132,.12)",paddingTop:14}}>{item.year}</div>}
+  </motion.div>
+);
+
+const CodeProjects = () => {
+  const [selected, setSelected] = useState(null);
+  return (
+    <>
+      <WorkSection id="code-projects" label="Code Projects" title="Built from" italic="Scratch"
+        desc="Web apps, experiments, open-source tools and interactive experiences."
+        accent="rgba(140,200,190,.18)" headingVariant="slideRight" sectionNum="04"
+        padding="76px 6vw 160px" titleWeight={700} italicWeight={300}>
+        {CODE_ITEMS.length > 0 ? (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))",gap:24}}>
+            {CODE_ITEMS.map((item,i)=>(
+              <Reveal key={i} delay={i*0.08} variant="slideRight">
+                <CodeCard item={item} onOpen={setSelected}/>
+              </Reveal>
+            ))}
+          </div>
+        ) : (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(320px,1fr))",gap:24}}>
+            {[0,1,2,3].map(i=>(
+              <Reveal key={i} delay={i*0.07} variant="slideRight"><AddCard label="Add project" icon="</>" tall type="code"/></Reveal>
+            ))}
+          </div>
+        )}
+      </WorkSection>
+      <AnimatePresence>
+        {selected && <CodeCaseStudy item={selected} onClose={()=>setSelected(null)}/>}
+      </AnimatePresence>
+    </>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CONTACT — inline form
+   Wire up: replace the console.log in handleSubmit with your fetch() to
+   Formspree / Resend / your own API when ready.
+───────────────────────────────────────────────────────────────────────────── */
+const Contact = () => {
+  const [form, setForm] = useState({name:"", email:"", service:"", message:""});
+  const [status, setStatus] = useState("idle"); // idle | sending | sent
+
+  const set = k => e => setForm(f=>({...f,[k]:e.target.value}));
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) return;
+    setStatus("sending");
+    // ── Wire to your backend here ──────────────────────────────────────────
+    // fetch("https://formspree.io/f/YOUR_ID", { method:"POST", body: JSON.stringify(form), ... })
+    // For now, simulate success after 1.2s
+    setTimeout(()=>setStatus("sent"), 1200);
+  };
+
+  const inputStyle = {
+    width:"100%", padding:"13px 18px", borderRadius:14,
+    background:"rgba(248,243,225,0.5)",
+    border:"1px solid rgba(174,183,132,0.35)",
+    fontSize:14, color:"#41431B", fontFamily:"'DM Sans',sans-serif",
+    outline:"none", transition:"border-color .2s, box-shadow .2s",
+    backdropFilter:"blur(8px)",
+  };
+
+  const darkInputStyle = {
+    width:"100%", padding:"13px 18px", borderRadius:14,
+    background:"rgba(248,243,225,0.06)",
+    border:"1px solid rgba(248,243,225,0.12)",
+    fontSize:14, color:"#F8F3E1", fontFamily:"'DM Sans',sans-serif",
+    outline:"none", transition:"border-color .2s, box-shadow .2s",
+    backdropFilter:"blur(8px)",
+  };
+
+  const SERVICES = [
+    "Thumbnail Design",
+    "Video Editing",
+    "Graphic Design / Branding",
+    "Web Development",
+    "Full Creative Package",
+    "Not sure yet",
+  ];
+
+  return (
+    <section id="contact" style={{
+      position:"relative", zIndex:1,
+      padding:"120px 6vw 0",
+      background:"#41431B",
+      overflow:"hidden",
+    }}>
+
+      {/* Grain overlay — same as loader, ties the two dark moments together */}
+      <div style={{position:"absolute",inset:0,opacity:0.04,pointerEvents:"none",
+        backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`}}/>
+
+      {/* Radial sage glow — warms up the dark background */}
+      <div style={{position:"absolute",top:"-20%",right:"-10%",width:"60vw",height:"60vw",
+        background:"radial-gradient(ellipse,rgba(174,183,132,0.12) 0%,transparent 65%)",
+        pointerEvents:"none"}}/>
+      <div style={{position:"absolute",bottom:"-10%",left:"-5%",width:"45vw",height:"45vw",
+        background:"radial-gradient(ellipse,rgba(174,183,132,0.08) 0%,transparent 70%)",
+        pointerEvents:"none"}}/>
+
+      {/* Ghost texture — cream on dark */}
+      <div style={{
+        position:"absolute", right:"-0.04em", top:"12%",
+        fontFamily:"'Cormorant Garamond',serif",
+        fontSize:"clamp(110px,15vw,200px)",
+        fontWeight:700, fontStyle:"italic",
+        color:"rgba(248,243,225,0.04)",
+        letterSpacing:"-0.04em", lineHeight:1,
+        userSelect:"none", pointerEvents:"none",
+        whiteSpace:"nowrap", zIndex:0,
+      }}>Let's</div>
+
+      <div style={{maxWidth:1000,margin:"0 auto",position:"relative",zIndex:1,paddingBottom:100}}>
+        <Reveal variant="zoom" style={{marginBottom:64}}>
+          {/* SLabel adapted for dark bg */}
+          <div style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.18em",
+            color:"rgba(174,183,132,0.7)",marginBottom:14,fontWeight:500}}>✦ Contact</div>
+          <h2 className="serif"
+            style={{
+              fontSize:"clamp(38px,5vw,68px)", fontWeight:600,
+              color:"#F8F3E1", lineHeight:0.96, letterSpacing:"-0.035em",
+              marginBottom:20,
+            }}>
+            Let's build something<br/>
+            <span style={{
+              fontStyle:"italic", fontWeight:300, color:"#AEB784",
+              letterSpacing:"-0.01em",
+            }}>worth sharing.</span>
+          </h2>
+          <p style={{
+            fontSize:16, color:"rgba(248,243,225,0.6)", maxWidth:460,
+            lineHeight:1.75, fontWeight:400, letterSpacing:"0.005em",
+          }}>
+            Tell me what you're working on and what you need. I'll get back to you within 24 hours.
+          </p>
+        </Reveal>
+
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1.3fr",gap:40,alignItems:"start"}}>
+
+          {/* Left — contact info + socials */}
+          <Reveal delay={0.1} variant="slideLeft">
+            <div style={{display:"flex",flexDirection:"column",gap:28}}>
+
+              {/* Email block */}
+              <div style={{
+                borderRadius:24, padding:"24px 26px",
+                background:"rgba(248,243,225,0.06)",
+                border:"1px solid rgba(248,243,225,0.10)",
+                backdropFilter:"blur(12px)",
+              }}>
+                <div style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.14em",
+                  color:"rgba(174,183,132,0.7)",marginBottom:10}}>Email directly</div>
+                <a href="mailto:hello@yoursite.com"
+                  style={{display:"block",fontFamily:"'Cormorant Garamond',serif",
+                    fontSize:20,fontWeight:600,color:"#F8F3E1",textDecoration:"none",
+                    borderBottom:"1.5px solid rgba(174,183,132,0.3)",paddingBottom:4,
+                    width:"fit-content"}}>
+                  hello@yoursite.com
+                </a>
+              </div>
+
+              {/* What you offer */}
+              <div style={{
+                borderRadius:24, padding:"24px 26px",
+                background:"rgba(248,243,225,0.06)",
+                border:"1px solid rgba(248,243,225,0.10)",
+                backdropFilter:"blur(12px)",
+              }}>
+                <div style={{fontSize:11,textTransform:"uppercase",letterSpacing:"0.14em",
+                  color:"rgba(174,183,132,0.7)",marginBottom:16}}>What I can help with</div>
+                <div style={{display:"flex",flexDirection:"column",gap:12}}>
+                  {[
+                    {icon:"🖼️", label:"Thumbnails & Social Graphics"},
+                    {icon:"🎬", label:"Video Editing & Reels"},
+                    {icon:"✏️", label:"Brand Identity & Print"},
+                    {icon:"</>", label:"Websites & Web Apps"},
+                  ].map(({icon,label})=>(
+                    <div key={label} style={{display:"flex",alignItems:"center",gap:12,
+                      fontSize:13,color:"rgba(248,243,225,0.65)",fontWeight:400}}>
+                      <span style={{fontSize:16,width:24,textAlign:"center",flexShrink:0}}>{icon}</span>
+                      {label}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Socials — dark bg variant with icons */}
+              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                {[
+                  { name:"Twitter",  href:"#", icon:(
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>)},
+                  { name:"LinkedIn", href:"#", icon:(
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>)},
+                  { name:"Dribbble", href:"#", icon:(
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 0C5.374 0 0 5.373 0 12c0 6.628 5.374 12 12 12 6.628 0 12-5.372 12-12 0-6.627-5.372-12-12-12zm9.885 11.441c-2.575-.422-4.943-.445-7.103-.073a40.644 40.644 0 00-.767-1.68c2.31-1 4.165-2.358 5.548-4.082a9.863 9.863 0 012.322 5.835zm-3.842-7.282c-1.205 1.554-2.868 2.783-4.986 3.68a46.287 46.287 0 00-3.488-5.438A9.894 9.894 0 0112 2.087c2.275 0 4.368.779 6.043 2.072zM6.967 4.947l.076.166c1.449 3.141 2.567 5.16 3.342 6.2C8.172 12.107 5.78 12.607 3.2 12.607H2.08a9.916 9.916 0 014.887-7.66zm-4.867 8.614h.194c2.864 0 5.497-.553 7.913-1.655.252.484.478.976.68 1.476-3.081 1.178-5.54 3.277-7.325 6.276A9.903 9.903 0 012.1 13.561zm2.457 7.546c1.67-2.768 3.926-4.679 6.784-5.777.786 2.019 1.352 4.261 1.683 6.711A9.933 9.933 0 0112 22a9.92 9.92 0 01-7.443-3.393zm10.424 2.636c-.317-2.22-.85-4.252-1.578-6.065a35.228 35.228 0 016.557.112 9.956 9.956 0 01-4.979 5.953z"/>
+                    </svg>)},
+                  { name:"GitHub",   href:"#", icon:(
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>)},
+                  { name:"YouTube",  href:"#", icon:(
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>)},
+                ].map(({name,href,icon})=>(
+                  <motion.a key={name} href={href} target="_blank" rel="noreferrer"
+                    whileHover={{scale:1.06, background:"rgba(174,183,132,0.18)"}}
+                    whileTap={{scale:.96}}
+                    style={{
+                      display:"inline-flex", alignItems:"center", gap:7,
+                      padding:"9px 16px", borderRadius:100, cursor:"pointer",
+                      fontSize:11, letterSpacing:"0.08em", textTransform:"uppercase",
+                      fontWeight:500, color:"rgba(174,183,132,0.85)",
+                      border:"1px solid rgba(174,183,132,0.25)",
+                      background:"rgba(174,183,132,0.06)",
+                      textDecoration:"none",
+                      transition:"background .2s",
+                    }}>
+                    {icon}
+                    {name}
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Right — form on dark */}
+          <Reveal delay={0.2} variant="slideRight">
+            <div style={{
+              borderRadius:24, padding:"36px 34px",
+              background:"rgba(248,243,225,0.06)",
+              border:"1px solid rgba(248,243,225,0.10)",
+              backdropFilter:"blur(16px)",
+              position:"relative", overflow:"hidden",
+            }}>
+              {/* inner sage glow */}
+              <div style={{position:"absolute",top:"-40%",right:"-20%",width:"60%",height:"60%",
+                background:"radial-gradient(ellipse,rgba(174,183,132,.08) 0%,transparent 70%)",
+                pointerEvents:"none"}}/>
+
+              {status==="sent" ? (
+                <motion.div initial={{opacity:0,scale:.96}} animate={{opacity:1,scale:1}}
+                  style={{textAlign:"center",padding:"40px 0"}}>
+                  <div className="serif" style={{fontSize:44,color:"#AEB784",marginBottom:20}}>✦</div>
+                  <h3 className="serif" style={{fontSize:28,fontWeight:600,color:"#F8F3E1",marginBottom:12}}>
+                    Message received.
+                  </h3>
+                  <p style={{fontSize:14,color:"rgba(248,243,225,0.6)",lineHeight:1.7}}>
+                    I'll be in touch within 24 hours. Looking forward to working together.
+                  </p>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} style={{display:"flex",flexDirection:"column",gap:14}}>
+
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
+                    {[
+                      {k:"name",  placeholder:"Your name",  type:"text"},
+                      {k:"email", placeholder:"Your email", type:"email"},
+                    ].map(({k,placeholder,type})=>(
+                      <input key={k}
+                        type={type} placeholder={placeholder}
+                        value={form[k]} onChange={set(k)}
+                        required
+                        style={{...darkInputStyle}}
+                        onFocus={e=>{
+                          e.target.style.borderColor="rgba(174,183,132,.6)";
+                          e.target.style.boxShadow="0 0 0 3px rgba(174,183,132,.08)";
+                        }}
+                        onBlur={e=>{
+                          e.target.style.borderColor="rgba(248,243,225,.12)";
+                          e.target.style.boxShadow="none";
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  <div style={{position:"relative"}}>
+                    <select value={form.service} onChange={set("service")}
+                      style={{...darkInputStyle, appearance:"none", WebkitAppearance:"none"}}>
+                      <option value="" disabled>What do you need help with?</option>
+                      {SERVICES.map(s=><option key={s} value={s}>{s}</option>)}
+                    </select>
+                    <span style={{position:"absolute",right:18,top:"50%",
+                      transform:"translateY(-50%)",pointerEvents:"none",
+                      color:"rgba(174,183,132,0.6)",fontSize:12}}>▾</span>
+                  </div>
+
+                  <textarea
+                    placeholder="Tell me about your project — goals, timeline, any details that help..."
+                    value={form.message} onChange={set("message")}
+                    required rows={5}
+                    style={{...darkInputStyle, resize:"vertical", minHeight:120}}
+                    onFocus={e=>{
+                      e.target.style.borderColor="rgba(174,183,132,.6)";
+                      e.target.style.boxShadow="0 0 0 3px rgba(174,183,132,.08)";
+                    }}
+                    onBlur={e=>{
+                      e.target.style.borderColor="rgba(248,243,225,.12)";
+                      e.target.style.boxShadow="none";
+                    }}
+                  />
+
+                  <motion.button type="submit"
+                    disabled={status==="sending"}
+                    whileHover={{scale:1.02, background:"rgba(174,183,132,0.28)"}}
+                    whileTap={{scale:.98}}
+                    style={{
+                      width:"100%", padding:"14px 32px", borderRadius:14,
+                      border:"1px solid rgba(174,183,132,0.4)", cursor:"pointer",
+                      background:"rgba(174,183,132,0.16)",
+                      color:"#F8F3E1", fontSize:14, fontWeight:500,
+                      fontFamily:"'DM Sans',sans-serif", letterSpacing:"0.06em",
+                      backdropFilter:"blur(8px)",
+                      opacity: status==="sending" ? 0.7 : 1,
+                      transition:"opacity .2s, background .2s",
+                    }}>
+                    {status==="sending" ? (
+                      <span style={{display:"flex",alignItems:"center",justifyContent:"center",gap:10}}>
+                        <motion.span animate={{rotate:360}}
+                          transition={{duration:.8,repeat:Infinity,ease:"linear"}}
+                          style={{display:"inline-block",width:14,height:14,
+                            border:"2px solid rgba(248,243,225,.2)",
+                            borderTopColor:"#F8F3E1",borderRadius:"50%"}}/>
+                        Sending…
+                      </span>
+                    ) : "Send Message →"}
+                  </motion.button>
+
+                  <p style={{fontSize:11,color:"rgba(248,243,225,0.3)",textAlign:"center",letterSpacing:"0.04em"}}>
+                    No spam. I reply within 24 hours.
+                  </p>
+                </form>
+              )}
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────────
+   FOOTER — narrative close
+   Has: large serif closing statement, live local time, back-to-top, links
+───────────────────────────────────────────────────────────────────────────── */
+const Footer = () => {
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+
+  useEffect(()=>{
+    const tick = () => {
+      const now = new Date();
+      setTime(now.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}));
+      setDate(now.toLocaleDateString("en-US",{weekday:"short",month:"short",day:"numeric"}));
+    };
+    tick();
+    const iv = setInterval(tick, 1000);
+    return ()=>clearInterval(iv);
+  },[]);
+
+  const scrollTop = () => window.scrollTo({top:0, behavior:"smooth"});
+
+  return (
+    <footer style={{
+      position:"relative", zIndex:1,
+      background:"#41431B",
+      overflow:"hidden",
+    }}>
+
+      {/* Top border — thin sage line separating from contact */}
+      <div style={{height:1, background:"rgba(174,183,132,0.12)"}}/>
+
+      {/* Closing statement — large, centred, the signature */}
+      <Reveal variant="zoom">
+        <div style={{
+          padding:"72px 6vw 56px",
+          textAlign:"center",
+          position:"relative",
+        }}>
+          {/* Ghost texture behind closing line */}
+          <div style={{
+            position:"absolute", left:"50%", top:"50%",
+            transform:"translate(-50%,-50%)",
+            fontFamily:"'Cormorant Garamond',serif",
+            fontSize:"clamp(80px,12vw,160px)",
+            fontWeight:700, fontStyle:"italic",
+            color:"rgba(248,243,225,0.03)",
+            letterSpacing:"-0.04em", lineHeight:1,
+            userSelect:"none", pointerEvents:"none",
+            whiteSpace:"nowrap",
+          }}>always</div>
+
+          <p style={{
+            fontFamily:"'Cormorant Garamond',serif",
+            fontSize:"clamp(22px,3.5vw,44px)",
+            fontWeight:300, fontStyle:"italic",
+            color:"rgba(248,243,225,0.85)",
+            letterSpacing:"-0.02em", lineHeight:1.2,
+            marginBottom:8,
+            position:"relative", zIndex:1,
+          }}>
+            "Let's make something worth remembering."
+          </p>
+          <p style={{
+            fontSize:12, letterSpacing:"0.16em",
+            textTransform:"uppercase",
+            color:"rgba(174,183,132,0.5)",
+            fontFamily:"'DM Sans',sans-serif",
+          }}>
+            — Always open to great work
+          </p>
+        </div>
+      </Reveal>
+
+      {/* Divider */}
+      <div style={{height:1, background:"rgba(174,183,132,0.10)", margin:"0 6vw"}}/>
+
+      {/* Bottom bar */}
+      <div style={{
+        padding:"28px 6vw 36px",
+        display:"grid",
+        gridTemplateColumns:"1fr auto 1fr",
+        alignItems:"center",
+        gap:24,
+      }}>
+
+        {/* Left — logo + local time */}
+        <div style={{display:"flex", flexDirection:"column", gap:6}}>
+          <div className="serif" style={{fontSize:20,fontWeight:600,color:"rgba(248,243,225,0.9)"}}>
+            AM<span style={{color:"#AEB784",fontWeight:300}}>.</span>
+          </div>
+          <div style={{display:"flex", alignItems:"center", gap:8}}>
+            <span style={{
+              fontSize:10, letterSpacing:"0.12em", textTransform:"uppercase",
+              color:"rgba(174,183,132,0.45)",
+            }}>Local time</span>
+            <span style={{
+              fontFamily:"'DM Sans',monospace",
+              fontSize:11, color:"rgba(174,183,132,0.7)",
+              letterSpacing:"0.06em",
+            }}>{time}</span>
+            <span style={{fontSize:10, color:"rgba(174,183,132,0.35)"}}>{date}</span>
+          </div>
+        </div>
+
+        {/* Centre — section nav links */}
+        <div style={{display:"flex", gap:20, flexWrap:"wrap", justifyContent:"center"}}>
+          {[
+            {label:"About",    id:"about"},
+            {label:"Work",     id:"library"},
+            {label:"Tools",    id:"tools"},
+            {label:"Contact",  id:"contact"},
+          ].map(({label,id})=>(
+            <span key={id}
+              onClick={()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"})}
+              style={{
+                fontSize:11, letterSpacing:"0.10em", textTransform:"uppercase",
+                color:"rgba(174,183,132,0.45)", cursor:"pointer",
+                transition:"color .2s",
+              }}
+              onMouseEnter={e=>e.target.style.color="rgba(174,183,132,0.85)"}
+              onMouseLeave={e=>e.target.style.color="rgba(174,183,132,0.45)"}>
+              {label}
+            </span>
+          ))}
+        </div>
+
+        {/* Right — back to top + copyright */}
+        <div style={{display:"flex", flexDirection:"column", alignItems:"flex-end", gap:6}}>
+          <motion.button
+            whileHover={{y:-2}}
+            whileTap={{scale:.95}}
+            onClick={scrollTop}
+            style={{
+              display:"flex", alignItems:"center", gap:8,
+              background:"none", border:"none", cursor:"pointer",
+              fontSize:11, letterSpacing:"0.12em", textTransform:"uppercase",
+              color:"rgba(174,183,132,0.6)",
+              fontFamily:"'DM Sans',sans-serif",
+              padding:0,
+            }}>
+            Back to top
+            <span style={{
+              fontSize:14, display:"inline-flex",
+              alignItems:"center", justifyContent:"center",
+              width:22, height:22, borderRadius:"50%",
+              border:"1px solid rgba(174,183,132,0.3)",
+            }}>↑</span>
+          </motion.button>
+          <div style={{fontSize:10, color:"rgba(174,183,132,0.3)", letterSpacing:"0.06em"}}>
+            © 2025 · Crafted with care ✦
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ROOT
+───────────────────────────────────────────────────────────────────────────── */
+export default function Portfolio() {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <>
+      <FontLink/>
+      <GlassFilter/>
+      <ScrollProgress/>
+
+      {/* Loader sits above everything, calls setLoaded when done */}
+      <Loader onDone={() => setLoaded(true)} />
+
+      {/* Portfolio content fades + rises in after loader exits */}
+      <AnimatePresence>
+        {loaded && (
+          <motion.div
+            key="portfolio"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: [.22,1,.36,1] }}
+          >
+            <CustomCursor/>
+            <Background/>
+
+            {/* Nav drops from above */}
+            <motion.div
+              initial={{ y: -48, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [.22,1,.36,1] }}
+            >
+              <Nav/>
+            </motion.div>
+
+            <main style={{position:"relative"}}>
+              {/* Floating icons — distributed across all sections */}
+              <FloatingIcons/>
+
+              {/* Hero rises with slight scale */}
+              <motion.div
+                initial={{ opacity: 0, y: 32, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.9, delay: 0.25, ease: [.22,1,.36,1] }}
+              >
+                <Hero/>
+              </motion.div>
+
+              {/* Rest of sections revealed by scroll as normal */}
+              <About/>
+              <Tools/>
+              <Library/>
+              <Thumbnails/>
+              <VideoEdits/>
+              <GraphicDesign/>
+              <CodeProjects/>
+              <Contact/>
+            </main>
+            <Footer/>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
