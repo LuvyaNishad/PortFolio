@@ -1,4 +1,14 @@
-// TODO: Nav — floating pill nav + lamp + scroll-spy
 export default function Nav() {
-  return null;
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 20,
+        left: 20,
+        zIndex: 100,
+      }}
+    >
+      Nav
+    </div>
+  );
 }

@@ -1,4 +1,7 @@
-// TODO: Footer — links + copyright
 export default function Footer() {
-  return null;
+  return (
+    <div style={{ padding: 40, textAlign: "center" }}>
+      Footer
+    </div>
+  );
 }
