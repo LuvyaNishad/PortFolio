@@ -1,2 +1,8 @@
-// TODO: GRAPHIC_ITEMS array
-export const GRAPHIC_ITEMS: any[] = [];
+export type GraphicItem = {
+  img?: string;
+  title: string;
+  tags?: string[];
+  year?: string;
+};
+
+export const GRAPHIC_ITEMS: GraphicItem[] = [];
