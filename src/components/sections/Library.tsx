@@ -1,4 +1,7 @@
-// TODO: Library — 4-card index grid
 export default function Library() {
-  return null;
+  return (
+    <section style={{ height: "100vh", padding: 40 }}>
+      <h1>Library</h1>
+    </section>
+  );
 }

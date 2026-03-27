@@ -1,3 +1,7 @@
-// TODO: NAV_LINKS + GITHUB_USERNAME
-export const GITHUB_USERNAME = "";
-export const NAV_LINKS: any[] = [];
+export const NAV_LINKS = [
+  { id: "hero", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "tools", label: "Tools" },
+  { id: "library", label: "Work" },
+  { id: "contact", label: "Contact" },
+];

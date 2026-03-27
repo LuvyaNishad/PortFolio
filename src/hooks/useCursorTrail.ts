@@ -1,2 +1,6 @@
-// TODO: useCursorTrail — canvas rAF trail logic (extracted from Background)
-export function useCursorTrail() {}
+// You already have cursor inside Background
+// keep this for future if needed
+
+export default function useCursorTrail() {
+  return null;
+}

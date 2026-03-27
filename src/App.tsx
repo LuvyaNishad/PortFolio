@@ -1,31 +1,77 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
+import GlassFilter from "./components/ui/GlassFilter";
+import ScrollProgress from "./components/ui/ProgressBar";
+import Loader from "./components/loader/Loader";
 
 import Background from "./components/layout/Background";
 import CustomCursor from "./components/layout/CustomCursor";
 import Nav from "./components/layout/Nav";
 import Footer from "./components/layout/Footer";
 
-import Loader from "./components/loader/Loader";
-
 import Hero from "./components/sections/Hero";
 import About from "./components/sections/About";
-// (we’ll add others in next phases)
+import Tools from "./components/sections/Tools";
+import Library from "./components/sections/Library";
+import Contact from "./components/sections/Contact";
+
+import Thumbnails from "./components/sections/work/Thumbnails";
+import VideoEdits from "./components/sections/work/VideoEdits";
+import GraphicDesign from "./components/sections/work/GraphicDesign";
+import CodeProjects from "./components/sections/work/CodeProjects";
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
 
   return (
     <>
-      {!loaded && <Loader onDone={() => setLoaded(true)} />}
+      <GlassFilter />
+      <ScrollProgress />
+      <Loader onDone={() => setLoaded(true)} />
 
-      <Background />
-      <CustomCursor />
-      <Nav />
+      <AnimatePresence>
+        {loaded && (
+          <motion.div
+            key="portfolio"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <CustomCursor />
+            <Background />
 
-      <Hero />
-      <About />
+            <motion.div
+              initial={{ y: -48, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Nav />
+            </motion.div>
 
-      <Footer />
+            <main style={{ position: "relative" }}>
+              <motion.div
+                initial={{ opacity: 0, y: 32, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Hero />
+              </motion.div>
+
+              <About />
+              <Tools />
+              <Library />
+              <Thumbnails />
+              <VideoEdits />
+              <GraphicDesign />
+              <CodeProjects />
+              <Contact />
+            </main>
+
+            <Footer />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
