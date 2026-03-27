@@ -11,6 +11,11 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.cache
+.parcel-cache
+.turbo
+.vercel
+.netlify
 *.local
 
 # Editor directories and files
@@ -28,3 +33,22 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# AI / agent artifacts
+.agent
+.gemini
+.gsd
+adapters
+gsd-template
+model_capabilities.yaml
+
+# One-off scratch files
+code.txt
+code2.txt
+skeleton.txt
+skeleton_directory.txt
+
+# Project planning docs (optional; keep if you want them public)
+GSD-STYLE.md
+PROJECT_PRD.md
+PROJECT_RULES.md
