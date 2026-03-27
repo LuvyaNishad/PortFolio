@@ -1,38 +1,282 @@
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { NAV_LINKS } from "../../data/navLinks";
+import useScrollSpy from "../../hooks/useScrollSpy";
+
+const SECTION_IDS = [
+  "hero",
+  "about",
+  "tools",
+  "library",
+  "thumbnails",
+  "video-edits",
+  "graphic-design",
+  "code-projects",
+  "contact",
+];
 
 export default function Nav() {
+  const { activeSection, setActiveSection } = useScrollSpy(SECTION_IDS);
+  const [lampX, setLampX] = useState<number | null>(null);
+
+  const pillRef = useRef<HTMLDivElement | null>(null);
+  const linkRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
   const go = (id: string) => {
+    setActiveSection(id);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const displayActive = ["thumbnails", "video-edits", "graphic-design", "code-projects"].includes(
+    activeSection
+  )
+    ? "library"
+    : activeSection;
+
+  useEffect(() => {
+    const linkEl = linkRefs.current[displayActive];
+    const pillEl = pillRef.current;
+    if (!linkEl || !pillEl) return;
+
+    const linkRect = linkEl.getBoundingClientRect();
+    const pillRect = pillEl.getBoundingClientRect();
+    setLampX(linkRect.left - pillRect.left + linkRect.width / 2);
+  }, [displayActive]);
+
   return (
-    <div
+    <motion.div
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       style={{
         position: "fixed",
-        top: 20,
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 100,
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 200,
         display: "flex",
-        gap: 20,
-        background: "rgba(255,255,255,0.6)",
-        padding: "10px 20px",
-        borderRadius: 100,
+        justifyContent: "center",
+        paddingTop: 18,
+        pointerEvents: "none",
       }}
     >
-      {NAV_LINKS.map(link => (
-        <button
-          key={link.id}
-          onClick={() => go(link.id)}
+      <div
+        ref={pillRef}
+        style={{
+          pointerEvents: "all",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          gap: 2,
+          padding: "5px 5px",
+          borderRadius: 100,
+          background:
+            "linear-gradient(108deg,rgba(174,183,132,0.42) 0%,rgba(140,158,96,0.30) 55%,rgba(174,183,132,0.38) 100%)",
+          backdropFilter: "blur(28px) saturate(200%) hue-rotate(3deg)",
+          WebkitBackdropFilter: "blur(28px) saturate(200%) hue-rotate(3deg)",
+          border: "1.5px solid rgba(80,100,45,0.35)",
+          boxShadow: `
+            0 1.5px 0 rgba(220,235,185,0.50) inset,
+            0 -1px 0 rgba(60,80,20,0.15) inset,
+            0 12px 48px rgba(65,67,27,0.18),
+            0 4px 12px rgba(65,67,27,0.10),
+            0 0 0 1px rgba(255,255,255,0.12) inset
+          `,
+        }}
+      >
+        <AnimatePresence>
+          {lampX !== null && NAV_LINKS.some((link) => link.id === displayActive) && (
+            <motion.div
+              key="lamp"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, x: lampX }}
+              exit={{ opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              style={{
+                position: "absolute",
+                top: -16,
+                left: 0,
+                translate: "-50% 0",
+                pointerEvents: "none",
+                zIndex: 30,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: 0,
+              }}
+            >
+              <div
+                style={{
+                  width: 30,
+                  height: 3,
+                  borderRadius: 100,
+                  background: "rgba(50,65,12,0.95)",
+                  boxShadow: "0 0 10px rgba(80,110,20,0.8), 0 0 4px rgba(50,65,12,1)",
+                  flexShrink: 0,
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: 3,
+                  width: 80,
+                  height: 36,
+                  background:
+                    "radial-gradient(ellipse 80% 100% at 50% 0%,rgba(174,183,132,0.55) 0%,transparent 85%)",
+                  filter: "blur(6px)",
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  top: 3,
+                  width: 44,
+                  height: 24,
+                  background:
+                    "radial-gradient(ellipse 80% 100% at 50% 0%,rgba(174,183,132,0.80) 0%,transparent 85%)",
+                  filter: "blur(2px)",
+                }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <motion.div
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          onClick={() => go("hero")}
           style={{
-            background: "none",
-            border: "none",
             cursor: "pointer",
+            userSelect: "none",
+            padding: "6px 16px 6px 12px",
+            borderRight: "1px solid rgba(80,100,45,0.18)",
+            marginRight: 4,
           }}
         >
-          {link.label}
-        </button>
-      ))}
-    </div>
+          <span
+            className="serif"
+            style={{
+              fontSize: 17,
+              fontWeight: 700,
+              color: "#41431B",
+              letterSpacing: "0.02em",
+              whiteSpace: "nowrap",
+            }}
+          >
+            AURELIUS<span style={{ color: "#4A5C28", fontWeight: 300 }}>.</span>
+          </span>
+        </motion.div>
+
+        {NAV_LINKS.map(({ label, id, external }) => {
+          const isActive = displayActive === id;
+
+          if (external) {
+            return (
+              <div
+                key={id}
+                style={{
+                  marginLeft: 4,
+                  paddingLeft: 4,
+                  borderLeft: "1px solid rgba(80,100,45,0.18)",
+                }}
+              >
+                <motion.a
+                  href={external}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{ scale: 1.04, background: "rgba(65,67,27,0.88)" }}
+                  whileTap={{ scale: 0.96 }}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 7,
+                    padding: "7px 18px",
+                    borderRadius: 100,
+                    background: "rgba(65,67,27,0.75)",
+                    color: "#F8F3E1",
+                    fontSize: 12,
+                    fontWeight: 500,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontFamily: "'DM Sans',sans-serif",
+                    textDecoration: "none",
+                    boxShadow: "0 2px 8px rgba(65,67,27,0.25)",
+                    transition: "background .2s",
+                    backdropFilter: "blur(8px)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                    <path
+                      d="M1 10L10 1M10 1H3M10 1V8"
+                      stroke="#F8F3E1"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  Resume
+                </motion.a>
+              </div>
+            );
+          }
+
+          return (
+            <div
+              key={id}
+              ref={(el) => {
+                linkRefs.current[id] = el;
+              }}
+              onClick={() => go(id)}
+              style={{ position: "relative", cursor: "pointer" }}
+            >
+              <motion.span
+                animate={{
+                  opacity: isActive ? 1 : 0.38,
+                  fontWeight: isActive ? 700 : 500,
+                }}
+                transition={{ duration: 0.25 }}
+                whileHover={{ opacity: isActive ? 1 : 0.72 }}
+                style={{
+                  position: "relative",
+                  display: "block",
+                  fontSize: 12,
+                  letterSpacing: "0.09em",
+                  textTransform: "uppercase",
+                  color: "#41431B",
+                  padding: "7px 18px",
+                  borderRadius: 100,
+                  userSelect: "none",
+                  zIndex: 1,
+                }}
+              >
+                <AnimatePresence>
+                  {isActive && (
+                    <motion.span
+                      layoutId="active-pill"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: 100,
+                        zIndex: -1,
+                        background: "rgba(248,243,225,0.95)",
+                        border: "1.5px solid rgba(65,67,27,0.18)",
+                        boxShadow:
+                          "0 2px 12px rgba(65,67,27,0.18), 0 1px 0 rgba(255,255,255,0.8) inset",
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
+                {label}
+              </motion.span>
+            </div>
+          );
+        })}
+      </div>
+    </motion.div>
   );
 }
