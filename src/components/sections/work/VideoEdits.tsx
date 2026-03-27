@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "../../ui/Reveal";
 import AddCard from "../../ui/AddCard";
-import ProjectSection from "../ProjectSection";
+import WorkSection from "./WorkSection";
 import { VideoPlayerModal } from "../Project";
 import { VIDEO_ITEMS, type VideoItem } from "../../../data/videos";
 
@@ -130,7 +130,7 @@ export default function VideoEdits() {
 
   return (
     <>
-      <ProjectSection
+      <WorkSection
         id="video-edits"
         label="Video Edits"
         title="Motion &"
@@ -160,7 +160,7 @@ export default function VideoEdits() {
             ))}
           </div>
         )}
-      </ProjectSection>
+      </WorkSection>
 
       <AnimatePresence>
         {selected && <VideoPlayerModal item={selected} onClose={() => setSelected(null)} />}

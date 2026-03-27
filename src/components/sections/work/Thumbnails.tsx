@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "../../ui/Reveal";
 import AddCard from "../../ui/AddCard";
-import ProjectSection from "../ProjectSection";
+import WorkSection from "./WorkSection";
 import { ThumbnailLightbox } from "../Project";
 import { THUMBNAIL_ITEMS, type ThumbnailItem } from "../../../data/thumbnails";
 
@@ -112,7 +112,7 @@ export default function Thumbnails() {
 
   return (
     <>
-      <ProjectSection
+      <WorkSection
         id="thumbnails"
         label="Thumbnails"
         title="Click-worthy"
@@ -142,7 +142,7 @@ export default function Thumbnails() {
             ))}
           </div>
         )}
-      </ProjectSection>
+      </WorkSection>
 
       <AnimatePresence>
         {selected && <ThumbnailLightbox item={selected} onClose={() => setSelected(null)} />}

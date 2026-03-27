@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Reveal from "../../ui/Reveal";
 import AddCard from "../../ui/AddCard";
-import ProjectSection from "../ProjectSection";
+import WorkSection from "./WorkSection";
 import { CodeCaseStudy } from "../Project";
 import { CODE_ITEMS, STACK_COLORS, type CodeProjectItem } from "../../../data/codeProjects";
 
@@ -145,7 +145,7 @@ export default function CodeProjects() {
 
   return (
     <>
-      <ProjectSection
+      <WorkSection
         id="code-projects"
         label="Code Projects"
         title="Built from"
@@ -175,7 +175,7 @@ export default function CodeProjects() {
             ))}
           </div>
         )}
-      </ProjectSection>
+      </WorkSection>
 
       <AnimatePresence>
         {selected && <CodeCaseStudy item={selected} onClose={() => setSelected(null)} />}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import LiquidButtonPrimary from "../ui/LiquidButtonPrimary";
 import LiquidButtonGhost from "../ui/LiquidButtonGhost";
@@ -6,7 +6,7 @@ import { sr } from "../../lib/utils";
 
 type AppIcon = {
   id: string;
-  icon: JSX.Element;
+  icon: ReactNode;
 };
 
 const APP_ICONS: AppIcon[] = [

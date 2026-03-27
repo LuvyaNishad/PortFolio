@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Reveal from "../../ui/Reveal";
 import AddCard from "../../ui/AddCard";
-import ProjectSection from "../ProjectSection";
+import WorkSection from "./WorkSection";
 import { GRAPHIC_ITEMS, type GraphicItem } from "../../../data/graphics";
 
 function GraphicCard({ item, featured = false }: { item: GraphicItem; featured?: boolean }) {
@@ -68,7 +68,7 @@ function GraphicCard({ item, featured = false }: { item: GraphicItem; featured?:
 
 export default function GraphicDesign() {
   return (
-    <ProjectSection
+  <WorkSection
       id="graphic-design"
       label="Graphic Design"
       title="Visual"
@@ -130,6 +130,6 @@ export default function GraphicDesign() {
           ))}
         </div>
       )}
-    </ProjectSection>
+  </WorkSection>
   );
 }
