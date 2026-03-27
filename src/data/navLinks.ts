@@ -1,7 +1,15 @@
-export const NAV_LINKS = [
-  { id: "hero", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "tools", label: "Tools" },
-  { id: "library", label: "Work" },
-  { id: "contact", label: "Contact" },
+export type NavLink = {
+  label: string;
+  id: string;
+  external?: string;
+};
+
+export const GITHUB_USERNAME = "your-username";
+
+export const NAV_LINKS: NavLink[] = [
+  { label: "About", id: "about" },
+  { label: "Tools", id: "tools" },
+  { label: "Library", id: "library" },
+  { label: "Contact", id: "contact" },
+  { label: "Resume", id: "resume", external: "/resume.pdf" },
 ];
