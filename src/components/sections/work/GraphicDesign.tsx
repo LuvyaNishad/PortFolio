@@ -1,4 +1,135 @@
-// TODO: GraphicDesign — GraphicCard + grid
+import { motion } from "framer-motion";
+import Reveal from "../../ui/Reveal";
+import AddCard from "../../ui/AddCard";
+import ProjectSection from "../ProjectSection";
+import { GRAPHIC_ITEMS, type GraphicItem } from "../../../data/graphics";
+
+function GraphicCard({ item, featured = false }: { item: GraphicItem; featured?: boolean }) {
+  return (
+    <motion.div
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 280, damping: 22 }}
+      className="glass"
+      style={{
+        borderRadius: 24,
+        overflow: "hidden",
+        gridColumn: featured ? "span 2" : "span 1",
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          aspectRatio: featured ? "2/1" : "1/1",
+          background: "linear-gradient(135deg,#D8C8E0 0%,#B8A8D0 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+      >
+        {item.img ? (
+          <img src={item.img} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        ) : (
+          <span style={{ fontSize: featured ? 52 : 32, opacity: 0.3 }}>GD</span>
+        )}
+      </div>
+
+      <div style={{ padding: "20px 22px 26px" }}>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+          {(item.tags || []).map((tag) => (
+            <span
+              key={tag}
+              style={{
+                fontSize: 10,
+                padding: "3px 10px",
+                borderRadius: 100,
+                background: "rgba(174,183,132,.12)",
+                color: "#4A5C28",
+                letterSpacing: "0.08em",
+                fontWeight: 500,
+                textTransform: "uppercase",
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <div className="serif" style={{ fontSize: featured ? 22 : 18, fontWeight: 600, color: "#41431B" }}>
+            {item.title || "Untitled"}
+          </div>
+          <span style={{ fontSize: 12, color: "#9A9878" }}>{item.year}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function GraphicDesign() {
-  return null;
+  return (
+    <ProjectSection
+      id="graphic-design"
+      label="Graphic Design"
+      title="Visual"
+      italic="Craft"
+      desc="Posters, brand identities, editorial layouts, and print design."
+      accent="rgba(180,168,210,.18)"
+      headingVariant="zoom"
+      sectionNum="03"
+      padding="152px 6vw 96px"
+      titleWeight={400}
+      italicWeight={400}
+    >
+      {GRAPHIC_ITEMS.length > 0 ? (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 22 }}>
+          {GRAPHIC_ITEMS.map((item, index) => (
+            <Reveal key={index} delay={index * 0.07} variant={index === 0 ? "slideLeft" : "zoom"}>
+              <GraphicCard item={item} featured={index === 0} />
+            </Reveal>
+          ))}
+        </div>
+      ) : (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 22 }}>
+          <Reveal delay={0} variant="slideLeft" style={{ gridColumn: "span 2" }}>
+            <motion.div
+              whileHover={{ y: -4 }}
+              style={{
+                borderRadius: 24,
+                border: "1.5px dashed rgba(174,183,132,.4)",
+                background: "rgba(248,243,225,.4)",
+                backdropFilter: "blur(10px)",
+                aspectRatio: "2/1",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 12,
+                cursor: "pointer",
+              }}
+            >
+              <span style={{ fontSize: 44 }}>GD</span>
+              <span
+                style={{
+                  fontSize: 11,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "rgba(174,183,132,.6)",
+                  fontWeight: 500,
+                }}
+              >
+                Featured piece
+              </span>
+            </motion.div>
+          </Reveal>
+
+          {[1, 2, 3, 4].map((index) => (
+            <Reveal key={index} delay={index * 0.07} variant="zoom">
+              <AddCard label="Add design" icon="GD" type="graphic" />
+            </Reveal>
+          ))}
+        </div>
+      )}
+    </ProjectSection>
+  );
 }
