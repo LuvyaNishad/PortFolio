@@ -4,6 +4,7 @@ import type { ThumbnailItem } from "../../data/thumbnails";
 import type { VideoItem } from "../../data/videos";
 import type { CodeProjectItem } from "../../data/codeProjects";
 import { STACK_COLORS } from "../../data/codeProjects";
+import type { GraphicItem } from "../../data/graphics";
 
 type ModalBackdropProps = {
   onClose: () => void;
@@ -511,6 +512,132 @@ export function ThumbnailLightbox({
               </motion.a>
             )}
           </div>
+        </div>
+      </motion.div>
+    </ModalBackdrop>
+  );
+}
+
+export function GraphicLightbox({
+  item,
+  onClose,
+}: {
+  item: GraphicItem;
+  onClose: () => void;
+}) {
+  return (
+    <ModalBackdrop onClose={onClose} wide>
+      <motion.div
+        initial={{ scale: 0.94, opacity: 0, y: 24 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.94, opacity: 0, y: 24 }}
+        transition={{ type: "spring", stiffness: 300, damping: 28 }}
+        style={{
+          background: "#0f1408",
+          borderRadius: 24,
+          overflow: "hidden",
+          boxShadow: "0 56px 140px rgba(0,0,0,0.65)",
+        }}
+      >
+        <div
+          style={{
+            position: "relative",
+            background: "linear-gradient(135deg,#141a0c,#0a0e06)",
+            lineHeight: 0,
+            padding: 18,
+          }}
+        >
+          {item.img ? (
+            <img
+              src={item.img}
+              alt={item.title}
+              style={{
+                width: "100%",
+                maxHeight: "85vh",
+                objectFit: "contain",
+                display: "block",
+                borderRadius: 14,
+                background: "rgba(0,0,0,0.25)",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                height: 380,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 64,
+                opacity: 0.2,
+                color: "#F8F3E1",
+              }}
+            >
+              GD
+            </div>
+          )}
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onClose}
+            style={{
+              position: "absolute",
+              top: 14,
+              right: 14,
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              background: "rgba(0,0,0,0.6)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              cursor: "pointer",
+              color: "#F8F3E1",
+              fontSize: 14,
+              backdropFilter: "blur(8px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            x
+          </motion.button>
+        </div>
+
+        <div
+          style={{
+            padding: "16px 22px 20px",
+            background: "rgba(248,243,225,0.98)",
+            borderTop: "1px solid rgba(174,183,132,0.2)",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+            <div className="serif" style={{ fontSize: 20, fontWeight: 600, color: "#41431B" }}>
+              {item.title || "Untitled"}
+            </div>
+            {item.year && <span style={{ fontSize: 12, color: "#9A9878" }}>{item.year}</span>}
+          </div>
+
+          {item.tags && item.tags.length > 0 && (
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 10 }}>
+              {item.tags.map((tag) => (
+                <span
+                  key={tag}
+                  style={{
+                    fontSize: 10,
+                    padding: "4px 12px",
+                    borderRadius: 100,
+                    background: "rgba(174,183,132,0.12)",
+                    border: "1px solid rgba(174,183,132,0.25)",
+                    color: "#4A5C28",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    fontWeight: 500,
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </motion.div>
     </ModalBackdrop>

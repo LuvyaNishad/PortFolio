@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import useCursorTrail from "../../hooks/useCursorTrail";
+import EtherealShadow from "../ui/etheral-shadow";
 
 export default function Background() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -148,6 +149,22 @@ export default function Background() {
             )`,
           }}
         />
+
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.55,
+            mixBlendMode: "soft-light",
+          }}
+        >
+          <EtherealShadow
+            color="rgba(174,183,132,0.75)"
+            animation={{ scale: 75, speed: 70 }}
+            noise={{ opacity: 0.45, scale: 1.1 }}
+            sizing="fill"
+          />
+        </div>
 
         <div
           style={{

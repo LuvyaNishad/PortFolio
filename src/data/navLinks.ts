@@ -4,7 +4,7 @@ export type NavLink = {
   external?: string;
 };
 
-export const GITHUB_USERNAME = "your-username";
+export const GITHUB_USERNAME = "LuvyaNishad";
 
 export const NAV_LINKS: NavLink[] = [
   { label: "About", id: "about" },

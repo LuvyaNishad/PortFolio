@@ -14,6 +14,7 @@ import Hero from "./components/sections/Hero";
 import About from "./components/sections/About";
 import Tools from "./components/sections/Tools";
 import Library from "./components/sections/Library";
+import GitHubContributions from "./components/sections/GitHubContributions";
 import Contact from "./components/sections/Contact";
 
 import Thumbnails from "./components/sections/work/Thumbnails";
@@ -65,6 +66,7 @@ export default function App() {
               <VideoEdits />
               <GraphicDesign />
               <CodeProjects />
+              <GitHubContributions />
               <Contact />
             </main>
 
