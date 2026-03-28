@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
 import SLabel from "../ui/SLabel";
+import SectionVines from "../layout/SectionVines";
 
 const LIBRARY_ITEMS = [
   {
@@ -41,6 +42,8 @@ export default function Library() {
       id="library"
       style={{ position: "relative", zIndex: 1, padding: "96px 6vw 112px", overflow: "hidden" }}
     >
+      <SectionVines opacity={0.17} flip />
+
       <div
         style={{
           position: "absolute",

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
 import { TOOL_CATEGORIES, type ToolItem } from "../../data/toolCategories";
+import SectionAmbient from "../layout/SectionAmbient";
+import SectionVines from "../layout/SectionVines";
 
 function ToolChip({ name, Icon }: ToolItem) {
   return (
@@ -100,37 +102,25 @@ export default function Tools() {
       <div
         style={{
           position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+      <SectionAmbient />
+      <SectionVines opacity={0.32} dense />
+
+      <div
+        style={{
+          position: "absolute",
           bottom: 0,
           left: "6vw",
           right: "6vw",
           height: 1,
           background:
             "linear-gradient(to right, transparent, rgba(65,67,27,0.10) 20%, rgba(65,67,27,0.10) 80%, transparent)",
-          pointerEvents: "none",
-        }}
-      />
-
-      <div
-        style={{
-          position: "absolute",
-          top: "5%",
-          left: "-5%",
-          width: "38vw",
-          height: "38vw",
-          background: "radial-gradient(ellipse,rgba(174,183,132,.2) 0%,transparent 70%)",
-          filter: "blur(70px)",
-          pointerEvents: "none",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: "10%",
-          right: "-5%",
-          width: "30vw",
-          height: "30vw",
-          background: "radial-gradient(ellipse,rgba(210,195,160,.18) 0%,transparent 70%)",
-          filter: "blur(60px)",
           pointerEvents: "none",
         }}
       />
@@ -146,7 +136,7 @@ export default function Tools() {
             fontSize: "clamp(110px,16vw,220px)",
             fontWeight: 700,
             fontStyle: "italic",
-            color: "rgba(65,67,27,0.04)",
+            color: "rgba(65,67,27,0.06)",
             letterSpacing: "-0.04em",
             lineHeight: 1,
             userSelect: "none",

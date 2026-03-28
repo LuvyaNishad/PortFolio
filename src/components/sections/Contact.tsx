@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
+import SectionVines from "../layout/SectionVines";
 
 const SERVICES = [
   "Thumbnail Design",
@@ -67,6 +68,8 @@ export default function Contact() {
         overflow: "hidden",
       }}
     >
+      <SectionVines opacity={0.24} flip dense dark />
+
       <div
         style={{
           position: "absolute",

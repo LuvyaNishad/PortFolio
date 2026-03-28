@@ -4,7 +4,7 @@ import { GITHUB_USERNAME } from "../../data/navLinks";
 
 export default function GitHubContributions() {
   const username = GITHUB_USERNAME;
-  const hasUsername = username && username !== "your-username";
+  const hasUsername = Boolean(username.trim()) && username.trim().toLowerCase() !== "your-username";
   const chartUrl = `https://ghchart.rshah.org/8a9b66/${username}`;
 
   return (

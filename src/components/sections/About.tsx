@@ -1,5 +1,7 @@
 import Reveal from "../ui/Reveal";
+import SectionAmbient from "../layout/SectionAmbient";
 import SLabel from "../ui/SLabel";
+import SectionVines from "../layout/SectionVines";
 
 export default function About() {
   return (
@@ -7,6 +9,19 @@ export default function About() {
       id="about"
       style={{ position: "relative", zIndex: 1, padding: "160px 6vw 140px", overflow: "hidden" }}
     >
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+      <SectionAmbient />
+      <SectionVines opacity={0.32} dense />
+
       <div
         style={{
           position: "absolute",
@@ -30,7 +45,7 @@ export default function About() {
           fontSize: "clamp(130px,20vw,280px)",
           fontWeight: 700,
           fontStyle: "italic",
-          color: "rgba(65,67,27,0.04)",
+          color: "rgba(65,67,27,0.06)",
           letterSpacing: "-0.04em",
           lineHeight: 1,
           userSelect: "none",

@@ -1,4 +1,6 @@
-type ToolIconComponent = () => JSX.Element;
+import type { ReactNode } from "react";
+
+type ToolIconComponent = () => ReactNode;
 
 export type ToolItem = {
   name: string;
@@ -8,7 +10,7 @@ export type ToolItem = {
 export type ToolCategory = {
   id: string;
   label: string;
-  icon: JSX.Element;
+  icon: ReactNode;
   tools: ToolItem[];
 };
 
