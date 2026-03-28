@@ -27,13 +27,21 @@ export default function Contact() {
       setForm((current) => ({ ...current, [key]: event.target.value }));
     };
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!form.name || !form.email || !form.message) return;
 
     setStatus("sending");
-    window.setTimeout(() => setStatus("sent"), 1200);
+
+    const res = await fetch("https://formspree.io/f/mreoeyjr", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(form),
+    });
+
+    setStatus(res.ok ? "sent" : "idle");
   };
+
 
   const darkInputStyle: React.CSSProperties = {
     width: "100%",
