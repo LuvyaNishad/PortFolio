@@ -15,10 +15,10 @@ export default function SectionVines({
 }: SectionVinesProps) {
   const basePalette = dark
     ? ["#F1EBCF", "#DCE4B5", "#BFC98E", "#8FA15C"]
-    : ["#1F260E", "#2B3514", "#3A481B", "#5B6F2E"];
+    : ["#101706", "#18210A", "#25320F", "#36501A"];
   const accentPalette = dark
     ? null
-    : ["#141A09", "#1E260D", "#293614", "#3A4A1E"];
+    : ["#5F8C2A", "#78AC3A", "#97CC4C", "#B7E467"];
 
   return (
     <div
@@ -38,6 +38,9 @@ export default function SectionVines({
           inset: "-7% -4%",
           transform: flip ? "scaleX(-1)" : "none",
           transformOrigin: "center",
+          filter: dark
+            ? "none"
+            : "drop-shadow(0 0 10px rgba(121,173,58,0.35)) drop-shadow(0 0 24px rgba(121,173,58,0.22))",
           maskImage:
             "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.88) 10%, rgba(0,0,0,0.88) 90%, transparent 100%)",
           WebkitMaskImage:
@@ -55,12 +58,12 @@ export default function SectionVines({
           animationSpeed={0.82}
           interactive
           bendRadius={3.8}
-          bendStrength={dark ? -0.12 : -0.2}
+          bendStrength={dark ? -0.12 : -0.24}
           mouseDamping={0.04}
           parallax
           parallaxStrength={0.06}
           mixBlendMode={dark ? "screen" : "multiply"}
-          opacity={dark ? 0.95 : 1.15}
+          opacity={dark ? 0.95 : 1.42}
         />
 
         {!dark && accentPalette && (
@@ -68,7 +71,7 @@ export default function SectionVines({
             style={{
               position: "absolute",
               inset: 0,
-              opacity: dense ? 0.62 : 0.5,
+              opacity: dense ? 0.92 : 0.78,
             }}
           >
             <FloatingLines
@@ -82,12 +85,12 @@ export default function SectionVines({
               animationSpeed={0.74}
               interactive
               bendRadius={3.2}
-              bendStrength={-0.16}
+              bendStrength={-0.2}
               mouseDamping={0.04}
               parallax
               parallaxStrength={0.045}
-              mixBlendMode="multiply"
-              opacity={1.1}
+              mixBlendMode="screen"
+              opacity={1.4}
             />
           </div>
         )}
