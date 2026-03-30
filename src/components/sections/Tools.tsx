@@ -98,7 +98,7 @@ function MarqueeRow({
 
 export default function Tools() {
   return (
-    <section id="tools" style={{ position: "relative", zIndex: 1, padding: "72px 0 88px" }}>
+    <section id="tools" style={{ position: "relative", zIndex: 1, padding: "72px 0 88px", overflow: "hidden" }}>
       <div
         style={{
           position: "absolute",
@@ -110,20 +110,25 @@ export default function Tools() {
         }}
       />
       <SectionAmbient />
-      <SectionVines opacity={0.32} dense />
-
       <div
         style={{
           position: "absolute",
-          bottom: 0,
-          left: "6vw",
-          right: "6vw",
-          height: 1,
-          background:
-            "linear-gradient(to right, transparent, rgba(65,67,27,0.10) 20%, rgba(65,67,27,0.10) 80%, transparent)",
+          inset: 0,
+          zIndex: 0,
           pointerEvents: "none",
         }}
-      />
+      >
+        <SectionVines opacity={0.72} dense hero />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.45,
+          }}
+        >
+          <SectionVines opacity={0.42} flip dense hero />
+        </div>
+      </div>
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6vw", position: "relative" }}>
         <div

@@ -33,7 +33,45 @@ export default function WorkSection({
 }: WorkSectionProps) {
   return (
     <section id={id} style={{ position: "relative", zIndex: 1, padding, overflow: "hidden" }}>
-      <SectionVines opacity={0.24} flip={sectionNum === "02" || sectionNum === "04"} dense={sectionNum === "03"} />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <SectionVines
+          opacity={0.72}
+          flip={sectionNum === "02" || sectionNum === "04"}
+          dense={sectionNum === "03"}
+          hero
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.45,
+          }}
+        >
+          <SectionVines
+            opacity={0.42}
+            flip={sectionNum !== "02" && sectionNum !== "04"}
+            dense={sectionNum === "03"}
+            hero
+          />
+        </div>
+      </div>
 
       <div
         style={{

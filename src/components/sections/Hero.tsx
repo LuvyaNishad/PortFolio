@@ -260,7 +260,25 @@ export default function Hero() {
         }}
       />
       <SectionAmbient />
-      <SectionVines opacity={0.32} dense />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      >
+        <SectionVines opacity={0.72} dense hero />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.45,
+          }}
+        >
+          <SectionVines opacity={0.42} flip dense hero />
+        </div>
+      </div>
 
       <FloatingIcons />
 
@@ -281,7 +299,7 @@ export default function Hero() {
           userSelect: "none",
           pointerEvents: "none",
           whiteSpace: "nowrap",
-          zIndex: 0,
+          zIndex: 1,
         }}
       >
         world-class.
@@ -292,7 +310,7 @@ export default function Hero() {
           y: contentY,
           opacity,
           position: "relative",
-          zIndex: 1,
+          zIndex: 2,
           maxWidth: 680,
         }}
       >
@@ -455,6 +473,7 @@ export default function Hero() {
           width: 72,
           height: 72,
           cursor: "pointer",
+          zIndex: 2,
         }}
         onClick={() => go("about")}
         whileHover={{ scale: 1.08 }}

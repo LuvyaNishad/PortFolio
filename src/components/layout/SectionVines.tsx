@@ -5,6 +5,7 @@ type SectionVinesProps = {
   flip?: boolean;
   dense?: boolean;
   dark?: boolean;
+  hero?: boolean;
 };
 
 export default function SectionVines({
@@ -12,13 +13,18 @@ export default function SectionVines({
   flip = false,
   dense = false,
   dark = false,
+  hero = false,
 }: SectionVinesProps) {
   const basePalette = dark
     ? ["#F1EBCF", "#DCE4B5", "#BFC98E", "#8FA15C"]
-    : ["#101706", "#18210A", "#25320F", "#36501A"];
+    : hero
+      ? ["#0F1607", "#1A240C", "#2B3A14", "#3E5320"]
+      : ["#19210C", "#243113", "#31421A", "#415523"];
   const accentPalette = dark
     ? null
-    : ["#5F8C2A", "#78AC3A", "#97CC4C", "#B7E467"];
+    : hero
+      ? ["#5A7F2A", "#74A238", "#92C64A", "#B0E460"]
+      : ["#42581E", "#557227", "#6A8B34", "#7EA243"];
 
   return (
     <div
@@ -40,7 +46,9 @@ export default function SectionVines({
           transformOrigin: "center",
           filter: dark
             ? "none"
-            : "drop-shadow(0 0 10px rgba(121,173,58,0.35)) drop-shadow(0 0 24px rgba(121,173,58,0.22))",
+            : hero
+              ? "drop-shadow(0 0 12px rgba(106,156,58,0.35)) drop-shadow(0 0 26px rgba(106,156,58,0.2))"
+              : "drop-shadow(0 0 10px rgba(65,85,35,0.24)) drop-shadow(0 0 24px rgba(65,85,35,0.14))",
           maskImage:
             "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.88) 10%, rgba(0,0,0,0.88) 90%, transparent 100%)",
           WebkitMaskImage:

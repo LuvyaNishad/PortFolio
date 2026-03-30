@@ -19,21 +19,39 @@ export default function About() {
           zIndex: 0,
         }}
       />
-      <SectionAmbient />
-      <SectionVines opacity={0.32} dense />
-
       <div
         style={{
           position: "absolute",
-          bottom: 0,
-          left: "6vw",
-          right: "6vw",
-          height: 1,
+          left: 0,
+          right: 0,
+          top: -90,
+          height: 180,
           background:
-            "linear-gradient(to right, transparent, rgba(65,67,27,0.12) 20%, rgba(65,67,27,0.12) 80%, transparent)",
+            "linear-gradient(180deg, rgba(174,183,132,0.2) 0%, rgba(174,183,132,0.08) 48%, transparent 100%)",
           pointerEvents: "none",
+          zIndex: 0,
         }}
       />
+      <SectionAmbient />
+      <div
+        style={{
+          position: "absolute",
+          inset: "-12% 0 -2% 0",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      >
+        <SectionVines opacity={0.72} dense hero />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.45,
+          }}
+        >
+          <SectionVines opacity={0.42} flip dense hero />
+        </div>
+      </div>
 
       <div
         style={{

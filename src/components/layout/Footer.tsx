@@ -39,7 +39,7 @@ export default function Footer() {
       style={{
         position: "relative",
         zIndex: 1,
-        background: "#41431B",
+        background: "#20260E",
         overflow: "hidden",
       }}
     >

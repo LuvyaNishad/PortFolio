@@ -64,17 +64,27 @@ export default function Contact() {
         position: "relative",
         zIndex: 1,
         padding: "120px 6vw 0",
-        background: "#41431B",
+        background: "#262C12",
         overflow: "hidden",
       }}
     >
-      <SectionVines opacity={0.24} flip dense dark />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(18,22,8,0.08) 0%, rgba(12,16,5,0.26) 18%, rgba(10,14,4,0.34) 52%, rgba(8,10,3,0.5) 100%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+      <SectionVines opacity={0.36} flip dense dark />
 
       <div
         style={{
           position: "absolute",
           inset: 0,
-          opacity: 0.04,
+          opacity: 0.06,
           pointerEvents: "none",
           backgroundImage:
             "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
@@ -88,7 +98,7 @@ export default function Contact() {
           right: "-10%",
           width: "60vw",
           height: "60vw",
-          background: "radial-gradient(ellipse,rgba(174,183,132,0.12) 0%,transparent 65%)",
+          background: "radial-gradient(ellipse,rgba(174,183,132,0.16) 0%,transparent 65%)",
           pointerEvents: "none",
         }}
       />
@@ -99,7 +109,7 @@ export default function Contact() {
           left: "-5%",
           width: "45vw",
           height: "45vw",
-          background: "radial-gradient(ellipse,rgba(174,183,132,0.08) 0%,transparent 70%)",
+          background: "radial-gradient(ellipse,rgba(241,235,207,0.08) 0%,transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -113,7 +123,7 @@ export default function Contact() {
           fontSize: "clamp(110px,15vw,200px)",
           fontWeight: 700,
           fontStyle: "italic",
-          color: "rgba(248,243,225,0.04)",
+          color: "rgba(248,243,225,0.06)",
           letterSpacing: "-0.04em",
           lineHeight: 1,
           userSelect: "none",

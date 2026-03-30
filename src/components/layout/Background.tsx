@@ -71,6 +71,7 @@ export default function Background() {
               "radial-gradient(ellipse at top center, rgba(248,243,225,0.18) 0%, rgba(248,243,225,0.02) 40%, transparent 70%)",
           }}
         />
+
       </div>
     </>
   );

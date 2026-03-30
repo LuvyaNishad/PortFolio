@@ -6,6 +6,7 @@ import ScrollProgress from "./components/ui/ProgressBar";
 import Loader from "./components/loader/Loader";
 
 import Background from "./components/layout/Background";
+import BottomViewportBlur from "./components/layout/BottomViewportBlur";
 import CustomCursor from "./components/layout/CustomCursor";
 import Nav from "./components/layout/Nav";
 import Footer from "./components/layout/Footer";
@@ -41,6 +42,7 @@ export default function App() {
           >
             <CustomCursor />
             <Background />
+            <BottomViewportBlur />
 
             <motion.div
               initial={{ y: -48, opacity: 0 }}
