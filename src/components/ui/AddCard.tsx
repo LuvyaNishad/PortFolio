@@ -26,44 +26,72 @@ export default function AddCard({
         onClick={() => setOpen(true)}
         style={{
           borderRadius: 24,
-          border: "1.5px dashed rgba(174,183,132,0.4)",
-          background: "rgba(248,243,225,0.4)",
-          backdropFilter: "blur(10px)",
+          border: "1px solid rgba(255,255,255,0.58)",
+          background: "linear-gradient(180deg, rgba(248,243,225,0.68) 0%, rgba(244,238,217,0.5) 100%)",
+          backdropFilter: "blur(18px) saturate(1.15)",
+          WebkitBackdropFilter: "blur(18px) saturate(1.15)",
+          boxShadow: "0 22px 46px rgba(65,67,27,0.12), inset 0 1px 0 rgba(255,255,255,0.7)",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 12,
+          overflow: "hidden",
           cursor: "pointer",
           minHeight: tall ? 300 : 220,
-          padding: 28,
         }}
       >
         <div
           style={{
-            width: 48,
-            height: 48,
-            borderRadius: "50%",
-            background: "rgba(174,183,132,.12)",
+            flex: 1,
+            minHeight: tall ? 220 : 156,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: 22,
-            color: "#4A5C28",
+            gap: 14,
+            padding: "28px 24px 22px",
+            background:
+              "linear-gradient(180deg, rgba(248,243,225,0.18) 0%, rgba(248,243,225,0.08) 100%)",
           }}
         >
-          {icon}
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.24)",
+              border: "1px solid rgba(255,255,255,0.42)",
+              boxShadow: "0 8px 24px rgba(65,67,27,0.08), inset 0 1px 0 rgba(255,255,255,0.55)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 24,
+              color: "#4A5C28",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+            }}
+          >
+            {icon}
+          </div>
         </div>
 
-        <div style={{ textAlign: "center" }}>
+        <div
+          style={{
+            padding: "16px 18px 18px",
+            borderTop: "1px solid rgba(255,255,255,0.38)",
+            background: "rgba(248,243,225,0.56)",
+            backdropFilter: "blur(16px) saturate(1.08)",
+            WebkitBackdropFilter: "blur(16px) saturate(1.08)",
+            textAlign: "center",
+            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.45)",
+          }}
+        >
           <span
             style={{
               display: "block",
-              fontSize: 11,
+              fontSize: 11.5,
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "rgba(174,183,132,.6)",
-              fontWeight: 500,
+              color: "#87944E",
+              fontWeight: 600,
             }}
           >
             {label}
@@ -73,8 +101,8 @@ export default function AddCard({
             style={{
               display: "block",
               marginTop: 4,
-              fontSize: 10,
-              color: "rgba(174,183,132,.4)",
+              fontSize: 10.5,
+              color: "rgba(116,128,69,0.72)",
               letterSpacing: "0.08em",
             }}
           >

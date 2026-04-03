@@ -104,7 +104,16 @@ function VideoCard({ item, onOpen }: { item: VideoItem; onOpen: (item: VideoItem
         )}
       </div>
 
-      <div style={{ padding: "18px 22px 24px" }}>
+      <div
+        style={{
+          padding: "18px 22px 24px",
+          borderTop: "1px solid rgba(255,255,255,0.38)",
+          background: "linear-gradient(180deg, rgba(248,243,225,0.74) 0%, rgba(242,236,214,0.58) 100%)",
+          backdropFilter: "blur(18px) saturate(1.08)",
+          WebkitBackdropFilter: "blur(18px) saturate(1.08)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.42)",
+        }}
+      >
         <div
           style={{
             fontSize: 11,

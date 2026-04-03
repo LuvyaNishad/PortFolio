@@ -1,5 +1,4 @@
 import SectionAmbient from "./SectionAmbient";
-import SectionVines from "./SectionVines";
 
 export default function LightPageBackground() {
   return (
@@ -26,24 +25,6 @@ export default function LightPageBackground() {
       />
 
       <SectionAmbient leftWidth="42vw" leftHeight="42vw" rightWidth="36vw" rightHeight="36vw" />
-
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
-      >
-        <SectionVines
-          opacity={0.72}
-          hero
-          interactive={false}
-          parallax={false}
-          showAccent={true}
-          pixelRatioCap={1}
-        />
-      </div>
     </div>
   );
 }

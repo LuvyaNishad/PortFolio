@@ -54,7 +54,16 @@ function GraphicCard({
         )}
       </div>
 
-      <div style={{ padding: "14px 18px 18px", borderTop: "1px solid rgba(174,183,132,.18)" }}>
+      <div
+        style={{
+          padding: "14px 18px 18px",
+          borderTop: "1px solid rgba(255,255,255,0.38)",
+          background: "linear-gradient(180deg, rgba(248,243,225,0.74) 0%, rgba(242,236,214,0.58) 100%)",
+          backdropFilter: "blur(18px) saturate(1.08)",
+          WebkitBackdropFilter: "blur(18px) saturate(1.08)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.42)",
+        }}
+      >
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
           {(item.tags || []).map((tag) => (
             <span
@@ -123,9 +132,11 @@ export default function GraphicDesign() {
                 whileHover={{ y: -4 }}
                 style={{
                   borderRadius: 24,
-                  border: "1.5px dashed rgba(174,183,132,.4)",
-                  background: "rgba(248,243,225,.4)",
-                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255,255,255,0.58)",
+                  background: "linear-gradient(180deg, rgba(248,243,225,0.68) 0%, rgba(244,238,217,0.5) 100%)",
+                  backdropFilter: "blur(18px) saturate(1.15)",
+                  WebkitBackdropFilter: "blur(18px) saturate(1.15)",
+                  boxShadow: "0 24px 52px rgba(65,67,27,0.12), inset 0 1px 0 rgba(255,255,255,0.68)",
                   aspectRatio: "2/1",
                   display: "flex",
                   flexDirection: "column",
@@ -134,15 +145,32 @@ export default function GraphicDesign() {
                   gap: 12,
                   cursor: "pointer",
                 }}
-              >
-                <span style={{ fontSize: 44 }}>GD</span>
+                >
+                <span
+                  style={{
+                    fontSize: 44,
+                    width: 64,
+                    height: 64,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "rgba(255,255,255,0.24)",
+                    border: "1px solid rgba(255,255,255,0.42)",
+                    boxShadow: "0 8px 24px rgba(65,67,27,0.08), inset 0 1px 0 rgba(255,255,255,0.55)",
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                  }}
+                >
+                  GD
+                </span>
                 <span
                   style={{
                     fontSize: 11,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "rgba(174,183,132,.6)",
-                    fontWeight: 500,
+                    color: "#87944E",
+                    fontWeight: 600,
                   }}
                 >
                   Featured piece
