@@ -118,7 +118,6 @@ export default function Thumbnails() {
         title="Click-worthy"
         italic="Covers"
         desc="YouTube, Instagram and social covers designed to stop the scroll."
-        accent="rgba(168,197,140,.22)"
         headingVariant="slideLeft"
         sectionNum="01"
         padding="148px 6vw 100px"

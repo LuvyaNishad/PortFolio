@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import Reveal from "../../ui/Reveal";
-import SectionSurface from "../../layout/SectionSurface";
 
 type WorkSectionProps = {
   id: string;
@@ -8,7 +7,6 @@ type WorkSectionProps = {
   title: string;
   italic: string;
   desc: string;
-  accent: string;
   children: ReactNode;
   headingVariant?: "up" | "slideLeft" | "slideRight" | "zoom" | "fade";
   sectionNum?: string;
@@ -23,7 +21,6 @@ export default function WorkSection({
   title,
   italic,
   desc,
-  accent,
   children,
   headingVariant = "slideLeft",
   sectionNum = "",
@@ -33,12 +30,6 @@ export default function WorkSection({
 }: WorkSectionProps) {
   return (
     <section id={id} style={{ position: "relative", zIndex: 1, padding, overflow: "hidden" }}>
-      <SectionSurface
-        flip={sectionNum === "02" || sectionNum === "04"}
-        dense={sectionNum === "03"}
-        accent={accent}
-      />
-
       {sectionNum && (
         <div
           style={{

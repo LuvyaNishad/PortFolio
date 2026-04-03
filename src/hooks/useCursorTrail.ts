@@ -28,6 +28,10 @@ export default function useCursorTrail(
   const trailColor = useRef({ r: 65, g: 67, b: 27 });
 
   useEffect(() => {
+    const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!supportsFinePointer || prefersReducedMotion) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -37,13 +41,16 @@ export default function useCursorTrail(
     const colLight = { r: 65, g: 67, b: 27 };
     const colDark = { r: 174, g: 183, b: 132 };
 
-    const trailLength = options.trailLength ?? 28;
-    const maxAge = options.maxAge ?? 28;
-    const baseRadius = options.baseRadius ?? 7;
-    const lerp = options.lerp ?? 0.18;
+    const trailLength = options.trailLength ?? 14;
+    const maxAge = options.maxAge ?? 16;
+    const baseRadius = options.baseRadius ?? 5;
+    const lerp = options.lerp ?? 0.22;
+    const inDarkRef = { current: false };
 
     const onMove = (event: MouseEvent) => {
       target.current = { x: event.clientX, y: event.clientY };
+      const targetElement = event.target as HTMLElement | null;
+      inDarkRef.current = Boolean(targetElement?.closest?.("#contact"));
     };
 
     const resize = () => {
@@ -59,12 +66,7 @@ export default function useCursorTrail(
     const draw = () => {
       const { width, height } = canvas;
 
-      const element = document.elementFromPoint(target.current.x, target.current.y);
-      const inDark =
-        element?.closest?.("#contact, #contact *") !== null &&
-        element?.closest?.("#contact") !== null;
-
-      const targetColor = inDark ? colDark : colLight;
+      const targetColor = inDarkRef.current ? colDark : colLight;
       trailColor.current.r += (targetColor.r - trailColor.current.r) * 0.06;
       trailColor.current.g += (targetColor.g - trailColor.current.g) * 0.06;
       trailColor.current.b += (targetColor.b - trailColor.current.b) * 0.06;
@@ -95,7 +97,7 @@ export default function useCursorTrail(
         const life = 1 - particle.age / maxAge;
         const radius = particle.size * (0.3 + life * 0.7);
         const alpha = life * life * 0.55;
-        const blur = (1 - life) * 12;
+        const blur = (1 - life) * 6;
 
         const gradient = ctx.createRadialGradient(
           particle.x,

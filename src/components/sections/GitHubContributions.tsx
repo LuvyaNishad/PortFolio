@@ -14,7 +14,6 @@ export default function GitHubContributions() {
       title="Contribution"
       italic="Map"
       desc="A quick snapshot of my recent coding activity."
-      accent="rgba(168,197,140,.2)"
       headingVariant="fade"
       sectionNum="05"
       padding="120px 6vw 96px"

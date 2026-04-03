@@ -12,27 +12,31 @@ export default function CustomCursor() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (!supportsFinePointer) return undefined;
+
+    const inDarkRef = { current: false };
+
     const onMove = (event: MouseEvent) => {
       mouse.current = { x: event.clientX, y: event.clientY };
+      const target = event.target as HTMLElement | null;
+      inDarkRef.current = Boolean(target?.closest?.("#contact, footer"));
       setVisible(true);
     };
 
     const onLeave = () => setVisible(false);
     const onEnter = () => setVisible(true);
 
-    const addHoverListeners = () => {
-      document.querySelectorAll("a,button,[data-cursor]").forEach((element) => {
-        element.addEventListener("mouseenter", () => setHovered(true));
-        element.addEventListener("mouseleave", () => setHovered(false));
-      });
+    const onPointerOver = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+      setHovered(Boolean(target?.closest?.("a,button,[data-cursor]")));
     };
 
     const dark = { r: 174, g: 183, b: 132 };
     const light = { r: 74, g: 92, b: 40 };
 
     const loop = () => {
-      const element = document.elementFromPoint(mouse.current.x, mouse.current.y);
-      const inDark = Boolean(element?.closest?.("#contact, footer"));
+      const inDark = inDarkRef.current;
 
       const target = inDark ? dark : light;
       col.current.r += (target.r - col.current.r) * 0.08;
@@ -63,14 +67,15 @@ export default function CustomCursor() {
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mouseleave", onLeave);
     document.addEventListener("mouseenter", onEnter);
+    document.addEventListener("mouseover", onPointerOver);
 
-    addHoverListeners();
     raf.current = requestAnimationFrame(loop);
 
     return () => {
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseleave", onLeave);
       document.removeEventListener("mouseenter", onEnter);
+      document.removeEventListener("mouseover", onPointerOver);
 
       if (raf.current !== null) {
         cancelAnimationFrame(raf.current);

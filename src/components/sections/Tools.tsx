@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
 import { TOOL_CATEGORIES, type ToolItem } from "../../data/toolCategories";
-import SectionSurface from "../layout/SectionSurface";
 
 function ToolChip({ name, Icon }: ToolItem) {
   return (
@@ -98,8 +97,6 @@ function MarqueeRow({
 export default function Tools() {
   return (
     <section id="tools" style={{ position: "relative", zIndex: 1, padding: "72px 0 88px", overflow: "hidden" }}>
-      <SectionSurface dense accent="rgba(174,183,132,.18)" />
-
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6vw", position: "relative" }}>
         <div
           style={{

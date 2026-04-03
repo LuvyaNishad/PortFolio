@@ -1,6 +1,5 @@
 import Reveal from "../ui/Reveal";
 import SLabel from "../ui/SLabel";
-import SectionSurface from "../layout/SectionSurface";
 
 export default function About() {
   return (
@@ -8,8 +7,6 @@ export default function About() {
       id="about"
       style={{ position: "relative", zIndex: 1, padding: "160px 6vw 140px", overflow: "hidden" }}
     >
-      <SectionSurface dense accent="rgba(174,183,132,.18)" />
-
       <div
         style={{
           position: "absolute",

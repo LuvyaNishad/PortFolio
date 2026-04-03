@@ -151,7 +151,6 @@ export default function CodeProjects() {
         title="Built from"
         italic="Scratch"
         desc="Web apps, experiments, open-source tools and interactive experiences."
-        accent="rgba(140,200,190,.18)"
         headingVariant="slideRight"
         sectionNum="04"
         padding="76px 6vw 160px"

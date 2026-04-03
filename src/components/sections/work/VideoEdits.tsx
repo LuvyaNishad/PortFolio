@@ -136,7 +136,6 @@ export default function VideoEdits() {
         title="Motion &"
         italic="Storytelling"
         desc="Reels, short-form content, long-form narratives, and cinematic brand films."
-        accent="rgba(210,180,140,.2)"
         headingVariant="slideRight"
         sectionNum="02"
         padding="80px 6vw 130px"

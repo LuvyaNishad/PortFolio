@@ -189,6 +189,7 @@ export type FloatingLinesProps = {
   parallaxStrength?: number;
   mixBlendMode?: CSSProperties["mixBlendMode"];
   opacity?: number;
+  pixelRatioCap?: number;
 };
 
 function hexToVec3(hex: string): Vector3 {
@@ -229,6 +230,7 @@ export default function FloatingLines({
   parallaxStrength = 0.12,
   mixBlendMode = "multiply",
   opacity = 0.9,
+  pixelRatioCap = 1.25,
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const targetMouseRef = useRef(new Vector2(-1000, -1000));
@@ -259,8 +261,12 @@ export default function FloatingLines({
     const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
     camera.position.z = 1;
 
-    const renderer = new WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    const renderer = new WebGLRenderer({
+      antialias: false,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pixelRatioCap));
     renderer.domElement.style.width = "100%";
     renderer.domElement.style.height = "100%";
     renderer.domElement.style.opacity = String(opacity);
@@ -353,7 +359,10 @@ export default function FloatingLines({
     }
 
     let raf = 0;
+    let isRunning = true;
+
     const renderLoop = () => {
+      if (!isRunning) return;
       uniforms.iTime.value = clock.getElapsedTime();
 
       if (interactive) {
@@ -372,10 +381,29 @@ export default function FloatingLines({
       raf = requestAnimationFrame(renderLoop);
     };
 
-    renderLoop();
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isRunning = false;
+        if (raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+        return;
+      }
+
+      if (!isRunning) {
+        isRunning = true;
+        raf = requestAnimationFrame(renderLoop);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    raf = requestAnimationFrame(renderLoop);
 
     return () => {
+      isRunning = false;
       cancelAnimationFrame(raf);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", setSize);
       if (interactive) {
         window.removeEventListener("pointermove", handlePointerMove);
@@ -406,6 +434,7 @@ export default function FloatingLines({
     opacity,
     parallax,
     parallaxStrength,
+    pixelRatioCap,
     topLineCount,
     topLineDistance,
     topWavePosition,

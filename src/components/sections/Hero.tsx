@@ -3,7 +3,6 @@ import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import LiquidButtonPrimary from "../ui/LiquidButtonPrimary";
 import LiquidButtonGhost from "../ui/LiquidButtonGhost";
 import { sr } from "../../lib/utils";
-import SectionSurface from "../layout/SectionSurface";
 
 type AppIcon = {
   id: string;
@@ -248,8 +247,6 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      <SectionSurface dense accent="rgba(174,183,132,.18)" />
-
       <FloatingIcons />
 
       <motion.div

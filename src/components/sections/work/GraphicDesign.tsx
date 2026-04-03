@@ -97,7 +97,6 @@ export default function GraphicDesign() {
         title="Visual"
         italic="Craft"
         desc="Posters, brand identities, editorial layouts, and print design."
-        accent="rgba(180,168,210,.18)"
         headingVariant="zoom"
         sectionNum="03"
         padding="152px 6vw 96px"

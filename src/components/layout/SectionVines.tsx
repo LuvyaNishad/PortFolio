@@ -6,6 +6,10 @@ type SectionVinesProps = {
   dense?: boolean;
   dark?: boolean;
   hero?: boolean;
+  interactive?: boolean;
+  parallax?: boolean;
+  showAccent?: boolean;
+  pixelRatioCap?: number;
 };
 
 export default function SectionVines({
@@ -14,6 +18,10 @@ export default function SectionVines({
   dense = false,
   dark = false,
   hero = false,
+  interactive = true,
+  parallax = true,
+  showAccent = true,
+  pixelRatioCap = 1.25,
 }: SectionVinesProps) {
   const basePalette = dark
     ? ["#F1EBCF", "#DCE4B5", "#BFC98E", "#8FA15C"]
@@ -64,17 +72,18 @@ export default function SectionVines({
           middleWavePosition={{ x: 4.7, y: 0.02, rotate: 0.12 }}
           bottomWavePosition={{ x: 1.6, y: -0.88, rotate: -0.14 }}
           animationSpeed={0.82}
-          interactive
+          interactive={interactive}
           bendRadius={3.8}
           bendStrength={dark ? -0.12 : -0.24}
           mouseDamping={0.04}
-          parallax
+          parallax={parallax}
           parallaxStrength={0.06}
           mixBlendMode={dark ? "screen" : "multiply"}
           opacity={dark ? 0.95 : 1.42}
+          pixelRatioCap={pixelRatioCap}
         />
 
-        {!dark && accentPalette && (
+        {!dark && accentPalette && showAccent && (
           <div
             style={{
               position: "absolute",
@@ -91,14 +100,15 @@ export default function SectionVines({
               middleWavePosition={{ x: 5.15, y: 0.08, rotate: 0.17 }}
               bottomWavePosition={{ x: 1.95, y: -0.8, rotate: -0.1 }}
               animationSpeed={0.74}
-              interactive
+              interactive={interactive}
               bendRadius={3.2}
               bendStrength={-0.2}
               mouseDamping={0.04}
-              parallax
+              parallax={parallax}
               parallaxStrength={0.045}
               mixBlendMode="screen"
               opacity={1.4}
+              pixelRatioCap={pixelRatioCap}
             />
           </div>
         )}

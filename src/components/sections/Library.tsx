@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
 import SLabel from "../ui/SLabel";
-import SectionSurface from "../layout/SectionSurface";
 
 const LIBRARY_ITEMS = [
   {
@@ -42,8 +41,6 @@ export default function Library() {
       id="library"
       style={{ position: "relative", zIndex: 1, padding: "96px 6vw 112px", overflow: "hidden" }}
     >
-      <SectionSurface dense accent="rgba(174,183,132,.18)" />
-
       <div
         style={{
           position: "absolute",

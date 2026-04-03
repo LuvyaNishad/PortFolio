@@ -8,6 +8,7 @@ import Loader from "./components/loader/Loader";
 import Background from "./components/layout/Background";
 import BottomViewportBlur from "./components/layout/BottomViewportBlur";
 import CustomCursor from "./components/layout/CustomCursor";
+import LightPageBackground from "./components/layout/LightPageBackground";
 import Nav from "./components/layout/Nav";
 import Footer from "./components/layout/Footer";
 
@@ -53,22 +54,27 @@ export default function App() {
             </motion.div>
 
             <main style={{ position: "relative" }}>
-              <motion.div
-                initial={{ opacity: 0, y: 32, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <Hero />
-              </motion.div>
+              <div style={{ position: "relative" }}>
+                <LightPageBackground />
 
-              <About />
-              <Tools />
-              <Library />
-              <Thumbnails />
-              <VideoEdits />
-              <GraphicDesign />
-              <CodeProjects />
-              <GitHubContributions />
+                <motion.div
+                  initial={{ opacity: 0, y: 32, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.9, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Hero />
+                </motion.div>
+
+                <About />
+                <Tools />
+                <Library />
+                <Thumbnails />
+                <VideoEdits />
+                <GraphicDesign />
+                <CodeProjects />
+                <GitHubContributions />
+              </div>
+
               <Contact />
             </main>
 
