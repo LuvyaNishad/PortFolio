@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
 import SLabel from "../ui/SLabel";
-import SectionVines from "../layout/SectionVines";
+import SectionSurface from "../layout/SectionSurface";
 
 const LIBRARY_ITEMS = [
   {
@@ -42,35 +42,7 @@ export default function Library() {
       id="library"
       style={{ position: "relative", zIndex: 1, padding: "96px 6vw 112px", overflow: "hidden" }}
     >
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      >
-        <SectionVines opacity={0.72} flip hero />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            opacity: 0.45,
-          }}
-        >
-          <SectionVines opacity={0.42} hero />
-        </div>
-      </div>
+      <SectionSurface dense accent="rgba(174,183,132,.18)" />
 
       <div
         style={{

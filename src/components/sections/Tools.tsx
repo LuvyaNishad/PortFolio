@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
 import { TOOL_CATEGORIES, type ToolItem } from "../../data/toolCategories";
-import SectionAmbient from "../layout/SectionAmbient";
-import SectionVines from "../layout/SectionVines";
+import SectionSurface from "../layout/SectionSurface";
 
 function ToolChip({ name, Icon }: ToolItem) {
   return (
@@ -99,36 +98,7 @@ function MarqueeRow({
 export default function Tools() {
   return (
     <section id="tools" style={{ position: "relative", zIndex: 1, padding: "72px 0 88px", overflow: "hidden" }}>
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-      <SectionAmbient />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 0,
-          pointerEvents: "none",
-        }}
-      >
-        <SectionVines opacity={0.72} dense hero />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            opacity: 0.45,
-          }}
-        >
-          <SectionVines opacity={0.42} flip dense hero />
-        </div>
-      </div>
+      <SectionSurface dense accent="rgba(174,183,132,.18)" />
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6vw", position: "relative" }}>
         <div

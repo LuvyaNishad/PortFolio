@@ -3,8 +3,7 @@ import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import LiquidButtonPrimary from "../ui/LiquidButtonPrimary";
 import LiquidButtonGhost from "../ui/LiquidButtonGhost";
 import { sr } from "../../lib/utils";
-import SectionAmbient from "../layout/SectionAmbient";
-import SectionVines from "../layout/SectionVines";
+import SectionSurface from "../layout/SectionSurface";
 
 type AppIcon = {
   id: string;
@@ -249,36 +248,7 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-      <SectionAmbient />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: "none",
-        }}
-      >
-        <SectionVines opacity={0.72} dense hero />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            opacity: 0.45,
-          }}
-        >
-          <SectionVines opacity={0.42} flip dense hero />
-        </div>
-      </div>
+      <SectionSurface dense accent="rgba(174,183,132,.18)" />
 
       <FloatingIcons />
 

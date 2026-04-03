@@ -1,7 +1,6 @@
 import Reveal from "../ui/Reveal";
-import SectionAmbient from "../layout/SectionAmbient";
 import SLabel from "../ui/SLabel";
-import SectionVines from "../layout/SectionVines";
+import SectionSurface from "../layout/SectionSurface";
 
 export default function About() {
   return (
@@ -9,49 +8,7 @@ export default function About() {
       id="about"
       style={{ position: "relative", zIndex: 1, padding: "160px 6vw 140px", overflow: "hidden" }}
     >
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: -90,
-          height: 180,
-          background:
-            "linear-gradient(180deg, rgba(174,183,132,0.2) 0%, rgba(174,183,132,0.08) 48%, transparent 100%)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-      <SectionAmbient />
-      <div
-        style={{
-          position: "absolute",
-          inset: "-12% 0 -2% 0",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      >
-        <SectionVines opacity={0.72} dense hero />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            opacity: 0.45,
-          }}
-        >
-          <SectionVines opacity={0.42} flip dense hero />
-        </div>
-      </div>
+      <SectionSurface dense accent="rgba(174,183,132,.18)" />
 
       <div
         style={{
