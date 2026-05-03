@@ -19,7 +19,7 @@ function ToolChip({ name, Icon }: ToolItem) {
       }}
     >
       <Icon />
-      <span style={{ fontSize: 13.5, color: "#41431B", fontWeight: 450, whiteSpace: "nowrap" }}>
+      <span style={{ fontSize: 13.5, color: "var(--olive)", fontWeight: 450, whiteSpace: "nowrap" }}>
         {name}
       </span>
     </div>
@@ -60,7 +60,7 @@ function MarqueeRow({
           top: 0,
           bottom: 0,
           width: 120,
-          zIndex: 2,
+          zIndex: "var(--z-raised)",
           background: "linear-gradient(to right,rgba(248,243,225,.95),transparent)",
           pointerEvents: "none",
         }}
@@ -72,14 +72,19 @@ function MarqueeRow({
           top: 0,
           bottom: 0,
           width: 120,
-          zIndex: 2,
+          zIndex: "var(--z-raised)",
           background: "linear-gradient(to left,rgba(248,243,225,.95),transparent)",
           pointerEvents: "none",
         }}
       />
 
       <motion.div
-        style={{ display: "flex", alignItems: "center", gap: 12, width: "max-content" }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          width: "max-content",
+        }}
         animate={{ x: reverse ? ["0%", "-50%"] : ["-50%", "0%"] }}
         transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
       >
@@ -96,7 +101,10 @@ function MarqueeRow({
 
 export default function Tools() {
   return (
-    <section id="tools" style={{ position: "relative", zIndex: 1, padding: "72px 0 88px", overflow: "hidden" }}>
+    <section
+      id="tools"
+      style={{ position: "relative", zIndex: "var(--z-content)", padding: "72px 0 88px", overflow: "hidden" }}
+    >
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 6vw", position: "relative" }}>
         <div
           style={{
@@ -114,16 +122,19 @@ export default function Tools() {
             userSelect: "none",
             pointerEvents: "none",
             whiteSpace: "nowrap",
-            zIndex: 0,
+            zIndex: "var(--z-background)",
           }}
         >
           Tools
         </div>
 
-        <Reveal variant="zoom" style={{ textAlign: "center", marginBottom: 72, position: "relative", zIndex: 1 }}>
+        <Reveal
+          variant="zoom"
+          style={{ textAlign: "center", marginBottom: 72, position: "relative", zIndex: "var(--z-content)" }}
+        >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginBottom: 14 }}>
             <div style={{ height: 1, width: 48, background: "rgba(174,183,132,.4)" }} />
-            <span style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.22em", color: "#AEB784", fontWeight: 500 }}>
+            <span style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.22em", color: "var(--sage)", fontWeight: 500 }}>
               Expertise
             </span>
             <div style={{ height: 1, width: 48, background: "rgba(174,183,132,.4)" }} />
@@ -134,7 +145,7 @@ export default function Tools() {
             style={{
               fontSize: "clamp(38px,5vw,68px)",
               fontWeight: 300,
-              color: "#41431B",
+              color: "var(--olive)",
               lineHeight: 0.95,
               letterSpacing: "-0.04em",
             }}
@@ -194,7 +205,7 @@ export default function Tools() {
                   style={{
                     fontSize: "clamp(14px,1.4vw,18px)",
                     fontWeight: 600,
-                    color: "#41431B",
+                    color: "var(--olive)",
                     letterSpacing: "-0.01em",
                     lineHeight: 1.2,
                   }}

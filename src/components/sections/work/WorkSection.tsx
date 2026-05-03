@@ -29,7 +29,7 @@ export default function WorkSection({
   italicWeight = 300,
 }: WorkSectionProps) {
   return (
-    <section id={id} style={{ position: "relative", zIndex: 1, padding, overflow: "hidden" }}>
+    <section id={id} style={{ position: "relative", zIndex: "var(--z-content)", padding, overflow: "hidden" }}>
       {sectionNum && (
         <div
           style={{
@@ -45,14 +45,14 @@ export default function WorkSection({
             lineHeight: 1,
             userSelect: "none",
             pointerEvents: "none",
-            zIndex: 0,
+            zIndex: "var(--z-background)",
           }}
         >
           {sectionNum}
         </div>
       )}
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: "var(--z-content)" }}>
         <Reveal variant={headingVariant} style={{ marginBottom: 56 }}>
           <div
             style={{
@@ -61,7 +61,7 @@ export default function WorkSection({
               letterSpacing: "0.18em",
               marginBottom: 14,
               fontWeight: 500,
-              color: "#AEB784",
+              color: "var(--sage)",
             }}
           >
             * {label}
@@ -72,7 +72,7 @@ export default function WorkSection({
             style={{
               fontSize: "clamp(36px,4.2vw,68px)",
               fontWeight: titleWeight,
-              color: "#41431B",
+              color: "var(--olive)",
               lineHeight: 1,
               letterSpacing: "-0.03em",
               marginBottom: 12,
@@ -87,7 +87,7 @@ export default function WorkSection({
           <p
             style={{
               fontSize: 14,
-              color: "#6B6B4A",
+              color: "var(--olive-muted)",
               maxWidth: 440,
               lineHeight: 1.8,
               fontWeight: 400,

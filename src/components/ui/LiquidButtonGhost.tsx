@@ -30,9 +30,9 @@ export default function LiquidButtonGhost({
         fontSize: 14,
         letterSpacing: "0.06em",
         fontWeight: 500,
-        color: "#41431B",
-        background: "rgba(248,243,225,0.45)",
-        zIndex: 0,
+        color: "var(--olive)",
+        background: "rgba(var(--cream-r), var(--cream-g), var(--cream-b), 0.45)",
+        zIndex: "var(--z-background)",
         ...style,
       }}
     >
@@ -41,7 +41,7 @@ export default function LiquidButtonGhost({
           position: "absolute",
           inset: 0,
           borderRadius: 100,
-          zIndex: 0,
+          zIndex: "var(--z-background)",
           backdropFilter: 'blur(14px) url("#liquid-glass") saturate(160%)',
           WebkitBackdropFilter: "blur(14px) saturate(160%)",
         }}
@@ -59,11 +59,11 @@ export default function LiquidButtonGhost({
             0 4px 16px rgba(65,67,27,0.1),
             0 1px 4px rgba(65,67,27,0.08)
           `,
-          zIndex: 1,
+          zIndex: "var(--z-content)",
           pointerEvents: "none",
         }}
       />
-      <span style={{ position: "relative", zIndex: 2 }}>{children}</span>
+      <span style={{ position: "relative", zIndex: "var(--z-raised)" }}>{children}</span>
     </motion.button>
   );
 }

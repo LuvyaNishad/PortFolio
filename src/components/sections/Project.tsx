@@ -93,7 +93,7 @@ export function ModalBackdrop({ onClose, children, wide = false }: ModalBackdrop
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 8000,
+        zIndex: "var(--z-modal)",
         background: "rgba(15,18,8,0.92)",
         backdropFilter: "blur(16px)",
         display: "flex",
@@ -136,7 +136,7 @@ function CopyButton({ text }: { text: string }) {
         borderRadius: 100,
         background: copied ? "rgba(65,67,27,0.85)" : "rgba(174,183,132,0.2)",
         border: "1px solid rgba(174,183,132,0.3)",
-        color: copied ? "#F8F3E1" : "#4A5C28",
+        color: copied ? "var(--cream)" : "var(--olive-soft)",
         fontSize: 11,
         fontWeight: 500,
         letterSpacing: "0.06em",
@@ -162,7 +162,7 @@ export function ComingSoonModal({
         exit={{ scale: 0.93, opacity: 0, y: 20 }}
         transition={{ type: "spring", stiffness: 320, damping: 28 }}
         style={{
-          background: "#F8F3E1",
+          background: "var(--cream)",
           borderRadius: 24,
           overflow: "hidden",
           boxShadow: "0 48px 120px rgba(0,0,0,0.45)",
@@ -191,7 +191,7 @@ export function ComingSoonModal({
               justifyContent: "center",
               fontSize: 20,
               flexShrink: 0,
-              color: "#F8F3E1",
+              color: "var(--cream)",
             }}
           >
             {icon ?? "+"}
@@ -200,7 +200,7 @@ export function ComingSoonModal({
           <div style={{ flex: 1 }}>
             <h3
               className="serif"
-              style={{ fontSize: 22, fontWeight: 600, color: "#41431B", lineHeight: 1.1 }}
+              style={{ fontSize: 22, fontWeight: 600, color: "var(--olive)", lineHeight: 1.1 }}
             >
               Coming soon
             </h3>
@@ -221,7 +221,7 @@ export function ComingSoonModal({
               background: "rgba(65,67,27,0.08)",
               border: "1px solid rgba(65,67,27,0.10)",
               cursor: "pointer",
-              color: "#41431B",
+              color: "var(--olive)",
               fontSize: 15,
               display: "flex",
               alignItems: "center",
@@ -233,7 +233,7 @@ export function ComingSoonModal({
         </div>
 
         <div style={{ padding: "20px 36px 0", flexShrink: 0 }}>
-          <p style={{ fontSize: 13, color: "#6B6B4A", lineHeight: 1.75 }}>
+          <p style={{ fontSize: 13, color: "var(--olive-muted)", lineHeight: 1.75 }}>
             Find the matching array in your data file and paste one object inside it.
             Once that array has items, the placeholder cards disappear automatically.
           </p>
@@ -254,7 +254,7 @@ export function ComingSoonModal({
               style={{
                 fontFamily: "'DM Sans', monospace",
                 fontSize: 12.5,
-                color: "#41431B",
+                color: "var(--olive)",
                 lineHeight: 1.85,
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
@@ -286,7 +286,7 @@ export function ThumbnailLightbox({
         exit={{ scale: 0.94, opacity: 0, y: 24 }}
         transition={{ type: "spring", stiffness: 300, damping: 28 }}
         style={{
-          background: "#F8F3E1",
+          background: "var(--cream)",
           borderRadius: 28,
           overflow: "hidden",
           boxShadow: "0 56px 140px rgba(0,0,0,0.6)",
@@ -390,7 +390,7 @@ export function ThumbnailLightbox({
               background: "rgba(0,0,0,0.55)",
               border: "1px solid rgba(255,255,255,0.15)",
               cursor: "pointer",
-              color: "#F8F3E1",
+              color: "var(--cream)",
               fontSize: 14,
               backdropFilter: "blur(8px)",
               display: "flex",
@@ -416,7 +416,7 @@ export function ThumbnailLightbox({
               style={{
                 fontSize: 28,
                 fontWeight: 600,
-                color: "#41431B",
+                color: "var(--olive)",
                 lineHeight: 1.1,
                 marginBottom: 14,
                 letterSpacing: "-0.02em",
@@ -426,7 +426,7 @@ export function ThumbnailLightbox({
             </h3>
 
             {item.context ? (
-              <p style={{ fontSize: 14, color: "#6B6B4A", lineHeight: 1.85 }}>{item.context}</p>
+              <p style={{ fontSize: 14, color: "var(--olive-muted)", lineHeight: 1.85 }}>{item.context}</p>
             ) : (
               <p style={{ fontSize: 13, color: "rgba(174,183,132,0.55)", fontStyle: "italic", lineHeight: 1.7 }}>
                 Add a `context` field to describe the creative brief.
@@ -450,7 +450,7 @@ export function ThumbnailLightbox({
                         fontSize: 10,
                         letterSpacing: "0.14em",
                         textTransform: "uppercase",
-                        color: "#AEB784",
+                        color: "var(--sage)",
                         fontWeight: 500,
                         minWidth: 70,
                         flexShrink: 0,
@@ -458,7 +458,7 @@ export function ThumbnailLightbox({
                     >
                       {label}
                     </span>
-                    <span style={{ fontSize: 13, color: "#41431B", fontWeight: 400 }}>{value}</span>
+                    <span style={{ fontSize: 13, color: "var(--olive)", fontWeight: 400 }}>{value}</span>
                   </div>
                 ))}
             </div>
@@ -474,7 +474,7 @@ export function ThumbnailLightbox({
                       borderRadius: 100,
                       background: "rgba(174,183,132,0.15)",
                       border: "1px solid rgba(174,183,132,0.3)",
-                      color: "#4A5C28",
+                      color: "var(--olive-soft)",
                       letterSpacing: "0.06em",
                       fontWeight: 500,
                     }}
@@ -499,7 +499,7 @@ export function ThumbnailLightbox({
                   padding: "12px 24px",
                   borderRadius: 100,
                   background: "rgba(65,67,27,0.88)",
-                  color: "#F8F3E1",
+                  color: "var(--cream)",
                   textDecoration: "none",
                   fontSize: 12,
                   fontWeight: 500,
@@ -569,7 +569,7 @@ export function GraphicLightbox({
                 justifyContent: "center",
                 fontSize: 64,
                 opacity: 0.2,
-                color: "#F8F3E1",
+                color: "var(--cream)",
               }}
             >
               GD
@@ -590,7 +590,7 @@ export function GraphicLightbox({
               background: "rgba(0,0,0,0.6)",
               border: "1px solid rgba(255,255,255,0.15)",
               cursor: "pointer",
-              color: "#F8F3E1",
+              color: "var(--cream)",
               fontSize: 14,
               backdropFilter: "blur(8px)",
               display: "flex",
@@ -605,12 +605,12 @@ export function GraphicLightbox({
         <div
           style={{
             padding: "16px 22px 20px",
-            background: "rgba(248,243,225,0.98)",
+            background: "rgba(var(--cream-r), var(--cream-g), var(--cream-b), 0.98)",
             borderTop: "1px solid rgba(174,183,132,0.2)",
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-            <div className="serif" style={{ fontSize: 20, fontWeight: 600, color: "#41431B" }}>
+            <div className="serif" style={{ fontSize: 20, fontWeight: 600, color: "var(--olive)" }}>
               {item.title || "Untitled"}
             </div>
             {item.year && <span style={{ fontSize: 12, color: "#9A9878" }}>{item.year}</span>}
@@ -627,7 +627,7 @@ export function GraphicLightbox({
                     borderRadius: 100,
                     background: "rgba(174,183,132,0.12)",
                     border: "1px solid rgba(174,183,132,0.25)",
-                    color: "#4A5C28",
+                    color: "var(--olive-soft)",
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
                     fontWeight: 500,
@@ -704,7 +704,9 @@ export function VideoPlayerModal({
                 />
               )}
 
-              <div style={{ position: "relative", zIndex: 1, textAlign: "center", padding: 24 }}>
+              <div
+                style={{ position: "relative", zIndex: "var(--z-content)", textAlign: "center", padding: 24 }}
+              >
                 <div
                   style={{
                     fontSize: 11,
@@ -730,7 +732,7 @@ export function VideoPlayerModal({
                       borderRadius: 100,
                       background: "rgba(248,243,225,0.12)",
                       border: "1px solid rgba(248,243,225,0.2)",
-                      color: "#F8F3E1",
+                      color: "var(--cream)",
                       textDecoration: "none",
                       fontSize: 13,
                     }}
@@ -754,14 +756,14 @@ export function VideoPlayerModal({
               position: "absolute",
               top: 12,
               right: 12,
-              zIndex: 10,
+              zIndex: "var(--z-raised)",
               width: 32,
               height: 32,
               borderRadius: "50%",
               background: "rgba(0,0,0,0.6)",
               border: "none",
               cursor: "pointer",
-              color: "#F8F3E1",
+              color: "var(--cream)",
               fontSize: 15,
               backdropFilter: "blur(8px)",
               display: "flex",
@@ -773,7 +775,7 @@ export function VideoPlayerModal({
           </motion.button>
         </div>
 
-        <div style={{ padding: "20px 24px 24px", color: "#F8F3E1" }}>
+        <div style={{ padding: "20px 24px 24px", color: "var(--cream)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
             <div>
               <div
@@ -790,7 +792,7 @@ export function VideoPlayerModal({
                 {item.duration ? ` · ${item.duration}` : ""}
               </div>
 
-              <h3 className="serif" style={{ fontSize: 22, fontWeight: 600, color: "#F8F3E1", lineHeight: 1.1 }}>
+              <h3 className="serif" style={{ fontSize: 22, fontWeight: 600, color: "var(--cream)", lineHeight: 1.1 }}>
                 {item.title || "Untitled"}
               </h3>
             </div>
@@ -869,7 +871,7 @@ export function CodeCaseStudy({
         exit={{ y: 32, opacity: 0 }}
         transition={{ type: "spring", stiffness: 280, damping: 30 }}
         style={{
-          background: "#F8F3E1",
+          background: "var(--cream)",
           borderRadius: 28,
           overflow: "hidden",
           boxShadow: "0 56px 140px rgba(0,0,0,0.6)",
@@ -939,7 +941,7 @@ export function CodeCaseStudy({
               left: 0,
               right: 0,
               height: 100,
-              background: "linear-gradient(to top, #F8F3E1, transparent)",
+              background: "linear-gradient(to top, var(--cream), transparent)",
               pointerEvents: "none",
             }}
           />
@@ -995,7 +997,7 @@ export function CodeCaseStudy({
               background: "rgba(0,0,0,0.5)",
               border: "1px solid rgba(255,255,255,0.15)",
               cursor: "pointer",
-              color: "#F8F3E1",
+              color: "var(--cream)",
               fontSize: 14,
               backdropFilter: "blur(8px)",
               display: "flex",
@@ -1015,7 +1017,7 @@ export function CodeCaseStudy({
                 style={{
                   fontSize: 34,
                   fontWeight: 700,
-                  color: "#41431B",
+                  color: "var(--olive)",
                   letterSpacing: "-0.025em",
                   lineHeight: 1,
                   marginBottom: 8,
@@ -1023,7 +1025,7 @@ export function CodeCaseStudy({
               >
                 {item.title}
               </h2>
-              <p style={{ fontSize: 14, color: "#6B6B4A", lineHeight: 1.7 }}>{item.desc}</p>
+              <p style={{ fontSize: 14, color: "var(--olive-muted)", lineHeight: 1.7 }}>{item.desc}</p>
             </div>
 
             <div style={{ display: "flex", gap: 8, flexShrink: 0, marginLeft: 28, paddingTop: 4 }}>
@@ -1039,7 +1041,7 @@ export function CodeCaseStudy({
                     padding: "9px 20px",
                     borderRadius: 100,
                     background: "rgba(65,67,27,0.88)",
-                    color: "#F8F3E1",
+                    color: "var(--cream)",
                     textDecoration: "none",
                     letterSpacing: "0.07em",
                     fontWeight: 500,
@@ -1064,7 +1066,7 @@ export function CodeCaseStudy({
                     padding: "9px 20px",
                     borderRadius: 100,
                     background: "rgba(174,183,132,0.15)",
-                    color: "#41431B",
+                    color: "var(--olive)",
                     textDecoration: "none",
                     letterSpacing: "0.07em",
                     fontWeight: 500,
@@ -1087,9 +1089,9 @@ export function CodeCaseStudy({
                   borderRadius: 100,
                   fontWeight: 500,
                   letterSpacing: "0.04em",
-                  background: `${STACK_COLORS[stack] || "#AEB784"}18`,
-                  color: STACK_COLORS[stack] || "#4A5C28",
-                  border: `1px solid ${STACK_COLORS[stack] || "#AEB784"}35`,
+                  background: `${STACK_COLORS[stack] || "var(--sage)"}18`,
+                  color: STACK_COLORS[stack] || "var(--olive-soft)",
+                  border: `1px solid ${STACK_COLORS[stack] || "var(--sage)"}35`,
                 }}
               >
                 {stack}
@@ -1109,7 +1111,7 @@ export function CodeCaseStudy({
                   <span
                     style={{
                       fontSize: 10,
-                      color: "#AEB784",
+                      color: "var(--sage)",
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
                       fontWeight: 500,
@@ -1119,7 +1121,7 @@ export function CodeCaseStudy({
                   </span>
                 </div>
 
-                <p style={{ fontSize: 14, color: "#41431B", lineHeight: 1.85 }}>
+                <p style={{ fontSize: 14, color: "var(--olive)", lineHeight: 1.85 }}>
                   {item[key as keyof CodeProjectItem] || `Add a ${key} field to CODE_ITEMS.`}
                 </p>
               </div>
@@ -1136,7 +1138,7 @@ export function CodeCaseStudy({
                   <span
                     style={{
                       fontSize: 10,
-                      color: "#AEB784",
+                      color: "var(--sage)",
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
                       fontWeight: 500,
@@ -1146,7 +1148,7 @@ export function CodeCaseStudy({
                   </span>
                 </div>
 
-                <p style={{ fontSize: 14, color: "#41431B", lineHeight: 1.85 }}>
+                <p style={{ fontSize: 14, color: "var(--olive)", lineHeight: 1.85 }}>
                   {item[key as keyof CodeProjectItem] || `Add a ${key} field to CODE_ITEMS.`}
                 </p>
               </div>
@@ -1164,7 +1166,7 @@ export function CodeCaseStudy({
             <div
               style={{
                 fontSize: 10,
-                color: "#AEB784",
+                color: "var(--sage)",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
                 marginBottom: 14,

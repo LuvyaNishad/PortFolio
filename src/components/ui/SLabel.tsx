@@ -64,8 +64,8 @@ export default function SLabel({ children }: SLabelProps) {
         gap: 6,
       }}
     >
-      <span style={{ color: "#41431B", fontSize: 9 }}>*</span>
-      <span style={{ color: "#AEB784" }}>{display}</span>
+      <span style={{ color: "var(--olive)", fontSize: 9 }}>*</span>
+      <span style={{ color: "var(--sage)" }}>{display}</span>
     </div>
   );
 }

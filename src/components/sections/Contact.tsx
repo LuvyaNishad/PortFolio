@@ -50,7 +50,7 @@ export default function Contact() {
     background: "rgba(248,243,225,0.06)",
     border: "1px solid rgba(248,243,225,0.12)",
     fontSize: 14,
-    color: "#F8F3E1",
+    color: "var(--cream)",
     outline: "none",
     transition: "border-color .2s, box-shadow .2s",
     backdropFilter: "blur(8px)",
@@ -61,9 +61,9 @@ export default function Contact() {
       id="contact"
       style={{
         position: "relative",
-        zIndex: 1,
+        zIndex: "var(--z-content)",
         padding: "120px 6vw 0",
-        background: "#262C12",
+        background: "var(--olive-panel)",
         overflow: "hidden",
       }}
     >
@@ -74,7 +74,7 @@ export default function Contact() {
           background:
             "linear-gradient(180deg, rgba(18,22,8,0.08) 0%, rgba(12,16,5,0.26) 18%, rgba(10,14,4,0.34) 52%, rgba(8,10,3,0.5) 100%)",
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       />
 
@@ -127,13 +127,15 @@ export default function Contact() {
           userSelect: "none",
           pointerEvents: "none",
           whiteSpace: "nowrap",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       >
         Let&apos;s
       </div>
 
-      <div style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: 1, paddingBottom: 100 }}>
+      <div
+        style={{ maxWidth: 1000, margin: "0 auto", position: "relative", zIndex: "var(--z-content)", paddingBottom: 100 }}
+      >
         <Reveal variant="zoom" style={{ marginBottom: 64 }}>
           <div
             style={{
@@ -153,7 +155,7 @@ export default function Contact() {
             style={{
               fontSize: "clamp(38px,5vw,68px)",
               fontWeight: 600,
-              color: "#F8F3E1",
+              color: "var(--cream)",
               lineHeight: 0.96,
               letterSpacing: "-0.035em",
               marginBottom: 20,
@@ -161,7 +163,7 @@ export default function Contact() {
           >
             Let&apos;s build something
             <br />
-            <span style={{ fontStyle: "italic", fontWeight: 300, color: "#AEB784", letterSpacing: "-0.01em" }}>
+            <span style={{ fontStyle: "italic", fontWeight: 300, color: "var(--sage)", letterSpacing: "-0.01em" }}>
               worth sharing.
             </span>
           </h2>
@@ -211,7 +213,7 @@ export default function Contact() {
                     fontFamily: "'Cormorant Garamond',serif",
                     fontSize: 20,
                     fontWeight: 600,
-                    color: "#F8F3E1",
+                    color: "var(--cream)",
                     textDecoration: "none",
                     borderBottom: "1.5px solid rgba(174,183,132,0.3)",
                     paddingBottom: 4,
@@ -266,7 +268,7 @@ export default function Contact() {
                           width: 24,
                           textAlign: "center",
                           flexShrink: 0,
-                          color: "#AEB784",
+                          color: "var(--sage)",
                           fontWeight: 700,
                         }}
                       >
@@ -337,10 +339,10 @@ export default function Contact() {
 
               {status === "sent" ? (
                 <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} style={{ textAlign: "center", padding: "40px 0" }}>
-                  <div className="serif" style={{ fontSize: 44, color: "#AEB784", marginBottom: 20 }}>
+                  <div className="serif" style={{ fontSize: 44, color: "var(--sage)", marginBottom: 20 }}>
                     *
                   </div>
-                  <h3 className="serif" style={{ fontSize: 28, fontWeight: 600, color: "#F8F3E1", marginBottom: 12 }}>
+                  <h3 className="serif" style={{ fontSize: 28, fontWeight: 600, color: "var(--cream)", marginBottom: 12 }}>
                     Message received.
                   </h3>
                   <p style={{ fontSize: 14, color: "rgba(248,243,225,0.6)", lineHeight: 1.7 }}>
@@ -418,7 +420,7 @@ export default function Contact() {
                       border: "1px solid rgba(174,183,132,0.4)",
                       cursor: "pointer",
                       background: "rgba(174,183,132,0.16)",
-                      color: "#F8F3E1",
+                      color: "var(--cream)",
                       fontSize: 14,
                       fontWeight: 500,
                       letterSpacing: "0.06em",

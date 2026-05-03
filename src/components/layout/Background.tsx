@@ -15,7 +15,7 @@ export default function Background() {
           inset: 0,
           width: "100%",
           height: "100%",
-          zIndex: 50,
+          zIndex: "var(--z-overlay)",
           pointerEvents: "none",
           mixBlendMode: "normal",
         }}
@@ -25,7 +25,7 @@ export default function Background() {
         style={{
           position: "fixed",
           inset: 0,
-          zIndex: 0,
+          zIndex: "var(--z-background)",
           overflow: "hidden",
           pointerEvents: "none",
         }}

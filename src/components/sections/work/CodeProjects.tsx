@@ -60,7 +60,7 @@ function CodeCard({
                 padding: "5px 14px",
                 borderRadius: 100,
                 background: "rgba(74,92,40,.12)",
-                color: "#4A5C28",
+                color: "var(--olive-soft)",
                 textDecoration: "none",
                 letterSpacing: "0.06em",
                 fontWeight: 500,
@@ -81,7 +81,7 @@ function CodeCard({
                 padding: "5px 14px",
                 borderRadius: 100,
                 background: "rgba(174,183,132,.08)",
-                color: "#4A5C28",
+                color: "var(--olive-soft)",
                 textDecoration: "none",
                 border: "1px solid rgba(174,183,132,.2)",
                 letterSpacing: "0.06em",
@@ -100,7 +100,7 @@ function CodeCard({
           style={{
             fontSize: 24,
             fontWeight: 600,
-            color: "#41431B",
+            color: "var(--olive)",
             lineHeight: 1.15,
             marginBottom: 10,
           }}
@@ -108,7 +108,7 @@ function CodeCard({
           {item.title}
         </div>
 
-        <p style={{ fontSize: 14, color: "#6B6B4A", lineHeight: 1.75, fontWeight: 300 }}>{item.desc}</p>
+        <p style={{ fontSize: 14, color: "var(--olive-muted)", lineHeight: 1.75, fontWeight: 300 }}>{item.desc}</p>
       </div>
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: "auto" }}>
@@ -121,9 +121,9 @@ function CodeCard({
               borderRadius: 100,
               fontWeight: 500,
               letterSpacing: "0.06em",
-              background: `${STACK_COLORS[stack] || "#AEB784"}18`,
-              color: STACK_COLORS[stack] || "#4A5C28",
-              border: `1px solid ${STACK_COLORS[stack] || "#AEB784"}30`,
+              background: `${STACK_COLORS[stack] || "var(--sage)"}18`,
+              color: STACK_COLORS[stack] || "var(--olive-soft)",
+              border: `1px solid ${STACK_COLORS[stack] || "var(--sage)"}30`,
             }}
           >
             {stack}

@@ -38,7 +38,7 @@ export default function Footer() {
     <footer
       style={{
         position: "relative",
-        zIndex: 1,
+        zIndex: "var(--z-content)",
         background: "#20260E",
         overflow: "hidden",
       }}
@@ -85,7 +85,7 @@ export default function Footer() {
               lineHeight: 1.2,
               marginBottom: 8,
               position: "relative",
-              zIndex: 1,
+              zIndex: "var(--z-content)",
             }}
           >
             "Let's make something worth remembering."
@@ -121,7 +121,7 @@ export default function Footer() {
             className="serif"
             style={{ fontSize: 20, fontWeight: 600, color: "rgba(248,243,225,0.9)" }}
           >
-            AM<span style={{ color: "#AEB784", fontWeight: 300 }}>.</span>
+            AM<span style={{ color: "var(--sage)", fontWeight: 300 }}>.</span>
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

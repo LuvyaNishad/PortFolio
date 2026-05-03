@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section
       id="about"
-      style={{ position: "relative", zIndex: 1, padding: "160px 6vw 140px", overflow: "hidden" }}
+      style={{ position: "relative", zIndex: "var(--z-content)", padding: "160px 6vw 140px", overflow: "hidden" }}
     >
       <div
         style={{
@@ -23,7 +23,7 @@ export default function About() {
           userSelect: "none",
           pointerEvents: "none",
           whiteSpace: "nowrap",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       >
         About
@@ -38,7 +38,7 @@ export default function About() {
           gap: 64,
           alignItems: "center",
           position: "relative",
-          zIndex: 1,
+          zIndex: "var(--z-content)",
         }}
       >
         <Reveal variant="slideLeft">
@@ -99,7 +99,7 @@ export default function About() {
                   padding: "7px 16px",
                   fontSize: 11,
                   fontWeight: 500,
-                  color: "#4A5C28",
+                  color: "var(--olive-soft)",
                   letterSpacing: "0.06em",
                   whiteSpace: "nowrap",
                 }}
@@ -118,7 +118,7 @@ export default function About() {
             style={{
               fontSize: "clamp(36px,3.8vw,50px)",
               fontWeight: 300,
-              color: "#41431B",
+              color: "var(--olive)",
               lineHeight: 1.1,
               letterSpacing: "-0.03em",
               marginBottom: 28,
@@ -126,7 +126,7 @@ export default function About() {
           >
             Most creators have great work.
             <br />
-            <em style={{ fontStyle: "italic", color: "#AEB784", letterSpacing: "-0.01em" }}>
+            <em style={{ fontStyle: "italic", color: "var(--sage)", letterSpacing: "-0.01em" }}>
               Not enough people see it.
             </em>
           </h2>
@@ -146,7 +146,7 @@ export default function About() {
                   fontSize: "clamp(18px,1.8vw,21px)",
                   fontWeight: 400,
                   fontStyle: "italic",
-                  color: "#4A5C28",
+                  color: "var(--olive-soft)",
                   lineHeight: 1.55,
                   letterSpacing: "0.01em",
                 }}
@@ -159,7 +159,7 @@ export default function About() {
           <p
             style={{
               fontSize: 15,
-              color: "#6B6B4A",
+              color: "var(--olive-muted)",
               lineHeight: 1.9,
               fontWeight: 400,
               marginBottom: 14,
@@ -197,7 +197,7 @@ export default function About() {
                     fontWeight: 500,
                     background: "rgba(174,183,132,0.18)",
                     border: "1px solid rgba(174,183,132,0.35)",
-                    color: "#4A5C28",
+                    color: "var(--olive-soft)",
                     letterSpacing: "0.06em",
                     textTransform: "uppercase",
                   }}

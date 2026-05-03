@@ -30,9 +30,9 @@ export default function LiquidButtonPrimary({
         fontSize: 14,
         letterSpacing: "0.06em",
         fontWeight: 500,
-        color: "#F8F3E1",
-        background: "linear-gradient(145deg,#4A5C28,#384A1E)",
-        zIndex: 0,
+        color: "var(--cream)",
+        background: "linear-gradient(145deg,var(--olive-soft),#384A1E)",
+        zIndex: "var(--z-background)",
         overflow: "visible",
         ...style,
       }}
@@ -42,7 +42,7 @@ export default function LiquidButtonPrimary({
           position: "absolute",
           inset: 0,
           borderRadius: 100,
-          zIndex: 0,
+          zIndex: "var(--z-background)",
           backdropFilter: 'url("#liquid-glass")',
           WebkitBackdropFilter: 'url("#liquid-glass")',
         }}
@@ -61,11 +61,11 @@ export default function LiquidButtonPrimary({
             0 6px 24px rgba(65,67,27,0.32),
             0 2px 6px rgba(65,67,27,0.2)
           `,
-          zIndex: 1,
+          zIndex: "var(--z-content)",
           pointerEvents: "none",
         }}
       />
-      <span style={{ position: "relative", zIndex: 2 }}>{children}</span>
+      <span style={{ position: "relative", zIndex: "var(--z-raised)" }}>{children}</span>
     </motion.button>
   );
 }

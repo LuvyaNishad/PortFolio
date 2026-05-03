@@ -119,14 +119,14 @@ function VideoCard({ item, onOpen }: { item: VideoItem; onOpen: (item: VideoItem
             fontSize: 11,
             textTransform: "uppercase",
             letterSpacing: "0.1em",
-            color: "#AEB784",
+            color: "var(--sage)",
             marginBottom: 6,
           }}
         >
           {item.category || "Video"}
         </div>
 
-        <div className="serif" style={{ fontSize: 21, fontWeight: 600, color: "#41431B", lineHeight: 1.1 }}>
+        <div className="serif" style={{ fontSize: 21, fontWeight: 600, color: "var(--olive)", lineHeight: 1.1 }}>
           {item.title || "Untitled Edit"}
         </div>
       </div>

@@ -24,8 +24,8 @@ export default function LiquidChip({ children, onClick }: LiquidChipProps) {
         letterSpacing: "0.09em",
         textTransform: "uppercase",
         fontWeight: 500,
-        color: "#4A5C28",
-        background: "rgba(248,243,225,0.38)",
+        color: "var(--olive-soft)",
+        background: "rgba(var(--cream-r), var(--cream-g), var(--cream-b), 0.38)",
       }}
     >
       <div
@@ -35,7 +35,7 @@ export default function LiquidChip({ children, onClick }: LiquidChipProps) {
           borderRadius: 100,
           backdropFilter: 'blur(12px) url("#liquid-glass") saturate(140%)',
           WebkitBackdropFilter: "blur(12px) saturate(140%)",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       />
       <div
@@ -49,11 +49,11 @@ export default function LiquidChip({ children, onClick }: LiquidChipProps) {
             0 4px 14px rgba(65,67,27,0.08),
             0 1px 3px rgba(65,67,27,0.06)
           `,
-          zIndex: 1,
+          zIndex: "var(--z-content)",
           pointerEvents: "none",
         }}
       />
-      <span style={{ position: "relative", zIndex: 2 }}>{children}</span>
+      <span style={{ position: "relative", zIndex: "var(--z-raised)" }}>{children}</span>
     </motion.span>
   );
 }

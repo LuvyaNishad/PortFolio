@@ -60,8 +60,8 @@ export default function Loader({ onDone }: LoaderProps) {
               left: 0,
               right: 0,
               height: "50vh",
-              zIndex: 9001,
-              background: "#41431B",
+              zIndex: "var(--z-loader)",
+              background: "var(--olive)",
               overflow: "hidden",
               display: "flex",
               flexDirection: "column",
@@ -92,7 +92,7 @@ export default function Loader({ onDone }: LoaderProps) {
               style={{
                 display: "flex",
                 gap: "0.06em",
-                zIndex: 1,
+                zIndex: "var(--z-content)",
                 paddingBottom: 8,
                 overflow: "hidden",
               }}
@@ -111,7 +111,7 @@ export default function Loader({ onDone }: LoaderProps) {
                   style={{
                     fontSize: "clamp(40px,7.5vw,80px)",
                     fontWeight: 700,
-                    color: "#F8F3E1",
+                    color: "var(--cream)",
                     letterSpacing: "0.08em",
                     lineHeight: 1,
                     display: "inline-block",
@@ -134,8 +134,8 @@ export default function Loader({ onDone }: LoaderProps) {
               left: 0,
               right: 0,
               height: "50vh",
-              zIndex: 9001,
-              background: "#41431B",
+              zIndex: "var(--z-loader)",
+              background: "var(--olive)",
               overflow: "hidden",
               display: "flex",
               flexDirection: "column",
@@ -155,7 +155,7 @@ export default function Loader({ onDone }: LoaderProps) {
 
             <div
               style={{
-                zIndex: 1,
+                zIndex: "var(--z-content)",
                 paddingTop: 8,
                 display: "flex",
                 alignItems: "center",
@@ -226,7 +226,7 @@ export default function Loader({ onDone }: LoaderProps) {
               left: 0,
               right: 0,
               height: 1,
-              zIndex: 9002,
+              zIndex: "var(--z-overlay)",
               background: "rgba(174,183,132,0.2)",
               transform: "translateY(-0.5px)",
             }}

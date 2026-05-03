@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import LiquidButtonPrimary from "../ui/LiquidButtonPrimary";
 import LiquidButtonGhost from "../ui/LiquidButtonGhost";
+import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion";
 import { sr } from "../../lib/utils";
 
 type AppIcon = {
@@ -114,7 +115,15 @@ const ICON_ZONES = [
   { xMin: 0.78, xMax: 0.94, yMin: 0.78, yMax: 0.86 },
 ];
 
-function FloatingIcon({ icon, index }: { icon: AppIcon; index: number }) {
+function FloatingIcon({
+  icon,
+  index,
+  prefersReducedMotion,
+}: {
+  icon: AppIcon;
+  index: number;
+  prefersReducedMotion: boolean;
+}) {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const [ready, setReady] = useState(false);
@@ -158,7 +167,7 @@ function FloatingIcon({ icon, index }: { icon: AppIcon; index: number }) {
         userSelect: "none",
         touchAction: "none",
         opacity: ready ? 1 : 0,
-        zIndex: dragging ? 100 : 3,
+        zIndex: dragging ? "var(--z-nav)" : "var(--z-decor)",
       }}
       onDragStart={() => setDragging(true)}
       onDragEnd={() => setDragging(false)}
@@ -166,7 +175,9 @@ function FloatingIcon({ icon, index }: { icon: AppIcon; index: number }) {
     >
       <motion.div
         animate={
-          dragging
+          prefersReducedMotion
+            ? { x: 0, y: 0, rotate: 0 }
+            : dragging
             ? { x: 0, y: 0, rotate: 0 }
             : {
                 x: [0, ampX, ampX * 0.3, -ampX * 0.6, 0],
@@ -176,7 +187,7 @@ function FloatingIcon({ icon, index }: { icon: AppIcon; index: number }) {
         }
         transition={{
           duration,
-          repeat: Infinity,
+          repeat: prefersReducedMotion ? 0 : Infinity,
           ease: "easeInOut",
           delay,
           times: [0, 0.3, 0.55, 0.8, 1],
@@ -205,6 +216,8 @@ function FloatingIcon({ icon, index }: { icon: AppIcon; index: number }) {
 }
 
 function FloatingIcons() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
   return (
     <div
       style={{
@@ -213,13 +226,18 @@ function FloatingIcons() {
         left: 0,
         width: "100%",
         height: "800vh",
-        zIndex: 4,
+        zIndex: "var(--z-float)",
         pointerEvents: "none",
       }}
     >
       <div style={{ position: "relative", width: "100%", height: "100%", pointerEvents: "all" }}>
         {APP_ICONS.map((icon, index) => (
-          <FloatingIcon key={icon.id} icon={icon} index={index} />
+          <FloatingIcon
+            key={icon.id}
+            icon={icon}
+            index={index}
+            prefersReducedMotion={prefersReducedMotion}
+          />
         ))}
       </div>
     </div>
@@ -239,7 +257,7 @@ export default function Hero() {
       id="hero"
       style={{
         position: "relative",
-        zIndex: 1,
+        zIndex: "var(--z-content)",
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
@@ -266,7 +284,7 @@ export default function Hero() {
           userSelect: "none",
           pointerEvents: "none",
           whiteSpace: "nowrap",
-          zIndex: 1,
+          zIndex: "var(--z-content)",
         }}
       >
         world-class.
@@ -277,7 +295,7 @@ export default function Hero() {
           y: contentY,
           opacity,
           position: "relative",
-          zIndex: 2,
+          zIndex: "var(--z-raised)",
           maxWidth: 680,
         }}
       >
@@ -296,7 +314,7 @@ export default function Hero() {
             fontSize: 12,
             letterSpacing: "0.12em",
             textTransform: "uppercase",
-            color: "#4A5C28",
+          color: "var(--olive-soft)",
             fontWeight: 500,
           }}
         >
@@ -307,7 +325,7 @@ export default function Hero() {
               width: 6,
               height: 6,
               borderRadius: "50%",
-              background: "#AEB784",
+              background: "var(--sage)",
               display: "inline-block",
             }}
           />
@@ -324,7 +342,7 @@ export default function Hero() {
               fontSize: "clamp(48px,6.5vw,90px)",
               fontWeight: 600,
               lineHeight: 0.92,
-              color: "#41431B",
+              color: "var(--olive)",
               letterSpacing: "-0.03em",
             }}
           >
@@ -343,7 +361,7 @@ export default function Hero() {
               fontWeight: 300,
               fontStyle: "italic",
               lineHeight: 0.88,
-              color: "#AEB784",
+              color: "var(--sage)",
               letterSpacing: "-0.04em",
             }}
           >
@@ -386,7 +404,7 @@ export default function Hero() {
                 alignItems: "center",
                 gap: 12,
                 fontSize: 14,
-                color: "#6B6B4A",
+                color: "var(--olive-muted)",
                 fontWeight: 400,
                 letterSpacing: "0.01em",
               }}
@@ -394,7 +412,7 @@ export default function Hero() {
               <span
                 style={{
                   fontSize: 11,
-                  color: "#AEB784",
+                  color: "var(--sage)",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   fontWeight: 500,
@@ -440,7 +458,7 @@ export default function Hero() {
           width: 72,
           height: 72,
           cursor: "pointer",
-          zIndex: 2,
+          zIndex: "var(--z-raised)",
         }}
         onClick={() => go("about")}
         whileHover={{ scale: 1.08 }}

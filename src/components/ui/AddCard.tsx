@@ -64,7 +64,7 @@ export default function AddCard({
               alignItems: "center",
               justifyContent: "center",
               fontSize: 24,
-              color: "#4A5C28",
+              color: "var(--olive-soft)",
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)",
             }}

@@ -10,7 +10,7 @@ export default function LightPageBackground() {
         inset: 0,
         overflow: "hidden",
         pointerEvents: "none",
-        zIndex: 0,
+        zIndex: "var(--z-background)",
         isolation: "isolate",
       }}
     >
@@ -21,7 +21,7 @@ export default function LightPageBackground() {
           background:
             "linear-gradient(180deg, rgba(227,219,187,0.16) 0%, rgba(227,219,187,0.12) 42%, rgba(227,219,187,0.16) 100%)",
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       />
 
@@ -29,7 +29,7 @@ export default function LightPageBackground() {
         style={{
           position: "absolute",
           inset: 0,
-          zIndex: 0,
+          zIndex: "var(--z-background)",
           opacity: 0.95,
         }}
       >

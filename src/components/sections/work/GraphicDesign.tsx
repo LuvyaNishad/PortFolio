@@ -73,7 +73,7 @@ function GraphicCard({
                 padding: "3px 9px",
                 borderRadius: 100,
                 background: "rgba(174,183,132,.12)",
-                color: "#4A5C28",
+                color: "var(--olive-soft)",
                 letterSpacing: "0.08em",
                 fontWeight: 500,
                 textTransform: "uppercase",
@@ -85,7 +85,7 @@ function GraphicCard({
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <div className="serif" style={{ fontSize: isFeatured ? 20 : 16, fontWeight: 600, color: "#41431B" }}>
+          <div className="serif" style={{ fontSize: isFeatured ? 20 : 16, fontWeight: 600, color: "var(--olive)" }}>
             {item.title || "Untitled"}
           </div>
           <span style={{ fontSize: 12, color: "#9A9878" }}>{item.year}</span>

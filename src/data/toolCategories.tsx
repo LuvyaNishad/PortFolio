@@ -37,7 +37,7 @@ export const Icons = {
   CapCut: () => (
     <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
       <rect width="24" height="24" rx="4" fill="#000" opacity=".1" />
-      <path d="M8 7l8 5-8 5V7z" fill="#41431B" />
+      <path d="M8 7l8 5-8 5V7z" fill="var(--olive)" />
     </svg>
   ),
   Photoshop: () => (
@@ -88,7 +88,7 @@ export const Icons = {
   NextJS: () => (
     <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
       <rect width="24" height="24" rx="4" fill="#000" opacity=".08" />
-      <path d="M12 4a8 8 0 100 16A8 8 0 0012 4zm-1.5 4.5h1.5v4.2l3-4.2H16.5l-3.3 4.5L16.8 17H15l-3-4.5V17H10.5V8.5z" fill="#41431B" />
+      <path d="M12 4a8 8 0 100 16A8 8 0 0012 4zm-1.5 4.5h1.5v4.2l3-4.2H16.5l-3.3 4.5L16.8 17H15l-3-4.5V17H10.5V8.5z" fill="var(--olive)" />
     </svg>
   ),
   Tailwind: () => (
@@ -100,8 +100,8 @@ export const Icons = {
   ThreeJS: () => (
     <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
       <rect width="24" height="24" rx="4" fill="#000" opacity=".08" />
-      <path d="M12 4L4 18h16L12 4zm0 3.5l5.5 9.5h-11L12 7.5z" fill="#41431B" opacity=".7" />
-      <path d="M12 10l2.75 4.75H9.25L12 10z" fill="#41431B" />
+      <path d="M12 4L4 18h16L12 4zm0 3.5l5.5 9.5h-11L12 7.5z" fill="var(--olive)" opacity=".7" />
+      <path d="M12 10l2.75 4.75H9.25L12 10z" fill="var(--olive)" />
     </svg>
   ),
   MotionGraphics: () => (
@@ -128,7 +128,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
     icon: (
       <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
         <rect width="22" height="22" rx="6" fill="rgba(174,183,132,.15)" />
-        <path d="M4 7h9v8H4V7zm10 1.5l4-2v7l-4-2V8.5z" fill="#4A5C28" />
+        <path d="M4 7h9v8H4V7zm10 1.5l4-2v7l-4-2V8.5z" fill="var(--olive-soft)" />
       </svg>
     ),
     tools: [
@@ -145,9 +145,9 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
     icon: (
       <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
         <rect width="22" height="22" rx="6" fill="rgba(174,183,132,.15)" />
-        <circle cx="11" cy="11" r="5" stroke="#4A5C28" strokeWidth="1.5" fill="none" />
-        <circle cx="11" cy="11" r="2" fill="#4A5C28" />
-        <path d="M11 4v2M11 16v2M4 11h2M16 11h2" stroke="#4A5C28" strokeWidth="1.3" strokeLinecap="round" />
+        <circle cx="11" cy="11" r="5" stroke="var(--olive-soft)" strokeWidth="1.5" fill="none" />
+        <circle cx="11" cy="11" r="2" fill="var(--olive-soft)" />
+        <path d="M11 4v2M11 16v2M4 11h2M16 11h2" stroke="var(--olive-soft)" strokeWidth="1.3" strokeLinecap="round" />
       </svg>
     ),
     tools: [
@@ -164,7 +164,7 @@ export const TOOL_CATEGORIES: ToolCategory[] = [
     icon: (
       <svg viewBox="0 0 22 22" fill="none" width="20" height="20">
         <rect width="22" height="22" rx="6" fill="rgba(174,183,132,.15)" />
-        <path d="M7 8l-4 3 4 3M15 8l4 3-4 3M13 6l-4 10" stroke="#4A5C28" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M7 8l-4 3 4 3M15 8l4 3-4 3M13 6l-4 10" stroke="var(--olive-soft)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
     tools: [

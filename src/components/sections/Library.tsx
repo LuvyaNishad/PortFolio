@@ -39,7 +39,7 @@ export default function Library() {
   return (
     <section
       id="library"
-      style={{ position: "relative", zIndex: 1, padding: "96px 6vw 112px", overflow: "hidden" }}
+      style={{ position: "relative", zIndex: "var(--z-content)", padding: "96px 6vw 112px", overflow: "hidden" }}
     >
       <div
         style={{
@@ -57,13 +57,13 @@ export default function Library() {
           userSelect: "none",
           pointerEvents: "none",
           whiteSpace: "nowrap",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       >
         Work
       </div>
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 1 }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: "var(--z-content)" }}>
         <Reveal variant="fade" style={{ textAlign: "center", marginBottom: 64 }}>
           <SLabel>Index</SLabel>
 
@@ -72,7 +72,7 @@ export default function Library() {
             style={{
               fontSize: "clamp(38px,5vw,68px)",
               fontWeight: 700,
-              color: "#41431B",
+              color: "var(--olive)",
               letterSpacing: "-0.03em",
               lineHeight: 0.95,
             }}
@@ -93,7 +93,7 @@ export default function Library() {
           <p
             style={{
               fontSize: 15,
-              color: "#6B6B4A",
+              color: "var(--olive-muted)",
               margin: "16px auto 0",
               maxWidth: 400,
               lineHeight: 1.8,
@@ -140,14 +140,14 @@ export default function Library() {
                     style={{
                       fontSize: 24,
                       fontWeight: 600,
-                      color: "#41431B",
+                      color: "var(--olive)",
                       lineHeight: 1.1,
                       marginBottom: 6,
                     }}
                   >
                     {item.label}
                   </div>
-                  <div style={{ fontSize: 13, color: "#6B6B4A", fontWeight: 300 }}>{item.sub}</div>
+                  <div style={{ fontSize: 13, color: "var(--olive-muted)", fontWeight: 300 }}>{item.sub}</div>
                 </div>
 
                 <div
@@ -157,7 +157,7 @@ export default function Library() {
                     alignItems: "center",
                     gap: 6,
                     fontSize: 12,
-                    color: "#41431B",
+                    color: "var(--olive)",
                     letterSpacing: "0.06em",
                     fontWeight: 600,
                     opacity: 0.55,

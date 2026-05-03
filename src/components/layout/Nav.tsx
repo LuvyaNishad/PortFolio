@@ -53,7 +53,7 @@ export default function Nav() {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 200,
+        zIndex: "var(--z-nav)",
         display: "flex",
         justifyContent: "center",
         paddingTop: 18,
@@ -98,7 +98,7 @@ export default function Nav() {
                 left: 0,
                 translate: "-50% 0",
                 pointerEvents: "none",
-                zIndex: 30,
+                zIndex: "var(--z-raised)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -158,12 +158,12 @@ export default function Nav() {
             style={{
               fontSize: 17,
               fontWeight: 700,
-              color: "#41431B",
+              color: "var(--olive)",
               letterSpacing: "0.02em",
               whiteSpace: "nowrap",
             }}
           >
-            AURELIUS<span style={{ color: "#4A5C28", fontWeight: 300 }}>.</span>
+            AURELIUS<span style={{ color: "var(--olive-soft)", fontWeight: 300 }}>.</span>
           </span>
         </motion.div>
 
@@ -193,7 +193,7 @@ export default function Nav() {
                     padding: "7px 18px",
                     borderRadius: 100,
                     background: "rgba(65,67,27,0.75)",
-                    color: "#F8F3E1",
+                    color: "var(--cream)",
                     fontSize: 12,
                     fontWeight: 500,
                     letterSpacing: "0.08em",
@@ -209,7 +209,7 @@ export default function Nav() {
                   <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
                     <path
                       d="M1 10L10 1M10 1H3M10 1V8"
-                      stroke="#F8F3E1"
+                      stroke="var(--cream)"
                       strokeWidth="1.6"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -243,11 +243,11 @@ export default function Nav() {
                   fontSize: 12,
                   letterSpacing: "0.09em",
                   textTransform: "uppercase",
-                  color: "#41431B",
+                  color: "var(--olive)",
                   padding: "7px 18px",
                   borderRadius: 100,
                   userSelect: "none",
-                  zIndex: 1,
+                  zIndex: "var(--z-content)",
                 }}
               >
                 <AnimatePresence>

@@ -24,7 +24,7 @@ export default function SectionAmbient({
           `,
           opacity: 0.95,
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       />
       <div
@@ -37,7 +37,7 @@ export default function SectionAmbient({
           background: "radial-gradient(ellipse,rgba(174,183,132,.2) 0%,transparent 70%)",
           filter: "blur(70px)",
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       />
       <div
@@ -50,7 +50,7 @@ export default function SectionAmbient({
           background: "radial-gradient(ellipse,rgba(210,195,160,.18) 0%,transparent 70%)",
           filter: "blur(60px)",
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       />
       <div
@@ -60,7 +60,7 @@ export default function SectionAmbient({
           background:
             "linear-gradient(180deg, rgba(248,243,225,0.02) 0%, rgba(174,183,132,0.035) 48%, rgba(248,243,225,0.02) 100%)",
           pointerEvents: "none",
-          zIndex: 0,
+          zIndex: "var(--z-background)",
         }}
       />
     </>

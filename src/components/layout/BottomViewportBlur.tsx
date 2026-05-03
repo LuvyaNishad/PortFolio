@@ -8,7 +8,7 @@ export default function BottomViewportBlur() {
         right: 0,
         bottom: 0,
         height: "clamp(44px, 7vh, 78px)",
-        zIndex: 35,
+        zIndex: "var(--z-nav)",
         pointerEvents: "none",
         backdropFilter: "blur(6px) saturate(102%)",
         WebkitBackdropFilter: "blur(6px) saturate(102%)",

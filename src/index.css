@@ -5,12 +5,33 @@
   --olive-r: 65;
   --olive-g: 67;
   --olive-b: 27;
+  --olive-soft: #4a5c28;
+  --olive-muted: #6b6b4a;
+  --olive-deep: #2a3018;
+  --olive-panel: #262c12;
   --sage: #aeb784;
   --sage-r: 174;
   --sage-g: 183;
   --sage-b: 132;
+  --sage-deep: #8c9e60;
   --sand: #e3dbbb;
+  --sand-r: 227;
+  --sand-g: 219;
+  --sand-b: 187;
   --cream: #f8f3e1;
+  --cream-r: 248;
+  --cream-g: 243;
+  --cream-b: 225;
+  --z-background: 0;
+  --z-content: 1;
+  --z-raised: 2;
+  --z-decor: 3;
+  --z-float: 4;
+  --z-nav: 100;
+  --z-modal: 200;
+  --z-overlay: 300;
+  --z-loader: 400;
+  --z-cursor: 500;
 }
 
 *,
@@ -64,8 +85,8 @@ select {
 }
 
 select option {
-  background: #2a3018;
-  color: #f8f3e1;
+  background: var(--olive-deep);
+  color: var(--cream);
 }
 
 select {
@@ -214,5 +235,11 @@ select {
 
   66% {
     border-radius: 55% 45% 60% 40% / 45% 55% 45% 55%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }

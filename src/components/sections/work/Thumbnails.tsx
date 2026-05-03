@@ -73,7 +73,7 @@ function ThumbnailCard({
                   fontSize: 11,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: "#F8F3E1",
+                  color: "var(--cream)",
                   fontWeight: 500,
                 }}
               >
@@ -99,7 +99,7 @@ function ThumbnailCard({
           style={{
             fontSize: 17,
             fontWeight: 600,
-            color: "#41431B",
+            color: "var(--olive)",
             marginBottom: 6,
             lineHeight: 1.2,
           }}

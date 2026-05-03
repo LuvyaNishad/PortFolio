@@ -42,7 +42,7 @@ export default function GitHubContributions() {
               style={{ width: "100%", height: "auto", display: "block" }}
             />
           ) : (
-            <div style={{ padding: "22px 10px", textAlign: "center", color: "#6B6B4A", fontSize: 14 }}>
+            <div style={{ padding: "22px 10px", textAlign: "center", color: "var(--olive-muted)", fontSize: 14 }}>
               Set <code>GITHUB_USERNAME</code> in <code>src/data/navLinks.ts</code> to show your chart.
             </div>
           )}
