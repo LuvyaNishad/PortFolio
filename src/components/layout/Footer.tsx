@@ -108,6 +108,7 @@ export default function Footer() {
       <div style={{ height: 1, background: "rgba(174,183,132,0.10)", margin: "0 6vw" }} />
 
       <div
+        className="footer-layout-grid"
         style={{
           padding: "28px 6vw 36px",
           display: "grid",

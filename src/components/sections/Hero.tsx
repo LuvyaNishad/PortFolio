@@ -258,7 +258,7 @@ export default function Hero() {
       style={{
         position: "relative",
         zIndex: "var(--z-content)",
-        minHeight: "100vh",
+        minHeight: "100svh",
         display: "flex",
         alignItems: "center",
         padding: "0 0 0 8vw",

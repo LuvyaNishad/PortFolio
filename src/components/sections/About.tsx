@@ -34,7 +34,7 @@ export default function About() {
           maxWidth: 1100,
           margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
           gap: 64,
           alignItems: "center",
           position: "relative",

@@ -97,6 +97,35 @@ select {
   display: none;
 }
 
+@media (max-width: 760px) {
+  .desktop-nav-item {
+    display: none !important;
+  }
+
+  .mobile-nav-toggle {
+    display: inline-flex !important;
+  }
+
+  .mobile-nav-menu {
+    display: block !important;
+  }
+
+  .contact-layout-grid,
+  .contact-form-grid,
+  .footer-layout-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .footer-layout-grid {
+    text-align: center;
+  }
+
+  .footer-layout-grid > * {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+}
+
 @keyframes rotateText {
   from {
     transform: rotate(0deg);

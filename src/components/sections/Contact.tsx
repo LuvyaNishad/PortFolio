@@ -182,7 +182,10 @@ export default function Contact() {
           </p>
         </Reveal>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 40, alignItems: "start" }}>
+        <div
+          className="contact-layout-grid"
+          style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 40, alignItems: "start" }}
+        >
           <Reveal delay={0.1} variant="slideLeft">
             <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
               <div
@@ -351,7 +354,10 @@ export default function Contact() {
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                  <div
+                    className="contact-form-grid"
+                    style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}
+                  >
                     {[
                       { key: "name", placeholder: "Your name", type: "text" },
                       { key: "email", placeholder: "Your email", type: "email" },

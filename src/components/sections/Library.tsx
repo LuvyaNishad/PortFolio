@@ -104,7 +104,7 @@ export default function Library() {
           </p>
         </Reveal>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 20 }}>
           {LIBRARY_ITEMS.map((item, index) => (
             <Reveal key={item.id} delay={index * 0.1} variant="zoom">
               <motion.div

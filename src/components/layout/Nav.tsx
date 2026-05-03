@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { NAV_LINKS } from "../../data/navLinks";
 import useScrollSpy from "../../hooks/useScrollSpy";
 
@@ -18,12 +19,14 @@ const SECTION_IDS = [
 export default function Nav() {
   const { activeSection, setActiveSection } = useScrollSpy(SECTION_IDS);
   const [lampX, setLampX] = useState<number | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const pillRef = useRef<HTMLDivElement | null>(null);
   const linkRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   const go = (id: string) => {
     setActiveSection(id);
+    setMobileOpen(false);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -167,6 +170,29 @@ export default function Nav() {
           </span>
         </motion.div>
 
+        <motion.button
+          type="button"
+          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={mobileOpen}
+          onClick={() => setMobileOpen((open) => !open)}
+          whileTap={{ scale: 0.94 }}
+          className="mobile-nav-toggle"
+          style={{
+            display: "none",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 34,
+            height: 34,
+            borderRadius: "50%",
+            border: "1px solid rgba(65,67,27,0.16)",
+            background: "rgba(248,243,225,0.82)",
+            color: "var(--olive)",
+            cursor: "pointer",
+          }}
+        >
+          {mobileOpen ? <X size={16} strokeWidth={2} /> : <Menu size={16} strokeWidth={2} />}
+        </motion.button>
+
         {NAV_LINKS.map(({ label, id, external }) => {
           const isActive = displayActive === id;
 
@@ -174,6 +200,7 @@ export default function Nav() {
             return (
               <div
                 key={id}
+                className="desktop-nav-item"
                 style={{
                   marginLeft: 4,
                   paddingLeft: 4,
@@ -224,6 +251,7 @@ export default function Nav() {
           return (
             <div
               key={id}
+              className="desktop-nav-item"
               ref={(el) => {
                 linkRefs.current[id] = el;
               }}
@@ -277,6 +305,81 @@ export default function Nav() {
           );
         })}
       </div>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            className="mobile-nav-menu"
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              display: "none",
+              position: "fixed",
+              top: 68,
+              left: 16,
+              right: 16,
+              pointerEvents: "all",
+              borderRadius: 22,
+              padding: 8,
+              background: "rgba(248,243,225,0.94)",
+              border: "1px solid rgba(65,67,27,0.16)",
+              boxShadow: "0 18px 48px rgba(65,67,27,0.18), 0 1px 0 rgba(255,255,255,0.7) inset",
+              backdropFilter: "blur(22px) saturate(160%)",
+              WebkitBackdropFilter: "blur(22px) saturate(160%)",
+            }}
+          >
+            {NAV_LINKS.map(({ label, id, external }) =>
+              external ? (
+                <a
+                  key={id}
+                  href={external}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                  style={{
+                    display: "block",
+                    padding: "13px 16px",
+                    borderRadius: 15,
+                    color: "var(--olive)",
+                    textDecoration: "none",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {label}
+                </a>
+              ) : (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => go(id)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    padding: "13px 16px",
+                    borderRadius: 15,
+                    border: "none",
+                    background: displayActive === id ? "rgba(174,183,132,0.22)" : "transparent",
+                    color: "var(--olive)",
+                    textAlign: "left",
+                    fontSize: 13,
+                    fontWeight: displayActive === id ? 700 : 600,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                  }}
+                >
+                  {label}
+                </button>
+              )
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
