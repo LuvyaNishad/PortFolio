@@ -205,7 +205,7 @@ export default function Contact() {
                 </div>
 
                 <a
-                  href="mailto:hello@yoursite.com"
+                  href="mailto:luvyanishad@gmail.com"
                   style={{
                     display: "block",
                     fontFamily: "'Cormorant Garamond',serif",
@@ -218,7 +218,7 @@ export default function Contact() {
                     width: "fit-content",
                   }}
                 >
-                  hello@yoursite.com
+                  luvyanishad@gmail.com
                 </a>
               </div>
 
