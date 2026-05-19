@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import GlassFilter from "./components/ui/GlassFilter";
@@ -26,12 +26,13 @@ import CodeProjects from "./components/sections/work/CodeProjects";
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+  const handleLoaded = useCallback(() => setLoaded(true), []);
 
   return (
     <>
       <GlassFilter />
       <ScrollProgress />
-      <Loader onDone={() => setLoaded(true)} />
+      {!loaded && <Loader onDone={handleLoaded} />}
 
       <AnimatePresence>
         {loaded && (

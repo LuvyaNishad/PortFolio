@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Youtube } from "lucide-react";
+import { Github, Linkedin, Youtube } from "lucide-react";
 import Reveal from "../ui/Reveal";
 
 const SERVICES = [
@@ -12,11 +12,26 @@ const SERVICES = [
   "Not sure yet",
 ];
 
+const XLogo = ({ color }: { color: string }) => (
+  <span
+    aria-hidden="true"
+    style={{
+      color,
+      fontSize: 14,
+      fontWeight: 700,
+      lineHeight: 1,
+      fontFamily: "'DM Sans', sans-serif",
+    }}
+  >
+    X
+  </span>
+);
+
 const SOCIAL_LINKS = [
-  { name: "Twitter", href: "#", Icon: Twitter },
-  { name: "LinkedIn", href: "#", Icon: Linkedin },
-  { name: "GitHub", href: "#", Icon: Github },
-  { name: "YouTube", href: "#", Icon: Youtube },
+  { name: "X", href: "#", brandColor: "#ffffff", Icon: XLogo },
+  { name: "LinkedIn", href: "#", brandColor: "#0A66C2", Icon: Linkedin },
+  { name: "GitHub", href: "#", brandColor: "#ffffff", Icon: Github },
+  { name: "YouTube", href: "#", brandColor: "#FF0000", Icon: Youtube, invertIcon: true },
 ];
 
 export default function Contact() {
@@ -28,6 +43,7 @@ export default function Contact() {
   });
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
 
   const setField =
     (key: keyof typeof form) =>
@@ -292,19 +308,27 @@ export default function Contact() {
               </div>
 
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                {SOCIAL_LINKS.map(({ name, href, Icon }) => (
+                {SOCIAL_LINKS.map(({ name, href, Icon, brandColor, invertIcon }) => {
+                  const isHovered = hoveredSocial === name;
+                  const iconColor = isHovered && invertIcon ? "var(--cream)" : isHovered ? brandColor : "var(--sage)";
+
+                  return (
                   <motion.a
                     key={name}
                     href={href}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={name}
-                    whileHover={{ scale: 1.06, background: "rgba(174,183,132,0.18)" }}
+                    onMouseEnter={() => setHoveredSocial(name)}
+                    onMouseLeave={() => setHoveredSocial(null)}
+                    onFocus={() => setHoveredSocial(name)}
+                    onBlur={() => setHoveredSocial(null)}
+                    whileHover={{ scale: 1.06 }}
                     whileTap={{ scale: 0.96 }}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: 7,
+                      gap: 8,
                       padding: "9px 16px",
                       borderRadius: 100,
                       cursor: "pointer",
@@ -312,16 +336,31 @@ export default function Contact() {
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
                       fontWeight: 500,
-                      color: "rgba(174,183,132,0.85)",
-                      border: "1px solid rgba(174,183,132,0.25)",
-                      background: "rgba(174,183,132,0.06)",
+                      color: isHovered ? brandColor : "rgba(174,183,132,0.85)",
+                      border: `1px solid ${isHovered ? brandColor : "rgba(174,183,132,0.25)"}`,
+                      background: isHovered ? "rgba(248,243,225,0.10)" : "rgba(174,183,132,0.06)",
                       textDecoration: "none",
+                      transition: "background .2s, border-color .2s, color .2s",
                     }}
                   >
-                    <Icon size={14} strokeWidth={2} aria-hidden="true" />
+                    <span
+                      style={{
+                        width: 18,
+                        height: 18,
+                        borderRadius: 6,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: isHovered && invertIcon ? brandColor : "transparent",
+                        transition: "background .2s",
+                      }}
+                    >
+                      <Icon color={iconColor} size={14} strokeWidth={2} aria-hidden="true" />
+                    </span>
                     {name}
                   </motion.a>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </Reveal>
