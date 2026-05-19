@@ -204,12 +204,13 @@ export function ComingSoonModal({
             >
               Coming soon
             </h3>
-            <p style={{ fontSize: 13, color: "#9A9878", marginTop: 3 }}>
+            <p style={{ fontSize: 13, color: "var(--olive-muted)", marginTop: 3 }}>
               This piece is not published yet. Use the template below to add it.
             </p>
           </div>
 
           <motion.button
+            aria-label="Close modal"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}
@@ -377,6 +378,7 @@ export function ThumbnailLightbox({
           </div>
 
           <motion.button
+            aria-label="Close modal"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}
@@ -577,6 +579,7 @@ export function GraphicLightbox({
           )}
 
           <motion.button
+            aria-label="Close modal"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}
@@ -613,7 +616,7 @@ export function GraphicLightbox({
             <div className="serif" style={{ fontSize: 20, fontWeight: 600, color: "var(--olive)" }}>
               {item.title || "Untitled"}
             </div>
-            {item.year && <span style={{ fontSize: 12, color: "#9A9878" }}>{item.year}</span>}
+            {item.year && <span style={{ fontSize: 12, color: "var(--olive-muted)" }}>{item.year}</span>}
           </div>
 
           {item.tags && item.tags.length > 0 && (
@@ -749,6 +752,7 @@ export function VideoPlayerModal({
           )}
 
           <motion.button
+            aria-label="Close modal"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}
@@ -984,6 +988,7 @@ export function CodeCaseStudy({
           </div>
 
           <motion.button
+            aria-label="Close modal"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}

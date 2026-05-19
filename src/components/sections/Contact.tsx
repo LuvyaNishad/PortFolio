@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { motion } from "framer-motion";
+import { Github, Linkedin, Twitter, Youtube } from "lucide-react";
 import Reveal from "../ui/Reveal";
 
 const SERVICES = [
@@ -9,6 +10,13 @@ const SERVICES = [
   "Web Development",
   "Full Creative Package",
   "Not sure yet",
+];
+
+const SOCIAL_LINKS = [
+  { name: "Twitter", href: "#", Icon: Twitter },
+  { name: "LinkedIn", href: "#", Icon: Linkedin },
+  { name: "GitHub", href: "#", Icon: Github },
+  { name: "YouTube", href: "#", Icon: Youtube },
 ];
 
 export default function Contact() {
@@ -284,12 +292,13 @@ export default function Contact() {
               </div>
 
               <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                {["Twitter", "LinkedIn", "Dribbble", "GitHub", "YouTube"].map((name) => (
+                {SOCIAL_LINKS.map(({ name, href, Icon }) => (
                   <motion.a
                     key={name}
-                    href="#"
+                    href={href}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label={name}
                     whileHover={{ scale: 1.06, background: "rgba(174,183,132,0.18)" }}
                     whileTap={{ scale: 0.96 }}
                     style={{
@@ -309,6 +318,7 @@ export default function Contact() {
                       textDecoration: "none",
                     }}
                   >
+                    <Icon size={14} strokeWidth={2} aria-hidden="true" />
                     {name}
                   </motion.a>
                 ))}

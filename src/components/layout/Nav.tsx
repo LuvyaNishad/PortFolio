@@ -47,7 +47,8 @@ export default function Nav() {
   }, [displayActive]);
 
   return (
-    <motion.div
+    <motion.nav
+      aria-label="Primary navigation"
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
@@ -380,6 +381,6 @@ export default function Nav() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </motion.nav>
   );
 }

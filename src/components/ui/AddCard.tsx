@@ -90,7 +90,7 @@ export default function AddCard({
               fontSize: 11.5,
               letterSpacing: "0.1em",
               textTransform: "uppercase",
-              color: "#87944E",
+              color: "var(--olive-soft)",
               fontWeight: 600,
             }}
           >
@@ -102,7 +102,7 @@ export default function AddCard({
               display: "block",
               marginTop: 4,
               fontSize: 10.5,
-              color: "rgba(116,128,69,0.72)",
+              color: "var(--olive-muted)",
               letterSpacing: "0.08em",
             }}
           >

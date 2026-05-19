@@ -88,7 +88,7 @@ function GraphicCard({
           <div className="serif" style={{ fontSize: isFeatured ? 20 : 16, fontWeight: 600, color: "var(--olive)" }}>
             {item.title || "Untitled"}
           </div>
-          <span style={{ fontSize: 12, color: "#9A9878" }}>{item.year}</span>
+          <span style={{ fontSize: 12, color: "var(--olive-muted)" }}>{item.year}</span>
         </div>
       </div>
     </motion.div>
@@ -169,7 +169,7 @@ export default function GraphicDesign() {
                     fontSize: 11,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
-                    color: "#87944E",
+                    color: "var(--olive-soft)",
                     fontWeight: 600,
                   }}
                 >

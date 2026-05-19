@@ -132,7 +132,7 @@ function CodeCard({
       </div>
 
       {item.year && (
-        <div style={{ fontSize: 12, color: "#9A9878", borderTop: "1px solid rgba(174,183,132,.12)", paddingTop: 14 }}>
+        <div style={{ fontSize: 12, color: "var(--olive-muted)", borderTop: "1px solid rgba(174,183,132,.12)", paddingTop: 14 }}>
           {item.year}
         </div>
       )}

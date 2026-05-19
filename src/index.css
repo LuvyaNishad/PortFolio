@@ -6,7 +6,7 @@
   --olive-g: 67;
   --olive-b: 27;
   --olive-soft: #4a5c28;
-  --olive-muted: #6b6b4a;
+  --olive-muted: #5b5d3d;
   --olive-deep: #2a3018;
   --olive-panel: #262c12;
   --sage: #aeb784;
@@ -42,10 +42,6 @@
   padding: 0;
 }
 
-* {
-  cursor: none !important;
-}
-
 html {
   scroll-behavior: smooth;
   scrollbar-width: none;
@@ -56,7 +52,6 @@ body {
   background: var(--cream);
   color: var(--olive);
   font-family: "DM Sans", sans-serif;
-  cursor: none;
 }
 
 button,
@@ -93,6 +88,17 @@ select {
   color-scheme: dark;
 }
 
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--olive-soft);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 5px rgba(var(--sage-r), var(--sage-g), var(--sage-b), 0.26);
+}
+
+:where(#contact, footer) :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline-color: var(--sage);
+  box-shadow: 0 0 0 5px rgba(var(--cream-r), var(--cream-g), var(--cream-b), 0.18);
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -123,6 +129,16 @@ select {
   .footer-layout-grid > * {
     align-items: center !important;
     justify-content: center !important;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+
+  body {
+    cursor: none;
   }
 }
 

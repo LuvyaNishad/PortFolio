@@ -53,7 +53,7 @@ export default function App() {
               <Nav />
             </motion.div>
 
-            <main style={{ position: "relative" }}>
+            <main aria-label="Portfolio content" style={{ position: "relative" }}>
               <div style={{ position: "relative" }}>
                 <LightPageBackground />
 

@@ -175,7 +175,7 @@ export default function About() {
           <p
             style={{
               fontSize: 15,
-              color: "#9A9878",
+              color: "var(--olive-muted)",
               lineHeight: 1.9,
               fontWeight: 400,
               marginBottom: 36,

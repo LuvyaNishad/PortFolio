@@ -107,7 +107,7 @@ function ThumbnailCard({
           {item.title || "Untitled"}
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#9A9878" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "var(--olive-muted)" }}>
           <span>{item.platform || "Platform"}</span>
           <span>{item.views || ""}</span>
         </div>
